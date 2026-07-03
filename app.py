@@ -82,10 +82,15 @@ main{{max-width:1600px;margin:0 auto;padding:1.5rem}}
 
 def inject_nav(content: bytes, current_path: str) -> bytes:
     nav = nav_html(current_path).encode()
-    body_tag = b'<body'
-    if body_tag in content:
-        idx = content.index(body_tag)
-        end_idx = content.index(b'>', idx) + 1
+    body_tag_lower = b'<body'
+    body_tag_upper = b'<BODY'
+    idx = None
+    for tag in [body_tag_lower, body_tag_upper]:
+        if tag in content:
+            idx = content.index(tag)
+            end_idx = content.index(b'>', idx) + 1
+            break
+    if idx is not None:
         return content[:end_idx] + nav + content[end_idx:]
     return nav + content
 
