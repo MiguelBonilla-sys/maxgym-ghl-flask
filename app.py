@@ -41,21 +41,40 @@ ROUTES = {
 
 # Alias /artifacts/NN_<name>.html → same HTML file
 ARTIFACT_ALIAS = {
-    '01_Strategy_Brief.html':        '/strategy-brief',
-    '02_Bot_Pipeline_Map.html':      '/bot-pipeline-map',
-    '02_Conversation_Flow.html':     '/conversation-flow',
-    '03_Custom_Fields_Table.html':   '/custom-fields',
-    '04_Bot_Agent_Summary.html':     '/bot-agent-summary',
-    '05_AI_Agent_Actions.html':      '/ai-agent-actions',
-    '06_Pipeline_Stage_Map.html':    '/pipeline-stage-map',
-    '07_User_Calendar_Config.html':  '/calendar-config',
-    '08_WhatsApp_Templates.html':   '/whatsapp-templates',
-    '09_Email_Templates.html':       '/email-templates',
-    '10_Workflow_Templates.html':    '/workflow-templates',
-    '11_Tags_Map.html':              '/tags-map',
-    '12_Landing_Page_Mockup.html':   '/landing-mockup',
+    '01_Strategy_Brief.html':          '/strategy-brief',
+    '02_Bot_Pipeline_Map.html':        '/bot-pipeline-map',
+    '02_Conversation_Flow.html':       '/conversation-flow',
+    '03_Custom_Fields_Table.html':     '/custom-fields',
+    '04_Bot_Agent_Summary.html':       '/bot-agent-summary',
+    '05_AI_Agent_Actions.html':        '/ai-agent-actions',
+    '06_Pipeline_Stage_Map.html':      '/pipeline-stage-map',
+    '07_User_Calendar_Config.html':    '/calendar-config',
+    '08_WhatsApp_Templates.html':     '/whatsapp-templates',
+    '09_Email_Templates.html':         '/email-templates',
+    '10_Workflow_Templates.html':      '/workflow-templates',
+    '11_Tags_Map.html':               '/tags-map',
+    '12_Landing_Page_Mockup.html':     '/landing-mockup',
     '13_Business_Profile_Settings.html': '/business-profile',
-    '14_Knowledgebase_Content.html': '/knowledgebase',
+    '14_Knowledgebase_Content.html':  '/knowledgebase',
+}
+
+# Also serve these from /artifacts/ (no NN_ prefix) to handle relative links in HTML
+ARTIFACT_SIMPLE = {
+    'artifacts/Strategy_Brief.html':        '/strategy-brief',
+    'artifacts/Bot_Pipeline_Map.html':      '/bot-pipeline-map',
+    'artifacts/Conversation_Flow.html':     '/conversation-flow',
+    'artifacts/Custom_Fields_Table.html':   '/custom-fields',
+    'artifacts/Bot_Agent_Summary.html':    '/bot-agent-summary',
+    'artifacts/AI_Agent_Actions.html':      '/ai-agent-actions',
+    'artifacts/Pipeline_Stage_Map.html':   '/pipeline-stage-map',
+    'artifacts/User_Calendar_Config.html':  '/calendar-config',
+    'artifacts/WhatsApp_Templates.html':   '/whatsapp-templates',
+    'artifacts/Email_Templates.html':       '/email-templates',
+    'artifacts/Workflow_Templates.html':    '/workflow-templates',
+    'artifacts/Tags_Map.html':            '/tags-map',
+    'artifacts/Landing_Page_Mockup.html':   '/landing-mockup',
+    'artifacts/Business_Profile_Settings.html': '/business-profile',
+    'artifacts/Knowledgebase_Content.html': '/knowledgebase',
 }
 
 NAV = [
@@ -154,6 +173,10 @@ def serve_html(route):
             return redirect(ARTIFACT_ALIAS[filename])
         return {'error': f"Unknown artifact '{filename}'",
                 'available': list(ARTIFACT_ALIAS.keys())}, 404
+
+    # Handle relative artifacts/ links embedded in HTML (e.g. href="artifacts/Strategy_Brief.html")
+    if route in ARTIFACT_SIMPLE:
+        return redirect(ARTIFACT_SIMPLE[route])
 
     if route not in ROUTES:
         return {'error': f"Unknown route '{route}'", 'available': list(ROUTES.keys())}, 404
