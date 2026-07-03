@@ -175,8 +175,10 @@ def serve_html(route):
                 'available': list(ARTIFACT_ALIAS.keys())}, 404
 
     # Handle relative artifacts/ links embedded in HTML (e.g. href="artifacts/Strategy_Brief.html")
-    if route in ARTIFACT_SIMPLE:
-        return redirect(ARTIFACT_SIMPLE[route])
+    # Route is like /artifacts/Strategy_Brief.html; key is artifacts/Strategy_Brief.html
+    route_no_slash = route.lstrip('/')
+    if route_no_slash in ARTIFACT_SIMPLE:
+        return redirect(ARTIFACT_SIMPLE[route_no_slash])
 
     if route not in ROUTES:
         return {'error': f"Unknown route '{route}'", 'available': list(ROUTES.keys())}, 404
