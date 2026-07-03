@@ -171,6 +171,8 @@ def serve_html(route):
         filename = route[len('/artifacts/'):]
         if filename in ARTIFACT_ALIAS:
             return redirect(ARTIFACT_ALIAS[filename])
+        if route.lstrip('/') in ARTIFACT_SIMPLE:
+            return redirect(ARTIFACT_SIMPLE[route.lstrip('/')])
         return {'error': f"Unknown artifact '{filename}'",
                 'available': list(ARTIFACT_ALIAS.keys())}, 404
 
