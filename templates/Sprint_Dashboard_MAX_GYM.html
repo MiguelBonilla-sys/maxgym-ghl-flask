@@ -1,5 +1,5 @@
-﻿<!DOCTYPE html>
-<html lang="es-PA">
+<!DOCTYPE html>
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1467,9 +1467,9 @@
       <div>
         <h2><span>Max Gym</span> — GHL Configuration Sprint</h2>
         <div class="meta">
-          <span class="meta-tag"><span class="dot"></span> Gym / Fitness</span>
+          <span class="meta-tag"><span class="dot"></span> Fitness / Membresías</span>
           <span class="meta-tag">Pipeline: Membership / Subscription Services</span>
-          <span class="meta-tag">Started: June 22, 2026</span>
+          <span class="meta-tag">Started: [DATE]</span>
         </div>
       </div>
       <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode">
@@ -1531,7 +1531,7 @@
           </li>
           <li class="checklist-item">
             <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
-            <span class="check-label">Select industry pipeline template: <strong>Membership / Subscription Services</strong></span>
+            <span class="check-label">Select industry pipeline template: <strong>[PIPELINE_TEMPLATE]</strong></span>
           </li>
           <li class="checklist-item">
             <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
@@ -1542,7 +1542,7 @@
             <span class="check-label">Present strategy brief to team (see artifact for details)</span>
           </li>
         </ul>
-        <div class="section-subtitle" style="margin-top:16px;">Cluster: <strong>#1 High-Intent Locals</strong> · Bot role: <strong>Calificar leads entrantes de WhatsApp e Instagram, identificar objetivo, manejar objeción de precio y sucursal única, agendar tour</strong> · Pipeline: <strong>Membership / Subscription Services</strong></div>
+        <div class="section-subtitle" style="margin-top:16px;">Cluster: <strong>High-Intent Locals</strong> · Bot role: <strong>Calificar leads entrantes de WhatsApp e Instagram</strong> · Pipeline: <strong>Membership / Subscription Services</strong></div>
       </div>
 
       <div class="tab-panel" id="tab-0-artifacts">
@@ -1551,13 +1551,13 @@
             <div class="card-icon">📄</div>
             <h4>Strategy Brief</h4>
             <p>Focus cluster, offer, pipeline template, bot role, brand voice, audience summary, channel map.</p>
-            <div class="card-footer"><a href="/strategy-brief" target="_blank"><button class="card-btn">📄 View file</button></a></div>
+            <div class="card-footer"><a href="artifacts/01_Strategy_Brief.html" target="_blank"><button class="card-btn">📄 View file</button></a></div>
           </div>
           <div class="artifact-card">
             <div class="card-icon">💬</div>
             <h4>Conversation Flow</h4>
             <p>Full approved bot flow with all questions, DQ types, and booking step.</p>
-            <div class="card-footer"><a href="/conversation-flow" target="_blank"><button class="card-btn">📄 View file</button></a></div>
+            <div class="card-footer"><a href="artifacts/02_Conversation_Flow.html" target="_blank"><button class="card-btn">📄 View file</button></a></div>
           </div>
         </div>
       </div>
@@ -1588,7 +1588,7 @@
           </li>
           <li class="checklist-item">
             <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
-            <span class="check-label">In Brand Kit: set heading font <strong>Inter</strong>, body font <strong>Inter</strong>. Add social links: <strong>@maxgym_pa (IG), maxgym.com.pa</strong>. Upload favicon.</span>
+            <span class="check-label">In Brand Kit: set heading font <strong>[HEADING_FONT]</strong>, body font <strong>[BODY_FONT]</strong>. Add social links: <strong>[SOCIAL_LINKS]</strong>. Upload favicon.</span>
           </li>
           <li class="checklist-item">
             <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
@@ -1596,11 +1596,11 @@
           </li>
           <li class="checklist-item">
             <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
-            <span class="check-label">Go to Settings → Domains → "Connect Domain". Enter <strong>maxgym.com.pa</strong>. Copy DNS records shown → paste at domain provider → click "Verify" in GHL.</span>
+            <span class="check-label">Go to Settings → Domains → "Connect Domain". Enter <strong>[DOMAIN]</strong>. Copy DNS records shown → paste at domain provider → click "Verify" in GHL.</span>
           </li>
           <li class="checklist-item">
             <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
-            <span class="check-label">Go to Settings → Account. Set timezone <strong>America/Panama</strong>, language <strong>es-PA</strong>. Verify SSL enabled, email subdomain DNS configured.</span>
+            <span class="check-label">Go to Settings → Account. Set timezone <strong>[TIMEZONE]</strong>, language <strong>es</strong>. Verify SSL enabled, email subdomain DNS configured.</span>
           </li>
           <li class="checklist-item">
             <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
@@ -1621,7 +1621,7 @@
             <div class="card-icon">🏷️</div>
             <h4>Tags Map</h4>
             <p>All tags organized by category — import into GHL Tags.</p>
-            <div class="card-footer"><a href="/tags-map" target="_blank"><button class="card-btn">🏷️ View file</button></a></div>
+            <div class="card-footer"><a href="artifacts/11_Tags_Map.html" target="_blank"><button class="card-btn">🏷️ View file</button></a></div>
           </div>
         </div>
       </div>
@@ -1633,31 +1633,31 @@
         </div>
         <div class="screenshots-gallery" id="gallery-1">
           <div class="screenshot-thumb" onclick="openLightbox('1', 0)">
-            <img class="thumb-img" data-src="/screenshots/phase-1/1.Crear Panel de Marca.png" data-label="Crear Panel de Marca" src="/screenshots/phase-1/1.Crear Panel de Marca.png" alt="Crear Panel de Marca" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-1/1-crear-panel-de-marca.png" data-label="Crear Panel de Marca" src="screenshots/phase-1/1-crear-panel-de-marca.png" alt="Crear Panel de Marca" loading="lazy">
             <div class="thumb-label">Crear Panel de Marca</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('1', 1)">
-            <img class="thumb-img" data-src="/screenshots/phase-1/2.Brandkit-upload-logo-colours.png" data-label="Brandkit - upload logo colours" src="/screenshots/phase-1/2.Brandkit-upload-logo-colours.png" alt="Brandkit - upload logo colours" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-1/2-brandkit-upload-logo-colours.png" data-label="Brandkit - upload logo colours" src="screenshots/phase-1/2-brandkit-upload-logo-colours.png" alt="Brandkit - upload logo colours" loading="lazy">
             <div class="thumb-label">Brandkit - upload logo colours</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('1', 2)">
-            <img class="thumb-img" data-src="/screenshots/phase-1/3.Crear etiquetas basicas.png" data-label="Crear etiquetas basicas" src="/screenshots/phase-1/3.Crear etiquetas basicas.png" alt="Crear etiquetas basicas" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-1/3-crear-etiquetas-basicas.png" data-label="Crear etiquetas basicas" src="screenshots/phase-1/3-crear-etiquetas-basicas.png" alt="Crear etiquetas basicas" loading="lazy">
             <div class="thumb-label">Crear etiquetas basicas</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('1', 3)">
-            <img class="thumb-img" data-src="/screenshots/phase-1/4.Integraciones-Conecta google calendar, una cuenta de Gmail, FacebookMeta, Linkedin, Tiktok, Whatsapp, GAnuncios.png" data-label="Integraciones - Conecta google calendar, Gmail, FacebookMeta, Linkedin, Tiktok, Whatsapp, GAnuncios" src="/screenshots/phase-1/4.Integraciones-Conecta google calendar, una cuenta de Gmail, FacebookMeta, Linkedin, Tiktok, Whatsapp, GAnuncios.png" alt="Integraciones" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-1/4-integraciones-conecta-google-calendar-una-cuenta-de-gmail-facebookmeta-linkedin-tiktok-whatsapp-ganuncios.png" data-label="Integraciones - Conecta google calendar, Gmail, FacebookMeta, Linkedin, Tiktok, Whatsapp, GAnuncios" src="screenshots/phase-1/4-integraciones-conecta-google-calendar-una-cuenta-de-gmail-facebookmeta-linkedin-tiktok-whatsapp-ganuncios.png" alt="Integraciones" loading="lazy">
             <div class="thumb-label">Integraciones</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('1', 4)">
-            <img class="thumb-img" data-src="/screenshots/phase-1/5.Enable External Tracking.png" data-label="Enable External Tracking" src="/screenshots/phase-1/5.Enable External Tracking.png" alt="Enable External Tracking" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-1/5-enable-external-tracking.png" data-label="Enable External Tracking" src="screenshots/phase-1/5-enable-external-tracking.png" alt="Enable External Tracking" loading="lazy">
             <div class="thumb-label">Enable External Tracking</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('1', 5)">
-            <img class="thumb-img" data-src="/screenshots/phase-1/6. Connect domain  subdomain and email subdomain.png" data-label="Connect domain subdomain and email subdomain" src="/screenshots/phase-1/6. Connect domain  subdomain and email subdomain.png" alt="Connect domain subdomain and email subdomain" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-1/6-connect-domain-subdomain-and-email-subdomain.png" data-label="Connect domain subdomain and email subdomain" src="screenshots/phase-1/6-connect-domain-subdomain-and-email-subdomain.png" alt="Connect domain subdomain and email subdomain" loading="lazy">
             <div class="thumb-label">Connect domain subdomain and email subdomain</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('1', 6)">
-            <img class="thumb-img" data-src="/screenshots/phase-1/7. Create dedicated Domain.png" data-label="Create dedicated Domain" src="/screenshots/phase-1/7. Create dedicated Domain.png" alt="Create dedicated Domain" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-1/7-create-dedicated-domain.png" data-label="Create dedicated Domain" src="screenshots/phase-1/7-create-dedicated-domain.png" alt="Create dedicated Domain" loading="lazy">
             <div class="thumb-label">Create dedicated Domain</div>
           </div>
         </div>
@@ -1716,25 +1716,25 @@
             <div class="card-icon">📊</div>
             <h4>Custom Fields Table</h4>
             <p>All contact &amp; opportunity fields with types and keys.</p>
-            <div class="card-footer"><a href="/custom-fields" target="_blank"><button class="card-btn">📊 View file</button></a></div>
+            <div class="card-footer"><a href="artifacts/03_Custom_Fields_Table.html" target="_blank"><button class="card-btn">📊 View file</button></a></div>
           </div>
           <div class="artifact-card">
             <div class="card-icon">💬</div>
             <h4>WhatsApp Templates</h4>
             <p>Approved WhatsApp message templates.</p>
-            <div class="card-footer"><a href="/whatsapp-templates" target="_blank"><button class="card-btn">💬 View file</button></a></div>
+            <div class="card-footer"><a href="artifacts/08_WhatsApp_Templates.html" target="_blank"><button class="card-btn">💬 View file</button></a></div>
           </div>
           <div class="artifact-card">
             <div class="card-icon">📅</div>
             <h4>User &amp; Calendar Config</h4>
             <p>Calendar settings and user configuration.</p>
-            <div class="card-footer"><a href="/calendar-config" target="_blank"><button class="card-btn">📅 View file</button></a></div>
+            <div class="card-footer"><a href="artifacts/07_User_Calendar_Config.html" target="_blank"><button class="card-btn">📅 View file</button></a></div>
           </div>
           <div class="artifact-card">
             <div class="card-icon">🏪</div>
             <h4>Business Profile Settings</h4>
             <p>17-field GHL Business Profile config — copy-paste ready.</p>
-            <div class="card-footer"><a href="/business-profile" target="_blank"><button class="card-btn">🏪 View file</button></a></div>
+            <div class="card-footer"><a href="artifacts/13_Business_Profile_Settings.html" target="_blank"><button class="card-btn">🏪 View file</button></a></div>
           </div>
         </div>
       </div>
@@ -1746,63 +1746,63 @@
         </div>
         <div class="screenshots-gallery" id="gallery-2">
           <div class="screenshot-thumb" onclick="openLightbox('2', 0)">
-            <img class="thumb-img" data-src="/screenshots/phase-2/8.Crear Campos personalizados.png" data-label="Crear Campos personalizados" src="/screenshots/phase-2/8.Crear Campos personalizados.png" alt="Crear Campos personalizados" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-2/8-crear-campos-personalizados.png" data-label="Crear Campos personalizados" src="screenshots/phase-2/8-crear-campos-personalizados.png" alt="Crear Campos personalizados" loading="lazy">
             <div class="thumb-label">Crear Campos personalizados</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('2', 1)">
-            <img class="thumb-img" data-src="/screenshots/phase-2/9.conectar whatsapp.png" data-label="Conectar whatsapp" src="/screenshots/phase-2/9.conectar whatsapp.png" alt="Conectar whatsapp" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-2/9-conectar-whatsapp.png" data-label="Conectar whatsapp" src="screenshots/phase-2/9-conectar-whatsapp.png" alt="Conectar whatsapp" loading="lazy">
             <div class="thumb-label">Conectar whatsapp</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('2', 2)">
-            <img class="thumb-img" data-src="/screenshots/phase-2/10.Conectar WhatsApp. Y crear las siguientes plantillas.png" data-label="Conectar WhatsApp. Y crear las siguientes plantillas" src="/screenshots/phase-2/10.Conectar WhatsApp. Y crear las siguientes plantillas.png" alt="Conectar WhatsApp" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-2/10-conectar-whatsapp-y-crear-las-siguientes-plantillas.png" data-label="Conectar WhatsApp. Y crear las siguientes plantillas" src="screenshots/phase-2/10-conectar-whatsapp-y-crear-las-siguientes-plantillas.png" alt="Conectar WhatsApp" loading="lazy">
             <div class="thumb-label">Conectar WhatsApp</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('2', 3)">
-            <img class="thumb-img" data-src="/screenshots/phase-2/11.Gestionar números (si aplica)1.png" data-label="Gestionar números (si aplica) 1" src="/screenshots/phase-2/11.Gestionar números (si aplica)1.png" alt="Gestionar números 1" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-2/11-gestionar-numeros-si-aplica-1.png" data-label="Gestionar números (si aplica) 1" src="screenshots/phase-2/11-gestionar-numeros-si-aplica-1.png" alt="Gestionar números 1" loading="lazy">
             <div class="thumb-label">Gestionar números 1</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('2', 4)">
-            <img class="thumb-img" data-src="/screenshots/phase-2/12.Gestionar números (si aplica)2.png" data-label="Gestionar números (si aplica) 2" src="/screenshots/phase-2/12.Gestionar números (si aplica)2.png" alt="Gestionar números 2" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-2/12-gestionar-numeros-si-aplica-2.png" data-label="Gestionar números (si aplica) 2" src="screenshots/phase-2/12-gestionar-numeros-si-aplica-2.png" alt="Gestionar números 2" loading="lazy">
             <div class="thumb-label">Gestionar números 2</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('2', 5)">
-            <img class="thumb-img" data-src="/screenshots/phase-2/13.Gestionar números 3.png" data-label="Gestionar números 3" src="/screenshots/phase-2/13.Gestionar números 3.png" alt="Gestionar números 3" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-2/13-gestionar-numeros-3.png" data-label="Gestionar números 3" src="screenshots/phase-2/13-gestionar-numeros-3.png" alt="Gestionar números 3" loading="lazy">
             <div class="thumb-label">Gestionar números 3</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('2', 6)">
-            <img class="thumb-img" data-src="/screenshots/phase-2/14.Asegurate de usar LeadConnector Email Systems y crear un dedicated domain.png" data-label="Asegurate de usar LeadConnector Email Systems" src="/screenshots/phase-2/14.Asegurate de usar LeadConnector Email Systems y crear un dedicated domain.png" alt="LeadConnector Email Systems" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-2/14-asegurate-de-usar-leadconnector-email-systems-y-crear-un-dedicated-domain.png" data-label="Asegurate de usar LeadConnector Email Systems" src="screenshots/phase-2/14-asegurate-de-usar-leadconnector-email-systems-y-crear-un-dedicated-domain.png" alt="LeadConnector Email Systems" loading="lazy">
             <div class="thumb-label">LeadConnector Email Systems</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('2', 7)">
-            <img class="thumb-img" data-src="/screenshots/phase-2/15.crear un dedicated domain.png" data-label="Crear un dedicated domain" src="/screenshots/phase-2/15.crear un dedicated domain.png" alt="Crear un dedicated domain" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-2/15-crear-un-dedicated-domain.png" data-label="Crear un dedicated domain" src="screenshots/phase-2/15-crear-un-dedicated-domain.png" alt="Crear un dedicated domain" loading="lazy">
             <div class="thumb-label">Crear un dedicated domain</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('2', 8)">
-            <img class="thumb-img" data-src="/screenshots/phase-2/16. check los email settings.png" data-label="Check los email settings" src="/screenshots/phase-2/16. check los email settings.png" alt="Check los email settings" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-2/16-check-los-email-settings.png" data-label="Check los email settings" src="screenshots/phase-2/16-check-los-email-settings.png" alt="Check los email settings" loading="lazy">
             <div class="thumb-label">Check los email settings</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('2', 9)">
-            <img class="thumb-img" data-src="/screenshots/phase-2/17.Crear Calendarios Puedes crear calendarios por cada usuario o como se haya definido con el cliente.png" data-label="Crear Calendarios" src="/screenshots/phase-2/17.Crear Calendarios Puedes crear calendarios por cada usuario o como se haya definido con el cliente.png" alt="Crear Calendarios" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-2/17-crear-calendarios-puedes-crear-calendarios-por-cada-usuario-o-como-se-haya-definido-con-el-cliente.png" data-label="Crear Calendarios" src="screenshots/phase-2/17-crear-calendarios-puedes-crear-calendarios-por-cada-usuario-o-como-se-haya-definido-con-el-cliente.png" alt="Crear Calendarios" loading="lazy">
             <div class="thumb-label">Crear Calendarios</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('2', 10)">
-            <img class="thumb-img" data-src="/screenshots/phase-2/18.Create 'Personal' Calendars for the team members.png" data-label="Create 'Personal' Calendars for the team members" src="/screenshots/phase-2/18.Create 'Personal' Calendars for the team members.png" alt="Create Personal Calendars" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-2/18-create-personal-calendars-for-the-team-members.png" data-label="Create 'Personal' Calendars for the team members" src="screenshots/phase-2/18-create-personal-calendars-for-the-team-members.png" alt="Create Personal Calendars" loading="lazy">
             <div class="thumb-label">Create Personal Calendars</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('2', 11)">
-            <img class="thumb-img" data-src="/screenshots/phase-2/19.Calendar-Notifications – Assign at least in-app notifications to 'Assigned User'.png" data-label="Calendar-Notifications" src="/screenshots/phase-2/19.Calendar-Notifications – Assign at least in-app notifications to 'Assigned User'.png" alt="Calendar Notifications" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-2/19-calendar-notifications-assign-at-least-in-app-notifications-to-assigned-user.png" data-label="Calendar-Notifications" src="screenshots/phase-2/19-calendar-notifications-assign-at-least-in-app-notifications-to-assigned-user.png" alt="Calendar Notifications" loading="lazy">
             <div class="thumb-label">Calendar Notifications</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('2', 12)">
-            <img class="thumb-img" data-src="/screenshots/phase-2/20.Crear usuarios.png" data-label="Crear usuarios" src="/screenshots/phase-2/20.Crear usuarios.png" alt="Crear usuarios" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-2/20-crear-usuarios.png" data-label="Crear usuarios" src="screenshots/phase-2/20-crear-usuarios.png" alt="Crear usuarios" loading="lazy">
             <div class="thumb-label">Crear usuarios</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('2', 13)">
-            <img class="thumb-img" data-src="/screenshots/phase-2/21.Asegurate de seleccionar el Calendario correcto para el contacto.png" data-label="Seleccionar el Calendario correcto" src="/screenshots/phase-2/21.Asegurate de seleccionar el Calendario correcto para el contacto.png" alt="Seleccionar Calendario correcto" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-2/21-asegurate-de-seleccionar-el-calendario-correcto-para-el-contacto.png" data-label="Seleccionar el Calendario correcto" src="screenshots/phase-2/21-asegurate-de-seleccionar-el-calendario-correcto-para-el-contacto.png" alt="Seleccionar Calendario correcto" loading="lazy">
             <div class="thumb-label">Seleccionar Calendario correcto</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('2', 14)">
-            <img class="thumb-img" data-src="/screenshots/phase-2/22.Business Profile settings.png" data-label="Business Profile settings" src="/screenshots/phase-2/22.Business Profile settings.png" alt="Business Profile settings" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-2/22-business-profile-settings.png" data-label="Business Profile settings" src="screenshots/phase-2/22-business-profile-settings.png" alt="Business Profile settings" loading="lazy">
             <div class="thumb-label">Business Profile settings</div>
           </div>
         </div>
@@ -1835,7 +1835,7 @@
           </li>
           <li class="checklist-item">
             <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
-            <span class="check-label">Go to Opportunities → Pipelines. Click "Create Pipeline". Name it <strong>Membership / Subscription Services</strong>. Select type <strong>Membership / Subscription Services</strong>.</span>
+            <span class="check-label">Go to Opportunities → Pipelines. Click "Create Pipeline". Name it <strong>Membresías — Max Gym</strong>. Select type <strong>Membership / Subscription Services</strong>.</span>
           </li>
           <li class="checklist-item">
             <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
@@ -1858,11 +1858,11 @@
           <table class="config-table">
             <thead><tr><th>#</th><th>Stage Name</th><th>Probability</th><th>Bot Phase</th><th>Copy</th></tr></thead>
             <tbody>
-              <tr><td>1</td><td><span class="mono">New Lead</span></td><td>10%</td><td>Phase 0 — Greeting</td><td><button class="card-btn" onclick="copyText('New Lead',this)">Copy</button></td></tr>
-              <tr><td>2</td><td><span class="mono">Tour / Visit Scheduled</span></td><td>25%</td><td>Phases 1-3 — Qualification</td><td><button class="card-btn" onclick="copyText('Tour / Visit Scheduled',this)">Copy</button></td></tr>
-              <tr><td>3</td><td><span class="mono">Prospect</span></td><td>50%</td><td>Phase N — Booking</td><td><button class="card-btn" onclick="copyText('Prospect',this)">Copy</button></td></tr>
-              <tr><td>4</td><td><span class="mono">Member Signed</span></td><td>80%</td><td>Human takes over</td><td><button class="card-btn" onclick="copyText('Member Signed',this)">Copy</button></td></tr>
-              <tr><td>5</td><td><span class="mono">Active Member</span></td><td>95%</td><td>Human takes over</td><td><button class="card-btn" onclick="copyText('Active Member',this)">Copy</button></td></tr>
+              <tr><td>1</td><td><span class="mono">[STAGE_1_NAME]</span></td><td>[STAGE_1_PROB]%</td><td>Phase 0 — Greeting</td><td><button class="card-btn" onclick="copyText('[STAGE_1_NAME]',this)">Copy</button></td></tr>
+              <tr><td>2</td><td><span class="mono">[STAGE_2_NAME]</span></td><td>[STAGE_2_PROB]%</td><td>Phases 1-3 — Qualification</td><td><button class="card-btn" onclick="copyText('[STAGE_2_NAME]',this)">Copy</button></td></tr>
+              <tr><td>3</td><td><span class="mono">[STAGE_3_NAME]</span></td><td>[STAGE_3_PROB]%</td><td>Phase N — Booking</td><td><button class="card-btn" onclick="copyText('[STAGE_3_NAME]',this)">Copy</button></td></tr>
+              <tr><td>4</td><td><span class="mono">[STAGE_4_NAME]</span></td><td>[STAGE_4_PROB]%</td><td>Human takes over</td><td><button class="card-btn" onclick="copyText('[STAGE_4_NAME]',this)">Copy</button></td></tr>
+              <tr><td>5</td><td><span class="mono">[STAGE_5_NAME]</span></td><td>[STAGE_5_PROB]%</td><td>Human takes over</td><td><button class="card-btn" onclick="copyText('[STAGE_5_NAME]',this)">Copy</button></td></tr>
               <tr><td>—</td><td><span class="mono">Won</span></td><td>100%</td><td>GHL auto</td><td><button class="card-btn" onclick="copyText('Won',this)">Copy</button></td></tr>
               <tr><td>—</td><td><span class="mono">Lost</span></td><td>0%</td><td>GHL auto</td><td><button class="card-btn" onclick="copyText('Lost',this)">Copy</button></td></tr>
             </tbody>
@@ -1877,13 +1877,13 @@
             <div class="card-icon">🔄</div>
             <h4>Bot Pipeline Map</h4>
             <p>Bot role → pipeline stage mapping with disqualified handling.</p>
-            <div class="card-footer"><a href="/bot-pipeline-map" target="_blank"><button class="card-btn">🔄 View file</button></a></div>
+            <div class="card-footer"><a href="artifacts/02_Bot_Pipeline_Map.html" target="_blank"><button class="card-btn">🔄 View file</button></a></div>
           </div>
           <div class="artifact-card">
             <div class="card-icon">📋</div>
             <h4>Pipeline Stage Map</h4>
             <p>Detailed stage config with probability, order, and bot assignments.</p>
-            <div class="card-footer"><a href="/pipeline-stage-map" target="_blank"><button class="card-btn">📋 View file</button></a></div>
+            <div class="card-footer"><a href="artifacts/06_Pipeline_Stage_Map.html" target="_blank"><button class="card-btn">📋 View file</button></a></div>
           </div>
         </div>
       </div>
@@ -1895,11 +1895,11 @@
         </div>
         <div class="screenshots-gallery" id="gallery-3">
           <div class="screenshot-thumb" onclick="openLightbox('3', 0)">
-            <img class="thumb-img" data-src="/screenshots/phase-3/23.First Go to Settings Labs and turn this setting on-opportunity forecasting.png" data-label="First Go to Settings Labs - opportunity forecasting" src="/screenshots/phase-3/23.First Go to Settings Labs and turn this setting on-opportunity forecasting.png" alt="Opportunity forecasting" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-3/23-first-go-to-settings-labs-and-turn-this-setting-on-opportunity-forecasting.png" data-label="First Go to Settings Labs - opportunity forecasting" src="screenshots/phase-3/23-first-go-to-settings-labs-and-turn-this-setting-on-opportunity-forecasting.png" alt="Opportunity forecasting" loading="lazy">
             <div class="thumb-label">Opportunity forecasting</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('3', 1)">
-            <img class="thumb-img" data-src="/screenshots/phase-3/24.Then create the Pipeline and Stages.png" data-label="Then create the Pipeline and Stages" src="/screenshots/phase-3/24.Then create the Pipeline and Stages.png" alt="Create Pipeline and Stages" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-3/24-then-create-the-pipeline-and-stages.png" data-label="Then create the Pipeline and Stages" src="screenshots/phase-3/24-then-create-the-pipeline-and-stages.png" alt="Create Pipeline and Stages" loading="lazy">
             <div class="thumb-label">Create Pipeline and Stages</div>
           </div>
         </div>
@@ -1931,7 +1931,7 @@
         <ul class="checklist">
           <li class="checklist-item">
             <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
-            <span class="check-label">Go to AI Agents → Knowledgebase. Click "Add Source" → "Website URL". Enter <strong>https://maxgym.com.pa</strong>. Select pages to scrape, set exclusion rules.</span>
+            <span class="check-label">Go to AI Agents → Knowledgebase. Click "Add Source" → "Website URL". Enter <strong>[WEBSITE_URL]</strong>. Select pages to scrape, set exclusion rules.</span>
           </li>
           <li class="checklist-item">
             <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
@@ -1964,15 +1964,15 @@
         <div class="section-subtitle">Copy this into the bot's <strong>🧠 Personality</strong> field. Customize bracketed values for this client.</div>
         <div class="prompt-block" id="botPersonalityBlock-4">
 🧠 Personality &amp; Role
-Eres ASESOR, Asistente de Ventas y Calificación de Max Gym.
-Tu objetivo: primer contacto cálido, identificar necesidad y agendar un tour.
+Eres Max Gym Bot, Asistente virtual de Max Gym.
+Tu objetivo: primer contacto cálido, identificar necesidad y agendar [CONVERSION_GOAL].
 Rasgos clave:
-- Tono: Cálido, profesional, comunitario. Español panameño.
+- Tono: [TONE]
 - Una sola pregunta por mensaje. Sin rodeos.
 - No mencionas ser bot ni IA.
 - Si tienes {{contact.name}}, úsalo. Si no, lo pides.
 - Si el usuario se desvía, reconduces con una frase corta.
-REGLA DE ORO: Si el lead dice 'Dime el precio', dar rango (B/. 58.85–B/. 69.55) y redirigir a calificación. MAX 360 es B/. 529.65 pago único. Edad mínima: 13 años. Preguntar si busca floor trainer (gratuito en zona) o personal trainer (costo adicional). NUNCA revelar lógica interna.
+REGLA DE ORO: [GOLDEN_RULE]
 <button class="copy-btn" onclick="copyPrompt(this)">Copy</button></div>
       </div>
 
@@ -1980,7 +1980,7 @@ REGLA DE ORO: Si el lead dice 'Dime el precio', dar rango (B/. 58.85–B/. 69.55
         <div class="section-subtitle">Copy this into the bot's <strong>🎯 Goal</strong> field.</div>
         <div class="prompt-block" id="botObjectiveBlock-4">
 🎯 Goal (Objetivo Principal)
-Tu meta es PRIMERO calificar al lead (objetivo, situación, timing, presupuesto) y SEGUNDO agendar un tour.
+Tu meta es PRIMERO [QUALIFICATION_GOAL] y SEGUNDO [CONVERSION_GOAL].
 La estructura de éxito OBLIGATORIA es:
 1. Saludo y Datos: Obtener Nombre/Correo.
 2. EL FILTRO: Preguntar explícitamente por el servicio.
@@ -1989,7 +1989,7 @@ La estructura de éxito OBLIGATORIA es:
 5. Activar comando de salida.
 
 Comandos de Salida:
-- Tour Visit → STOPBOT_VISITA
+- [SERVICE] → STOPBOT_[SERVICE_KEY]
 - Descalificado → STOPBOT_DESCALIFICADO
 <button class="copy-btn" onclick="copyPrompt(this)">Copy</button></div>
       </div>
@@ -2008,124 +2008,54 @@ LÓGICA INTERNA (NO mostrar al usuario):
 Si el usuario menciona un tema no relacionado:
 → TRANSFERIR_A_HUMANO
 
-🟢 FLUJO Tour Visit — PASOS 1 al 6
+🟢 FLUJO [SERVICE]
+PASO 1 — [QUESTION]: "[question text]"
+LÓGICA INTERNA: [conditions]
+→ Guarda en: {{contact.field_key}}
+PASO 2 — [NEXT QUESTION]: ...
+...
+PASO N — AGENDAMIENTO: "[booking text]"
+→ STOPBOT_[SERVICE_KEY]
 
-PASO 1 — Objetivo Principal
-Bot: "¿Cuál es tu principal objetivo entrenando?
-🔹 Ganar músculo / aumentar fuerza
-🔹 Bajar de peso / definir
-🔹 Mantenerme activo / salud general
-🔹 Mejorar mi condición física / rendimiento
-🔹 No estoy seguro / necesito orientación"
-→ Guarda en: {{contact.objetivo_principal}}
-LÓGICA INTERNA: Si "No estoy seguro" → redirigir a MAX 360
-
-PASO 2 — Situación Actual
-Bot: "Cuéntame sobre tu situación actual:
-🔹 Nunca he ido a un gimnasio / principiante
-🔹 Voy actualmente a otro gimnasio
-🔹 He ido antes pero dejé de ir
-🔹 Entreno en casa / al aire libre"
-→ Guarda en: {{contact.situacion_actual}}
-LÓGICA INTERNA: Si "otro gym" → tag currently-member-elsewhere, warm-lead. Si "dejé" → tag lapsed-member. Si "nunca" → tag beginner.
-
-PASO 3 — Timing / Urgencia
-Bot: "¿Y cuándo te gustaría empezar?
-🔹 Esta semana / lo antes posible
-🔹 La próxima semana
-🔹 En las próximas 2–3 semanas
-🔹 Aún no estoy seguro"
-→ Guarda en: {{contact.cuando_empezar}}
-LÓGICA INTERNA: Si "Esta semana" → tag high-urgency. Si "No estoy seguro" → TIPO B check.
-
-PASO 4 — Presupuesto / Plan
-Bot: "Nuestros planes están entre B/. 58.85 y B/. 69.55 al mes (ITBMS incluido).
-¿Cuál se ajusta más a ti?
-🔹 Plan Max Rewards — B/. 58.85/mes (mejor relación calidad-precio)
-🔹 Plan Mensual (Max PRO) — B/. 69.55/mes (sin permanencia)
-🔹 MAX 360 — B/. 529.65 (pago único, 3 meses gym + PT + nutrición + fisio + 3 valoraciones)
-🔹 Day Pass $21.40 / quiero probar antes
-🔹 Aún no estoy seguro"
-→ Guarda en: {{contact.presupuesto}}
-LÓGICA INTERNA: Si lead pregunta precio antes → dar rango B/. 58.85–B/. 69.55 y redirigir aquí.
-
-PASO 5 — Objeción de Sucursal Única + Ubicación
-Bot: "Tenemos una sola sucursal en Costa del Este. Es INTENCIONAL: mejor equipamiento del país, abierto 5am–12am, parqueo gratis, sauna. Power Club tiene 10 sucursales pero ninguna abre a las 11pm. ¿En qué zona te mueves?"
-→ Guarda en: {{contact.objecion_sucursal}}, {{contact.ubicacion_referencia}}
-LÓGICA INTERNA: Si lead vive/trabaja a >30 min → TIPO B (dq-wrong-profile).
-
-PASO 6 — Tour + Day Pass + Booking
-Bot: "¡Te invito a conocer Max Gym! Tour completo sin compromiso. Si quieres entrenar el mismo día, day pass de $21.40. ¿Qué día te queda mejor?
-🔹 Mañana en la mañana (5am–12pm)
-🔹 Mañana en la tarde/noche (12pm–10pm)
-🔹 Pasado mañana
-🔹 Fin de semana
-O dime tú qué día y hora."
-→ Guarda en: {{contact.visita_agendada}}, {{contact.tour_type}} = "Tour"
-→ STOPBOT_VISITA
-
-🔴 DESCALIFICACIÓN (TIPO A–F)
-🔴 TIPO A — Presupuesto < B/. 50/mes firmemente → "Entendemos que nuestro precio no se ajusta a tu presupuesto. Si cambias de opinión, aquí estamos." → STOPBOT_DESCALIFICADO → tag dq-budget-too-low
-🔴 TIPO B — Vive/trabaja a >30 min de Costa del Este → "Actualmente solo tenemos sede en Costa del Este. Si te mudas más cerca, encantados de recibirte." → STOPBOT_DESCALIFICADO → tag dq-wrong-profile
-🔴 TIPO C — Necesita aprobación de pareja y no se da → "Entendemos que es decisión en pareja. Cuando ambos estén listos, encantados de darles un tour." → STOPBOT_DESCALIFICADO → tag dq-no-decision-maker
-🔴 TIPO D — Busca algo que Max Gym no ofrece → "Lamentamos no tener lo que buscas. Te deseamos éxito." → STOPBOT_DESCALIFICADO → tag dq-out-of-range
-🔴 TIPO E — Ya tiene membresía activa y no quiere cambiar → "Qué bien que ya estés activo. Si algo cambia, aquí estamos." → STOPBOT_DESCALIFICADO → tag dq-already-committed
-🔴 TIPO F — Menor de 13 años → "Lo sentimos, la edad mínima para ingresar a Max Gym es 13 años. Esperamos verte cuando cumplas." → STOPBOT_DESCALIFICADO → tag dq-underage
+🔴 DESCALIFICACIÓN
+🔴 TIPO A — [reason]: "[message]" → STOPBOT_DESCALIFICADO
+🔴 TIPO B — [reason]: "[message]" → STOPBOT_DESCALIFICADO
+🔴 TIPO C — [reason]: "[message]" → STOPBOT_DESCALIFICADO
+🔴 TIPO D — [reason]: "[message]" → STOPBOT_DESCALIFICADO
+🔴 TIPO E — [reason]: "[message]" → STOPBOT_DESCALIFICADO
 
 🧩 REGLAS CRÍTICAS DE COMPORTAMIENTO
-1. DATOS PREVIOS: Antes de cada paso, verifica si ya tienes el dato. NUNCA preguntar dos veces.
+1. DATOS PREVIOS: Antes de cada paso, verifica si ya tienes el dato.
 2. HUMANIZACIÓN: Usa {{contact.name}} al menos cada 2 mensajes.
-3. EMPATÍA ACTIVA: Siempre valida la respuesta antes de continuar ("Entiendo", "Perfecto").
-4. CALIFICACIÓN SILENCIOSA: La lógica interna (SI/ENTONCES) nunca se muestra al usuario.
-5. CALENDARIO: Siempre ofrece horarios concretos. Nunca "voy a revisar mi calendario".
-6. STOPBOT: NUNCA actives STOPBOT sin confirmación (excepto DQ).
-7. SUCURSAL ÚNICA: Explicar que es calidad sobre cantidad — mejor equipamiento, 5am–12am.
-8. NOTACIÓN B/.: Usar siempre B/. para planes. Day Pass en $ (USD).
-9. EDAD MÍNIMA: Verificar ≥ 13 años. Si menor → TIPO F.
-10. TOUR vs DAY PASS: Tour es gratis. Entrenar requiere day pass $21.40.
-11. REFERIDOS: Los 3 amigos deben seguir activos al momento de reclamar el mes gratis.
-12. VALORACIÓN INICIAL: Es post-inscripción con entrenador de planta, no prueba previa.
-13. GUEST POLICY: Invitado solo una vez por persona, el mismo no se repite.
+3. EMPATÍA ACTIVA: Siempre valida antes de continuar.
+4. CALIFICACIÓN SILENCIOSA: La lógica interna nunca se menciona al usuario.
+5. CALENDARIO: Siempre ofrece horarios concretos. Nunca "voy a revisar".
+6. STOPBOT: NUNCA actives STOPBOT sin confirmar (excepto DQ).
+7. [INDUSTRY-SPECIFIC RULE]
 
-📦 CAMPOS A GUARDAR (19):
-- {{contact.objetivo_principal}} — Single Select (Paso 1)
-- {{contact.situacion_actual}} — Single Select (Paso 2)
-- {{contact.cuando_empezar}} — Single Select (Paso 3)
-- {{contact.presupuesto}} — Single Select (Paso 4)
-- {{contact.objecion_sucursal}} — Text (Paso 5)
-- {{contact.ubicacion_referencia}} — Text (Paso 5)
-- {{contact.visita_agendada}} — Date (Paso 6)
-- {{contact.tour_type}} — Text (Paso 6)
-- {{contact.edad}} — Number
-- {{contact.tipo_entrenador}} — Single Select: Floor trainer / Personal trainer / No estoy seguro
-- {{contact.tipo_pase}} — Single Select: Day Pass $21.40 / Week Pass $32.10 / Single Class $10.70 / Ninguno
-- {{contact.bot_status}} — Text: Qualifying / Meeting Booked / Disqualified / Deactivated
-- {{contact.disqualification_reason}} — Text: TIPO A–F + descripción
-- {{contact.disqualification_date}} — Date
-- {{contact.bot_conversation_summary}} — Text Area
-- {{contact.bot_actions_summary}} — Text Area
-- {{contact.loss_reason}} — Text
-- {{contact.pixel_event_sent}} — Yes/No
-- {{contact.membresia_plan}} — Single Select
+📦 CAMPOS A GUARDAR:
+- {{contact.field_1}}
+- {{contact.field_2}}
+- {{contact.field_3}}
 <button class="copy-btn" onclick="copyPrompt(this)">Copy</button></div>
       </div>
 
       <div class="tab-panel" id="tab-4-actions">
         <div class="section-subtitle" style="margin-bottom:16px;padding:12px 16px;background:var(--info-bg);border-radius:var(--radius-sm);border:1px solid color-mix(in srgb, var(--info) 30%, transparent);">
           ⚠️ Configure these 6 actions <strong>in order</strong> inside your AI Agent Bot → Actions tab.
-          See <a href="/ai-agent-actions" target="_blank"><strong>artifacts/05_AI_Agent_Actions.html</strong></a> for the complete configuration with real client values.
+          See <a href="artifacts/05_AI_Agent_Actions.html" target="_blank"><strong>artifacts/05_AI_Agent_Actions.html</strong></a> for the complete configuration with real client values.
         </div>
 
         <div class="table-wrap">
           <table class="config-table">
             <thead><tr><th>#</th><th>Action</th><th>Purpose</th><th>Artifact</th></tr></thead>
             <tbody>
-              <tr><td>1</td><td>Book Appointment</td><td>Calendar booking with reschedule</td><td><a href="/ai-agent-actions" target="_blank">🔗</a></td></tr>
-              <tr><td>2</td><td>Start Workflow</td><td>2 sub-actions: Descalificados + Mover a Oportunidad</td><td><a href="/ai-agent-actions" target="_blank">🔗</a></td></tr>
-              <tr><td>3</td><td>Add Contact Info</td><td>1 action per field in approved flow</td><td><a href="/ai-agent-actions" target="_blank">🔗</a></td></tr>
-              <tr><td>4</td><td>Stop Bot</td><td>3 scenarios: Goodbye, STOPBOT_Tour Visit, STOPBOT_DESCALIFICADO</td><td><a href="/ai-agent-actions" target="_blank">🔗</a></td></tr>
-              <tr><td>5</td><td>Transfer to Human</td><td>4 scenarios: Requested, Missing Info, Unresolved, Wrong Service</td><td><a href="/ai-agent-actions" target="_blank">🔗</a></td></tr>
-              <tr><td>6</td><td>No Reply Follow-up</td><td>2h / 22h re-engagement sequence</td><td><a href="/ai-agent-actions" target="_blank">🔗</a></td></tr>
+              <tr><td>1</td><td>Book Appointment</td><td>Calendar booking with reschedule</td><td><a href="artifacts/05_AI_Agent_Actions.html" target="_blank">🔗</a></td></tr>
+              <tr><td>2</td><td>Start Workflow</td><td>2 sub-actions: Descalificados + Mover a Oportunidad</td><td><a href="artifacts/05_AI_Agent_Actions.html" target="_blank">🔗</a></td></tr>
+              <tr><td>3</td><td>Add Contact Info</td><td>1 action per field in approved flow</td><td><a href="artifacts/05_AI_Agent_Actions.html" target="_blank">🔗</a></td></tr>
+              <tr><td>4</td><td>Stop Bot</td><td>3 scenarios: Goodbye, STOPBOT_[SERVICE], STOPBOT_DESCALIFICADO</td><td><a href="artifacts/05_AI_Agent_Actions.html" target="_blank">🔗</a></td></tr>
+              <tr><td>5</td><td>Transfer to Human</td><td>4 scenarios: Requested, Missing Info, Unresolved, Wrong Service</td><td><a href="artifacts/05_AI_Agent_Actions.html" target="_blank">🔗</a></td></tr>
+              <tr><td>6</td><td>No Reply Follow-up</td><td>2h / 22h re-engagement sequence</td><td><a href="artifacts/05_AI_Agent_Actions.html" target="_blank">🔗</a></td></tr>
             </tbody>
           </table>
         </div>
@@ -2137,19 +2067,19 @@ O dime tú qué día y hora."
             <div class="card-icon">📄</div>
             <h4>Bot Agent Summary</h4>
             <p>Complete 🧠 Personality, 🎯 Objective, 📋 Additional Info prompts — all copyable.</p>
-            <div class="card-footer"><a href="/bot-agent-summary" target="_blank"><button class="card-btn">📄 View file</button></a></div>
+            <div class="card-footer"><a href="artifacts/04_Bot_Agent_Summary.html" target="_blank"><button class="card-btn">📄 View file</button></a></div>
           </div>
           <div class="artifact-card">
             <div class="card-icon">⚙️</div>
             <h4>AI Agent Actions</h4>
             <p>All 6 actions with real client values, field mappings, trigger phrases.</p>
-            <div class="card-footer"><a href="/ai-agent-actions" target="_blank"><button class="card-btn">📄 View file</button></a></div>
+            <div class="card-footer"><a href="artifacts/05_AI_Agent_Actions.html" target="_blank"><button class="card-btn">📄 View file</button></a></div>
           </div>
           <div class="artifact-card">
             <div class="card-icon">🧠</div>
             <h4>Knowledgebase Content</h4>
             <p>Website scrape URL, 10+ FAQs, Marketing Brain upload instruction — all in TARGET_LANG.</p>
-            <div class="card-footer"><a href="/knowledgebase" target="_blank"><button class="card-btn">🧠 View file</button></a></div>
+            <div class="card-footer"><a href="artifacts/14_Knowledgebase_Content.html" target="_blank"><button class="card-btn">🧠 View file</button></a></div>
           </div>
         </div>
       </div>
@@ -2161,23 +2091,23 @@ O dime tú qué día y hora."
         </div>
         <div class="screenshots-gallery" id="gallery-4">
           <div class="screenshot-thumb" onclick="openLightbox('4', 0)">
-            <img class="thumb-img" data-src="/screenshots/phase-4/25.Go to Ai Agents - Knowledgebase.png" data-label="Go to Ai Agents - Knowledgebase" src="/screenshots/phase-4/25.Go to Ai Agents - Knowledgebase.png" alt="Go to Ai Agents - Knowledgebase" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-4/25-go-to-ai-agents-knowledgebase.png" data-label="Go to Ai Agents - Knowledgebase" src="screenshots/phase-4/25-go-to-ai-agents-knowledgebase.png" alt="Go to Ai Agents - Knowledgebase" loading="lazy">
             <div class="thumb-label">Go to Ai Agents - Knowledgebase</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('4', 1)">
-            <img class="thumb-img" data-src="/screenshots/phase-4/26.Train the bot with as much info as you have and needs.png" data-label="Train the bot" src="/screenshots/phase-4/26.Train the bot with as much info as you have and needs.png" alt="Train the bot" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-4/26-train-the-bot-with-as-much-info-as-you-have-and-needs.png" data-label="Train the bot" src="screenshots/phase-4/26-train-the-bot-with-as-much-info-as-you-have-and-needs.png" alt="Train the bot" loading="lazy">
             <div class="thumb-label">Train the bot</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('4', 2)">
-            <img class="thumb-img" data-src="/screenshots/phase-4/27.Now go Back and then go to Conversation AI and click on Create Bot.png" data-label="Create Bot" src="/screenshots/phase-4/27.Now go Back and then go to Conversation AI and click on Create Bot.png" alt="Create Bot" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-4/27-now-go-back-and-then-go-to-conversation-ai-and-click-on-create-bot.png" data-label="Create Bot" src="screenshots/phase-4/27-now-go-back-and-then-go-to-conversation-ai-and-click-on-create-bot.png" alt="Create Bot" loading="lazy">
             <div class="thumb-label">Create Bot</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('4', 3)">
-            <img class="thumb-img" data-src="/screenshots/phase-4/29. Set the Correct Goals and Actions1.png" data-label="Set Goals and Actions" src="/screenshots/phase-4/29. Set the Correct Goals and Actions1.png" alt="Set Goals and Actions" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-4/29-set-the-correct-goals-and-actions1.png" data-label="Set Goals and Actions" src="screenshots/phase-4/29-set-the-correct-goals-and-actions1.png" alt="Set Goals and Actions" loading="lazy">
             <div class="thumb-label">Set Goals and Actions</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('4', 4)">
-            <img class="thumb-img" data-src="/screenshots/phase-4/31. Finish the Configuration and Save the Bot.png" data-label="Save Bot" src="/screenshots/phase-4/31. Finish the Configuration and Save the Bot.png" alt="Save Bot" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-4/31-finish-the-configuration-and-save-the-bot.png" data-label="Save Bot" src="screenshots/phase-4/31-finish-the-configuration-and-save-the-bot.png" alt="Save Bot" loading="lazy">
             <div class="thumb-label">Save Bot</div>
           </div>
         </div>
@@ -2247,10 +2177,10 @@ O dime tú qué día y hora."
           <table class="config-table">
             <thead><tr><th>Template</th><th>Send After</th><th>Purpose</th><th>Artifact</th></tr></thead>
             <tbody>
-              <tr><td>Follow-up Day 3</td><td>3 days</td><td>Educational / value-add content</td><td><a href="/email-templates" target="_blank">🔗</a></td></tr>
-              <tr><td>Follow-up Day 5</td><td>5 days</td><td>Case study / social proof</td><td><a href="/email-templates" target="_blank">🔗</a></td></tr>
-              <tr><td>Follow-up Day 15</td><td>15 days</td><td>Last touch with clear CTA</td><td><a href="/email-templates" target="_blank">🔗</a></td></tr>
-              <tr><td>Meeting Reminder</td><td>24h before</td><td>Date/time confirmation, prep notes, link</td><td><a href="/email-templates" target="_blank">🔗</a></td></tr>
+              <tr><td>Follow-up Day 3</td><td>3 days</td><td>Educational / value-add content</td><td><a href="artifacts/09_Email_Templates.html" target="_blank">🔗</a></td></tr>
+              <tr><td>Follow-up Day 5</td><td>5 days</td><td>Case study / social proof</td><td><a href="artifacts/09_Email_Templates.html" target="_blank">🔗</a></td></tr>
+              <tr><td>Follow-up Day 15</td><td>15 days</td><td>Last touch with clear CTA</td><td><a href="artifacts/09_Email_Templates.html" target="_blank">🔗</a></td></tr>
+              <tr><td>Meeting Reminder</td><td>24h before</td><td>Date/time confirmation, prep notes, link</td><td><a href="artifacts/09_Email_Templates.html" target="_blank">🔗</a></td></tr>
             </tbody>
           </table>
         </div>
@@ -2262,7 +2192,7 @@ O dime tú qué día y hora."
             <div class="card-icon">✉️</div>
             <h4>Email Templates</h4>
             <p>4 branded templates with HTML structure.</p>
-            <div class="card-footer"><a href="/email-templates" target="_blank"><button class="card-btn">📄 View file</button></a></div>
+            <div class="card-footer"><a href="artifacts/09_Email_Templates.html" target="_blank"><button class="card-btn">📄 View file</button></a></div>
           </div>
         </div>
       </div>
@@ -2274,19 +2204,19 @@ O dime tú qué día y hora."
         </div>
         <div class="screenshots-gallery" id="gallery-5">
           <div class="screenshot-thumb" onclick="openLightbox('5', 0)">
-            <img class="thumb-img" data-src="/screenshots/phase-5/32. Go to Marketing and connect all the Brand's social media.png" data-label="Go to Marketing and connect all the Brand's social media" src="/screenshots/phase-5/32. Go to Marketing and connect all the Brand's social media.png" alt="Connect social media" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-5/32-go-to-marketing-and-connect-all-the-brands-social-media.png" data-label="Go to Marketing and connect all the Brand's social media" src="screenshots/phase-5/32-go-to-marketing-and-connect-all-the-brands-social-media.png" alt="Connect social media" loading="lazy">
             <div class="thumb-label">Connect social media</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('5', 1)">
-            <img class="thumb-img" data-src="/screenshots/phase-5/33. social media once connected.png" data-label="Social media once connected" src="/screenshots/phase-5/33. social media once connected.png" alt="Social media connected" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-5/33-social-media-once-connected.png" data-label="Social media once connected" src="screenshots/phase-5/33-social-media-once-connected.png" alt="Social media connected" loading="lazy">
             <div class="thumb-label">Social media connected</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('5', 2)">
-            <img class="thumb-img" data-src="/screenshots/phase-5/34. Go to the Emails Tab and create at least one template with the company's branding.png" data-label="Go to the Emails Tab and create at least one template with company branding" src="/screenshots/phase-5/34. Go to the Emails Tab and create at least one template with the company's branding.png" alt="Create email template" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-5/34-go-to-the-emails-tab-and-create-at-least-one-template-with-the-companys-branding.png" data-label="Go to the Emails Tab and create at least one template with company branding" src="screenshots/phase-5/34-go-to-the-emails-tab-and-create-at-least-one-template-with-the-companys-branding.png" alt="Create email template" loading="lazy">
             <div class="thumb-label">Create email template</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('5', 3)">
-            <img class="thumb-img" data-src="/screenshots/phase-5/35. Emails-email template example.png" data-label="Emails - email template example" src="/screenshots/phase-5/35. Emails-email template example.png" alt="Email template example" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-5/35-emails-email-template-example.png" data-label="Emails - email template example" src="screenshots/phase-5/35-emails-email-template-example.png" alt="Email template example" loading="lazy">
             <div class="thumb-label">Email template example</div>
           </div>
         </div>
@@ -2326,24 +2256,30 @@ O dime tú qué día y hora."
 
       <div class="tab-panel" id="tab-6-workflows">
         <div class="section-title">🔧 Workflow Templates (13 Automations)</div>
-        <div class="section-subtitle">All 13 workflows with triggers, conditions, actions, and dependency map. See <a href="/workflow-templates" target="_blank"><strong>artifact</strong></a> for full node-level config.</div>
+        <div style="display:flex;align-items:center;gap:12px;background:var(--info-bg);border:1px solid var(--info);border-radius:10px;padding:12px 16px;margin-bottom:16px">
+          <span style="font-size:20px">🗺</span>
+          <div style="flex:1;font-size:13px;color:var(--text-secondary)">Explora y arma cada workflow en el <strong>Workflow Builder interactivo</strong> (canvas estilo GHL, checklist de progreso y config por nodo). Requiere <code>pnpm dev</code> corriendo en <code>react-app/</code>.</div>
+          <a href="http://localhost:5173/?tab=workflows" target="_blank" style="background:var(--info);color:#fff;font-size:12px;font-weight:700;padding:8px 14px;border-radius:8px;text-decoration:none;white-space:nowrap">Abrir Builder ↗</a>
+        </div>
+
+        <div class="section-subtitle">All 13 workflows with triggers, conditions, actions, and dependency map. See <a href="artifacts/10_Workflow_Templates.html" target="_blank"><strong>artifact</strong></a> for full node-level config.</div>
         <div class="table-wrap">
           <table class="config-table">
-            <thead><tr><th>#</th><th>Workflow</th><th>Trigger</th><th>Key Actions</th><th>Artifact</th></tr></thead>
+            <thead><tr><th>#</th><th>Workflow</th><th>Trigger</th><th>Key Actions</th><th>Artifact</th><th>Builder</th></tr></thead>
             <tbody>
-              <tr><td>1</td><td>Update status when IA books meeting</td><td>Bot: Mover a Oportunidad</td><td>Move stage, add tags, notify</td><td><a href="/workflow-templates" target="_blank">🔗</a></td></tr>
-              <tr><td>2</td><td>Update status when IA disqualifies</td><td>Bot: Descalificados</td><td>Move to Lost, tag DQ reason</td><td><a href="/workflow-templates" target="_blank">🔗</a></td></tr>
-              <tr><td>3</td><td>Update disqualified (system)</td><td>Tag or stage change</td><td>Move stage, log date</td><td><a href="/workflow-templates" target="_blank">🔗</a></td></tr>
-              <tr><td>4</td><td>Disqualified + pixel</td><td>Stage: Lost + DQ tag</td><td>Send pixel event</td><td><a href="/workflow-templates" target="_blank">🔗</a></td></tr>
-              <tr><td>5</td><td>Cold leads</td><td>14d inactivity</td><td>Tag cold, move stage</td><td><a href="/workflow-templates" target="_blank">🔗</a></td></tr>
-              <tr><td>6</td><td>Won + pixel</td><td>Stage: Won</td><td>Pixel event, onboarding, notify</td><td><a href="/workflow-templates" target="_blank">🔗</a></td></tr>
-              <tr><td>7</td><td>Lost</td><td>Stage: Lost</td><td>Capture reason, nurture</td><td><a href="/workflow-templates" target="_blank">🔗</a></td></tr>
-              <tr><td>8</td><td>Duplicate contact to opp</td><td>Opportunity created</td><td>Copy contact fields</td><td><a href="/workflow-templates" target="_blank">🔗</a></td></tr>
-              <tr><td>9</td><td>Meeting reminder</td><td>24h/1h pre-appointment</td><td>Send WhatsApp template</td><td><a href="/workflow-templates" target="_blank">🔗</a></td></tr>
-              <tr><td>10</td><td>Deactivate IA on disqualify</td><td>Tag: ia-disqualified</td><td>Stop bot, add tag</td><td><a href="/workflow-templates" target="_blank">🔗</a></td></tr>
-              <tr><td>11</td><td>Follow-up 72h</td><td>72h no response</td><td>WA seq: 24h→3d→5d→10d→15d</td><td><a href="/workflow-templates" target="_blank">🔗</a></td></tr>
-              <tr><td>12</td><td>Create lead from form</td><td>Form submission</td><td>Create contact + opp + start bot</td><td><a href="/workflow-templates" target="_blank">🔗</a></td></tr>
-              <tr><td>13</td><td>Google Ads conversions</td><td>Stage: Won / Contact created</td><td>Send conversion to Google</td><td><a href="/workflow-templates" target="_blank">🔗</a></td></tr>
+              <tr><td>1</td><td>Update status when IA books meeting</td><td>Bot: Mover a Oportunidad</td><td>Move stage, add tags, notify</td><td><a href="artifacts/10_Workflow_Templates.html" target="_blank">🔗</a></td><td><a href="http://localhost:5173/?wf=1&tab=workflows" target="_blank" title="Abrir WF 1 en el Workflow Builder">🗺</a></td></tr>
+              <tr><td>2</td><td>Update status when IA disqualifies</td><td>Bot: Descalificados</td><td>Move to Lost, tag DQ reason</td><td><a href="artifacts/10_Workflow_Templates.html" target="_blank">🔗</a></td><td><a href="http://localhost:5173/?wf=2&tab=workflows" target="_blank" title="Abrir WF 2 en el Workflow Builder">🗺</a></td></tr>
+              <tr><td>3</td><td>Update disqualified (system)</td><td>Tag or stage change</td><td>Move stage, log date</td><td><a href="artifacts/10_Workflow_Templates.html" target="_blank">🔗</a></td><td><a href="http://localhost:5173/?wf=3&tab=workflows" target="_blank" title="Abrir WF 3 en el Workflow Builder">🗺</a></td></tr>
+              <tr><td>4</td><td>Disqualified + pixel</td><td>Stage: Lost + DQ tag</td><td>Send pixel event</td><td><a href="artifacts/10_Workflow_Templates.html" target="_blank">🔗</a></td><td><a href="http://localhost:5173/?wf=4&tab=workflows" target="_blank" title="Abrir WF 4 en el Workflow Builder">🗺</a></td></tr>
+              <tr><td>5</td><td>Cold leads</td><td>14d inactivity</td><td>Tag cold, move stage</td><td><a href="artifacts/10_Workflow_Templates.html" target="_blank">🔗</a></td><td><a href="http://localhost:5173/?wf=5&tab=workflows" target="_blank" title="Abrir WF 5 en el Workflow Builder">🗺</a></td></tr>
+              <tr><td>6</td><td>Won + pixel</td><td>Stage: Won</td><td>Pixel event, onboarding, notify</td><td><a href="artifacts/10_Workflow_Templates.html" target="_blank">🔗</a></td><td><a href="http://localhost:5173/?wf=6&tab=workflows" target="_blank" title="Abrir WF 6 en el Workflow Builder">🗺</a></td></tr>
+              <tr><td>7</td><td>Lost</td><td>Stage: Lost</td><td>Capture reason, nurture</td><td><a href="artifacts/10_Workflow_Templates.html" target="_blank">🔗</a></td><td><a href="http://localhost:5173/?wf=7&tab=workflows" target="_blank" title="Abrir WF 7 en el Workflow Builder">🗺</a></td></tr>
+              <tr><td>8</td><td>Duplicate contact to opp</td><td>Opportunity created</td><td>Copy contact fields</td><td><a href="artifacts/10_Workflow_Templates.html" target="_blank">🔗</a></td><td><a href="http://localhost:5173/?wf=8&tab=workflows" target="_blank" title="Abrir WF 8 en el Workflow Builder">🗺</a></td></tr>
+              <tr><td>9</td><td>Meeting reminder</td><td>24h/1h pre-appointment</td><td>Send WhatsApp template</td><td><a href="artifacts/10_Workflow_Templates.html" target="_blank">🔗</a></td><td><a href="http://localhost:5173/?wf=9&tab=workflows" target="_blank" title="Abrir WF 9 en el Workflow Builder">🗺</a></td></tr>
+              <tr><td>10</td><td>Deactivate IA on disqualify</td><td>Tag: ia-disqualified</td><td>Stop bot, add tag</td><td><a href="artifacts/10_Workflow_Templates.html" target="_blank">🔗</a></td><td><a href="http://localhost:5173/?wf=10&tab=workflows" target="_blank" title="Abrir WF 10 en el Workflow Builder">🗺</a></td></tr>
+              <tr><td>11</td><td>Follow-up 72h</td><td>72h no response</td><td>WA seq: 24h→3d→5d→10d→15d</td><td><a href="artifacts/10_Workflow_Templates.html" target="_blank">🔗</a></td><td><a href="http://localhost:5173/?wf=11&tab=workflows" target="_blank" title="Abrir WF 11 en el Workflow Builder">🗺</a></td></tr>
+              <tr><td>12</td><td>Create lead from form</td><td>Form submission</td><td>Create contact + opp + start bot</td><td><a href="artifacts/10_Workflow_Templates.html" target="_blank">🔗</a></td><td><a href="http://localhost:5173/?wf=12&tab=workflows" target="_blank" title="Abrir WF 12 en el Workflow Builder">🗺</a></td></tr>
+              <tr><td>13</td><td>Google Ads conversions</td><td>Stage: Won / Contact created</td><td>Send conversion to Google</td><td><a href="artifacts/10_Workflow_Templates.html" target="_blank">🔗</a></td><td><a href="http://localhost:5173/?wf=13&tab=workflows" target="_blank" title="Abrir WF 13 en el Workflow Builder">🗺</a></td></tr>
             </tbody>
           </table>
         </div>
@@ -2355,7 +2291,7 @@ O dime tú qué día y hora."
             <div class="card-icon">🔧</div>
             <h4>Workflow Templates</h4>
             <p>All 13 workflows with triggers, conditions, actions, and dependency map — full node-level config.</p>
-            <div class="card-footer"><a href="/workflow-templates" target="_blank"><button class="card-btn">📄 View file</button></a></div>
+            <div class="card-footer"><a href="artifacts/10_Workflow_Templates.html" target="_blank"><button class="card-btn">📄 View file</button></a></div>
           </div>
         </div>
       </div>
@@ -2367,11 +2303,11 @@ O dime tú qué día y hora."
         </div>
         <div class="screenshots-gallery" id="gallery-6">
           <div class="screenshot-thumb" onclick="openLightbox('6', 0)">
-            <img class="thumb-img" data-src="/screenshots/phase-6/36. Set up Automations-Configura al menos las siguientes Workflows1.png" data-label="Set up Automations - Workflows 1" src="/screenshots/phase-6/36. Set up Automations-Configura al menos las siguientes Workflows1.png" alt="Workflows 1" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-6/36-set-up-automations-configura-al-menos-las-siguientes-workflows1.png" data-label="Set up Automations - Workflows 1" src="screenshots/phase-6/36-set-up-automations-configura-al-menos-las-siguientes-workflows1.png" alt="Workflows 1" loading="lazy">
             <div class="thumb-label">Workflows 1</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('6', 1)">
-            <img class="thumb-img" data-src="/screenshots/phase-6/37. Set up Automations-Configura al menos las siguientes Workflows2.png" data-label="Set up Automations - Workflows 2" src="/screenshots/phase-6/37. Set up Automations-Configura al menos las siguientes Workflows2.png" alt="Workflows 2" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-6/37-set-up-automations-configura-al-menos-las-siguientes-workflows2.png" data-label="Set up Automations - Workflows 2" src="screenshots/phase-6/37-set-up-automations-configura-al-menos-las-siguientes-workflows2.png" alt="Workflows 2" loading="lazy">
             <div class="thumb-label">Workflows 2</div>
           </div>
         </div>
@@ -2428,10 +2364,10 @@ O dime tú qué día y hora."
           <table class="config-table">
             <thead><tr><th>Type</th><th>Name</th><th>Value</th><th>Purpose</th></tr></thead>
             <tbody>
-              <tr><td>CNAME</td><td>mail.maxgym.com.pa</td><td>Pendiente — copiar de GHL</td><td>Email subdomain</td></tr>
-              <tr><td>TXT</td><td>maxgym.com.pa</td><td>Pendiente — copiar de GHL</td><td>SPF record</td></tr>
-              <tr><td>TXT</td><td>Pendiente — copiar de GHL._domainkey.maxgym.com.pa</td><td>Pendiente — copiar de GHL</td><td>DKIM signing</td></tr>
-              <tr><td>CNAME</td><td>www</td><td>Pendiente — copiar de GHL</td><td>Subdomain routing</td></tr>
+              <tr><td>CNAME</td><td>mail.[DOMAIN]</td><td>[GHL_MAIL_VALUE]</td><td>Email subdomain</td></tr>
+              <tr><td>TXT</td><td>[DOMAIN]</td><td>[GHL_SPF_VALUE]</td><td>SPF record</td></tr>
+              <tr><td>TXT</td><td>[DKIM_SELECTOR]._domainkey.[DOMAIN]</td><td>[GHL_DKIM_VALUE]</td><td>DKIM signing</td></tr>
+              <tr><td>CNAME</td><td>www</td><td>[GHL_CNAME_VALUE]</td><td>Subdomain routing</td></tr>
             </tbody>
           </table>
         </div>
@@ -2443,7 +2379,7 @@ O dime tú qué día y hora."
             <div class="card-icon">🖥️</div>
             <h4>Landing Page Mockup</h4>
             <p>Self-contained responsive HTML: Hero → Form → Social Proof → CTA → Footer.</p>
-            <div class="card-footer"><a href="/landing-mockup" target="_blank"><button class="card-btn">📄 View file</button></a></div>
+            <div class="card-footer"><a href="artifacts/12_Landing_Page_Mockup.html" target="_blank"><button class="card-btn">📄 View file</button></a></div>
           </div>
         </div>
       </div>
@@ -2455,27 +2391,27 @@ O dime tú qué día y hora."
         </div>
         <div class="screenshots-gallery" id="gallery-7">
           <div class="screenshot-thumb" onclick="openLightbox('7', 0)">
-            <img class="thumb-img" data-src="/screenshots/phase-7/38. list of funnels.png" data-label="list of funnels" src="/screenshots/phase-7/38. list of funnels.png" alt="list of funnels" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-7/38-list-of-funnels.png" data-label="list of funnels" src="screenshots/phase-7/38-list-of-funnels.png" alt="list of funnels" loading="lazy">
             <div class="thumb-label">list of funnels</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('7', 1)">
-            <img class="thumb-img" data-src="/screenshots/phase-7/39. Funnels-landing pages.png" data-label="Funnels-landing pages" src="/screenshots/phase-7/39. Funnels-landing pages.png" alt="Funnels-landing pages" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-7/39-funnels-landing-pages.png" data-label="Funnels-landing pages" src="screenshots/phase-7/39-funnels-landing-pages.png" alt="Funnels-landing pages" loading="lazy">
             <div class="thumb-label">Funnels-landing pages</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('7', 2)">
-            <img class="thumb-img" data-src="/screenshots/phase-7/40. funnel details.png" data-label="funnel details" src="/screenshots/phase-7/40. funnel details.png" alt="funnel details" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-7/40-funnel-details.png" data-label="funnel details" src="screenshots/phase-7/40-funnel-details.png" alt="funnel details" loading="lazy">
             <div class="thumb-label">funnel details</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('7', 3)">
-            <img class="thumb-img" data-src="/screenshots/phase-7/41. funnel settings tracking codes.png" data-label="funnel settings tracking codes" src="/screenshots/phase-7/41. funnel settings tracking codes.png" alt="funnel settings tracking codes" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-7/41-funnel-settings-tracking-codes.png" data-label="funnel settings tracking codes" src="screenshots/phase-7/41-funnel-settings-tracking-codes.png" alt="funnel settings tracking codes" loading="lazy">
             <div class="thumb-label">funnel settings tracking codes</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('7', 4)">
-            <img class="thumb-img" data-src="/screenshots/phase-7/43. Marketing - Forms.png" data-label="Marketing - Forms" src="/screenshots/phase-7/43. Marketing - Forms.png" alt="Marketing - Forms" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-7/43-marketing-forms.png" data-label="Marketing - Forms" src="screenshots/phase-7/43-marketing-forms.png" alt="Marketing - Forms" loading="lazy">
             <div class="thumb-label">Marketing - Forms</div>
           </div>
           <div class="screenshot-thumb" onclick="openLightbox('7', 5)">
-            <img class="thumb-img" data-src="/screenshots/phase-7/44. set up forms.png" data-label="set up forms" src="/screenshots/phase-7/44. set up forms.png" alt="set up forms" loading="lazy">
+            <img class="thumb-img" data-src="screenshots/phase-7/44-set-up-forms.png" data-label="set up forms" src="screenshots/phase-7/44-set-up-forms.png" alt="set up forms" loading="lazy">
             <div class="thumb-label">set up forms</div>
           </div>
         </div>
