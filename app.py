@@ -114,6 +114,7 @@ def index():
 
 @app.route('/<route>')
 def serve_html(route):
+    route = f'/{route}'
     if route not in ROUTES:
         return {'error': f"Unknown route '{route}'", 'available': list(ROUTES.keys())}, 404
 
@@ -126,7 +127,7 @@ def serve_html(route):
     with open(filepath, 'rb') as f:
         content = f.read()
 
-    content = inject_nav(content, f'/{route}')
+    content = inject_nav(content, route)
     return Response(content, mimetype='text/html')
 
 
