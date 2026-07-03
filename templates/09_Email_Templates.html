@@ -1,0 +1,207 @@
+﻿<!DOCTYPE html>
+<html lang="es-PA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Max Gym — Email Templates</title>
+<style>
+  :root { --primary: #000000; --secondary: #87f24d; --accent: #E8F5E9; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: #f0f2f5; color: #0f172a; padding: 40px; line-height: 1.6; }
+  h1 { color: var(--primary); font-size: 28px; margin-bottom: 4px; }
+  .subtitle { color: #475569; margin-bottom: 24px; }
+  .email-card { background: #fff; border-radius: 12px; margin-bottom: 24px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); border: 1px solid #e2e8f0; overflow: hidden; }
+  .email-header { padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; background: #f8fafc; }
+  .email-name { font-weight: 700; font-size: 15px; color: var(--primary); }
+  .email-meta { font-size: 12px; color: #64748b; margin-top: 2px; }
+  .copy-btn { padding: 6px 16px; font-size: 12px; font-weight: 600; border-radius: 6px; border: 1px solid var(--secondary); background: #fff; color: var(--secondary); cursor: pointer; transition: all 0.15s; font-family: 'Inter', sans-serif; }
+  .copy-btn:hover { background: var(--secondary); color: #fff; }
+  .copy-btn.copied { background: var(--secondary); color: #fff; border-color: var(--secondary); }
+  .email-html { display: none; }
+  .email-preview { padding: 20px; }
+  .email-container { max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; font-family: 'Inter', system-ui, sans-serif; }
+  .email-container .header { background: #000000; padding: 24px 20px; text-align: center; }
+  .email-container .header h2 { color: #fff; margin: 0; font-size: 20px; letter-spacing: 1px; }
+  .email-container .header .accent-line { width: 60px; height: 3px; background: #87f24d; margin: 8px auto 0; border-radius: 2px; }
+  .email-container .body { padding: 32px 24px; font-size: 14px; line-height: 1.7; color: #1e293b; }
+  .email-container .body p { margin-bottom: 16px; }
+  .email-container .body .cta-btn { display: inline-block; background: #87f24d; color: #fff; padding: 12px 28px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 15px; margin: 8px 0 16px; }
+  .email-container .body .highlight { background: #E8F5E9; padding: 16px; border-radius: 8px; margin: 16px 0; border-left: 4px solid #87f24d; }
+  .email-container .footer { padding: 20px 24px; background: #f8fafc; border-top: 1px solid #e2e8f0; font-size: 12px; color: #64748b; text-align: center; line-height: 1.8; }
+  .email-container .footer strong { color: #000; }
+</style>
+</head>
+<body>
+<h1>✉️ Max Gym — Email Templates</h1>
+<div class="subtitle">Create these templates in GHL → Marketing → Emails. All copy in Spanish (Panamá). Brand colors #000000 / #87f24d.</div>
+
+<!-- Email 1: Day 3 Educational -->
+<div class="email-card">
+  <div class="email-header">
+    <div>
+      <div class="email-name">Seguimiento Día 3 — Educational</div>
+      <div class="email-meta">Send after: 3 days post-visit · es-PA · Subject: "Tips para empezar tu transformación 💚"</div>
+    </div>
+    <button class="copy-btn" onclick="copyEmailHTML(this)">Copy HTML</button>
+  </div>
+  <div class="email-preview">
+    <div class="email-container">
+      <div class="header">
+        <h2>MAX GYM</h2>
+        <div class="accent-line"></div>
+      </div>
+      <div class="body">
+        <p><strong>¡Hola {{contact.first_name}}!</strong></p>
+        <p>Sabemos que empezar un nuevo hábito puede ser abrumador, pero estamos aquí para ayudarte. Por eso preparamos 3 tips para que tu transformación comience con el pie derecho:</p>
+        <div class="highlight">
+          <p><strong>🔥 Tip 1: Arranca con consistencia, no con intensidad</strong><br>Es mejor entrenar 30 minutos 5 veces por semana que 2 horas una sola vez. El hábito se construye apareciendo.</p>
+          <p><strong>🥗 Tip 2: La nutrición es el 70%</strong><br>No necesitas una dieta extrema. Pequeños cambios — más proteína, menos procesados, más agua — hacen la diferencia.</p>
+          <p><strong>📊 Tip 3: Mide tu progreso</strong><br>No solo es el peso. Toma fotos, mide tu cintura, anota tus marcas. En Max Gym tenemos valoración InBody para que veas resultados reales.</p>
+        </div>
+        <p>¿Listo para empezar? Te esperamos para tu próxima visita.</p>
+        <p style="text-align:center;"><a class="cta-btn" href="#">Agendar mi visita</a></p>
+        <p style="color:#64748b;font-size:12px;">— Equipo Max Gym 💚</p>
+      </div>
+      <div class="footer">
+        <strong>Max Gym Costa del Este</strong><br>
+        Plaza del Super 99, Nivel 1, Costa del Este<br>
+        Lun–Vie 5am–12am | Sáb–Dom 8am–4pm<br>
+        <a href="https://maxgym.com.pa" style="color:#87f24d;">maxgym.com.pa</a> · @maxgym_pa
+      </div>
+    </div>
+  </div>
+  <div class="email-html"><![CDATA[<!DOCTYPE html><html lang="es-PA"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"></head><body style="margin:0;padding:0;background:#f0f2f5;font-family:'Inter',system-ui,sans-serif;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:20px;"><table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:8px;overflow:hidden;"><tr><td style="background:#000000;padding:24px 20px;text-align:center;"><h2 style="color:#fff;margin:0;font-size:20px;letter-spacing:1px;">MAX GYM</h2><div style="width:60px;height:3px;background:#87f24d;margin:8px auto 0;border-radius:2px;"></div></td></tr><tr><td style="padding:32px 24px;font-size:14px;line-height:1.7;color:#1e293b;"><p><strong>¡Hola {{contact.first_name}}!</strong></p><p>Sabemos que empezar un nuevo hábito puede ser abrumador, pero estamos aquí para ayudarte. Por eso preparamos 3 tips para que tu transformación comience con el pie derecho:</p><table role="presentation" cellpadding="16" cellspacing="0" style="background:#E8F5E9;border-radius:8px;margin:16px 0;border-left:4px solid #87f24d;width:100%;"><tr><td style="font-size:14px;line-height:1.7;"><p style="margin:0 0 12px;"><strong>🔥 Tip 1: Arranca con consistencia, no con intensidad</strong><br>Es mejor entrenar 30 minutos 5 veces por semana que 2 horas una sola vez. El hábito se construye apareciendo.</p><p style="margin:0 0 12px;"><strong>🥗 Tip 2: La nutrición es el 70%</strong><br>No necesitas una dieta extrema. Pequeños cambios — más proteína, menos procesados, más agua — hacen la diferencia.</p><p style="margin:0;"><strong>📊 Tip 3: Mide tu progreso</strong><br>No solo es el peso. Toma fotos, mide tu cintura, anota tus marcas. En Max Gym tenemos valoración InBody para que veas resultados reales.</p></td></tr></table><p>¿Listo para empezar? Te esperamos para tu próxima visita.</p><table role="presentation" cellpadding="0" cellspacing="0" width="100%"><tr><td align="center" style="padding:8px 0 16px;"><a href="#" style="display:inline-block;background:#87f24d;color:#fff;padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:600;font-size:15px;">Agendar mi visita</a></td></tr></table><p style="color:#64748b;font-size:12px;">— Equipo Max Gym 💚</p></td></tr><tr><td style="padding:20px 24px;background:#f8fafc;border-top:1px solid #e2e8f0;font-size:12px;color:#64748b;text-align:center;line-height:1.8;"><strong>Max Gym Costa del Este</strong><br>Plaza del Super 99, Nivel 1, Costa del Este<br>Lun–Vie 5am–12am | Sáb–Dom 8am–4pm<br><a href="https://maxgym.com.pa" style="color:#87f24d;">maxgym.com.pa</a> · @maxgym_pa</td></tr></table></td></tr></table></body></html>]]></div>
+</div>
+
+<!-- Email 2: Day 5 Social Proof -->
+<div class="email-card">
+  <div class="email-header">
+    <div>
+      <div class="email-name">Seguimiento Día 5 — Social Proof</div>
+      <div class="email-meta">Send after: 5 days post-visit · es-PA · Subject: "Historias de miembros Max Gym 💪"</div>
+    </div>
+    <button class="copy-btn" onclick="copyEmailHTML(this)">Copy HTML</button>
+  </div>
+  <div class="email-preview">
+    <div class="email-container">
+      <div class="header">
+        <h2>MAX GYM</h2>
+        <div class="accent-line"></div>
+      </div>
+      <div class="body">
+        <p><strong>¡Hola {{contact.first_name}}!</strong></p>
+        <p>En Max Gym cada miembro tiene una historia. Hoy queremos compartir dos que nos inspiran:</p>
+        <div class="highlight">
+          <p><strong>💪 Andrea, 34 años</strong><br>"Llegué sin saber ni usar una máquina. Hoy corro mi primer 10K y bajé 12kg en 6 meses. El ambiente es increíble, todos te apoyan."</p>
+          <p><strong>🔥 Carlos, 28 años</strong><br>"Empecé con MAX 360 porque no veía resultados en otros gyms. La valoración InBody y el entrenador personalizado cambiaron mi enfoque. Subí 8kg de masa muscular."</p>
+        </div>
+        <p>Detrás de cada resultado hay decisión + consistencia + el equipo correcto. ¿Listo para escribir tu historia?</p>
+        <p style="text-align:center;"><a class="cta-btn" href="#">Agendar mi visita</a></p>
+        <p style="color:#64748b;font-size:12px;">— Equipo Max Gym 💚</p>
+      </div>
+      <div class="footer">
+        <strong>Max Gym Costa del Este</strong><br>
+        Plaza del Super 99, Nivel 1, Costa del Este<br>
+        Lun–Vie 5am–12am | Sáb–Dom 8am–4pm<br>
+        <a href="https://maxgym.com.pa" style="color:#87f24d;">maxgym.com.pa</a> · @maxgym_pa
+      </div>
+    </div>
+  </div>
+  <div class="email-html"><![CDATA[<!DOCTYPE html><html lang="es-PA"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"></head><body style="margin:0;padding:0;background:#f0f2f5;font-family:'Inter',system-ui,sans-serif;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:20px;"><table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:8px;overflow:hidden;"><tr><td style="background:#000000;padding:24px 20px;text-align:center;"><h2 style="color:#fff;margin:0;font-size:20px;letter-spacing:1px;">MAX GYM</h2><div style="width:60px;height:3px;background:#87f24d;margin:8px auto 0;border-radius:2px;"></div></td></tr><tr><td style="padding:32px 24px;font-size:14px;line-height:1.7;color:#1e293b;"><p><strong>¡Hola {{contact.first_name}}!</strong></p><p>En Max Gym cada miembro tiene una historia. Hoy queremos compartir dos que nos inspiran:</p><table role="presentation" cellpadding="16" cellspacing="0" style="background:#E8F5E9;border-radius:8px;margin:16px 0;border-left:4px solid #87f24d;width:100%;"><tr><td style="font-size:14px;line-height:1.7;"><p style="margin:0 0 12px;"><strong>💪 Andrea, 34 años</strong><br>"Llegué sin saber ni usar una máquina. Hoy corro mi primer 10K y bajé 12kg en 6 meses. El ambiente es increíble, todos te apoyan."</p><p style="margin:0;"><strong>🔥 Carlos, 28 años</strong><br>"Empecé con MAX 360 porque no veía resultados en otros gyms. La valoración InBody y el entrenador personalizado cambiaron mi enfoque. Subí 8kg de masa muscular."</p></td></tr></table><p>Detrás de cada resultado hay decisión + consistencia + el equipo correcto. ¿Listo para escribir tu historia?</p><table role="presentation" cellpadding="0" cellspacing="0" width="100%"><tr><td align="center" style="padding:8px 0 16px;"><a href="#" style="display:inline-block;background:#87f24d;color:#fff;padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:600;font-size:15px;">Agendar mi visita</a></td></tr></table><p style="color:#64748b;font-size:12px;">— Equipo Max Gym 💚</p></td></tr><tr><td style="padding:20px 24px;background:#f8fafc;border-top:1px solid #e2e8f0;font-size:12px;color:#64748b;text-align:center;line-height:1.8;"><strong>Max Gym Costa del Este</strong><br>Plaza del Super 99, Nivel 1, Costa del Este<br>Lun–Vie 5am–12am | Sáb–Dom 8am–4pm<br><a href="https://maxgym.com.pa" style="color:#87f24d;">maxgym.com.pa</a> · @maxgym_pa</td></tr></table></td></tr></table></body></html>]]></div>
+</div>
+
+<!-- Email 3: Day 15 Last Touch -->
+<div class="email-card">
+  <div class="email-header">
+    <div>
+      <div class="email-name">Seguimiento Día 15 — Last Touch CTA</div>
+      <div class="email-meta">Send after: 15 days post-visit (final touch) · es-PA · Subject: "¿Siguen vigentes tus ganas? 💚"</div>
+    </div>
+    <button class="copy-btn" onclick="copyEmailHTML(this)">Copy HTML</button>
+  </div>
+  <div class="email-preview">
+    <div class="email-container">
+      <div class="header">
+        <h2>MAX GYM</h2>
+        <div class="accent-line"></div>
+      </div>
+      <div class="body">
+        <p><strong>¡Hola {{contact.first_name}}!</strong></p>
+        <p>Voy a ser honesto contigo.</p>
+        <p>Hace unos días conversamos sobre tus objetivos y te compartimos lo que Max Gym puede ofrecerte. No queremos ser insistentes, pero queremos asegurarnos de que no dejes pasar la oportunidad de empezar.</p>
+        <div class="highlight">
+          <p>Las máquinas que conociste no están en ningún otro gym de Panamá.<br>
+          El horario de 5am a 12am se adapta a tu ritmo de vida.<br>
+          Y el equipo está listo para recibirte.</p>
+        </div>
+        <p>Si aún tienes interés, este es tu momento. Si no, también está bien — la puerta siempre estará abierta.</p>
+        <p style="text-align:center;"><a class="cta-btn" href="#">Quiero agendar mi visita</a></p>
+        <p style="color:#64748b;font-size:12px;">— Equipo Max Gym 💚</p>
+      </div>
+      <div class="footer">
+        <strong>Max Gym Costa del Este</strong><br>
+        Plaza del Super 99, Nivel 1, Costa del Este<br>
+        Lun–Vie 5am–12am | Sáb–Dom 8am–4pm<br>
+        <a href="https://maxgym.com.pa" style="color:#87f24d;">maxgym.com.pa</a> · @maxgym_pa
+      </div>
+    </div>
+  </div>
+  <div class="email-html"><![CDATA[<!DOCTYPE html><html lang="es-PA"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"></head><body style="margin:0;padding:0;background:#f0f2f5;font-family:'Inter',system-ui,sans-serif;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:20px;"><table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:8px;overflow:hidden;"><tr><td style="background:#000000;padding:24px 20px;text-align:center;"><h2 style="color:#fff;margin:0;font-size:20px;letter-spacing:1px;">MAX GYM</h2><div style="width:60px;height:3px;background:#87f24d;margin:8px auto 0;border-radius:2px;"></div></td></tr><tr><td style="padding:32px 24px;font-size:14px;line-height:1.7;color:#1e293b;"><p><strong>¡Hola {{contact.first_name}}!</strong></p><p>Voy a ser honesto contigo.</p><p>Hace unos días conversamos sobre tus objetivos y te compartimos lo que Max Gym puede ofrecerte. No queremos ser insistentes, pero queremos asegurarnos de que no dejes pasar la oportunidad de empezar.</p><table role="presentation" cellpadding="16" cellspacing="0" style="background:#E8F5E9;border-radius:8px;margin:16px 0;border-left:4px solid #87f24d;width:100%;"><tr><td style="font-size:14px;line-height:1.7;"><p style="margin:0;">Las máquinas que conociste no están en ningún otro gym de Panamá.<br>El horario de 5am a 12am se adapta a tu ritmo de vida.<br>Y el equipo está listo para recibirte.</p></td></tr></table><p>Si aún tienes interés, este es tu momento. Si no, también está bien — la puerta siempre estará abierta.</p><table role="presentation" cellpadding="0" cellspacing="0" width="100%"><tr><td align="center" style="padding:8px 0 16px;"><a href="#" style="display:inline-block;background:#87f24d;color:#fff;padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:600;font-size:15px;">Quiero agendar mi visita</a></td></tr></table><p style="color:#64748b;font-size:12px;">— Equipo Max Gym 💚</p></td></tr><tr><td style="padding:20px 24px;background:#f8fafc;border-top:1px solid #e2e8f0;font-size:12px;color:#64748b;text-align:center;line-height:1.8;"><strong>Max Gym Costa del Este</strong><br>Plaza del Super 99, Nivel 1, Costa del Este<br>Lun–Vie 5am–12am | Sáb–Dom 8am–4pm<br><a href="https://maxgym.com.pa" style="color:#87f24d;">maxgym.com.pa</a> · @maxgym_pa</td></tr></table></td></tr></table></body></html>]]></div>
+</div>
+
+<!-- Email 4: Tour Reminder 24h -->
+<div class="email-card">
+  <div class="email-header">
+    <div>
+      <div class="email-name">Recordatorio de Tour (24h)</div>
+      <div class="email-meta">Send: 24h before scheduled tour · es-PA · Subject: "Tu tour en Max Gym es mañana 🏋️"</div>
+    </div>
+    <button class="copy-btn" onclick="copyEmailHTML(this)">Copy HTML</button>
+  </div>
+  <div class="email-preview">
+    <div class="email-container">
+      <div class="header">
+        <h2>MAX GYM</h2>
+        <div class="accent-line"></div>
+      </div>
+      <div class="body">
+        <p><strong>¡Hola {{contact.first_name}}!</strong></p>
+        <p>Tu tour en Max Gym está agendado para <strong>mañana</strong> y no podríamos estar más emocionados de recibirte. 🎉</p>
+        <div class="highlight">
+          <p><strong>📍 Ubicación:</strong> Plaza del Super 99, Nivel 1, Costa del Este<br>
+          <strong>🕐 Horario agendado:</strong> {{appointment.start_time}}<br>
+          <strong>⏰ Horario del gym:</strong> 5am–12am</p>
+        </div>
+        <p><strong>¿Qué llevar?</strong><br>
+        ✅ Ropa cómoda y tenis<br>
+        ✅ Toalla (o puedes comprar una aquí)<br>
+        ✅ Agua (tenemos dispensador)<br>
+        ✅ Muchas ganas 💚</p>
+        <p>Te daremos un tour completo, conocerás nuestras máquinas Panatta, Technogym y Hammer Strength. Sin compromiso, sin presión.</p>
+        <p style="text-align:center;"><a class="cta-btn" href="#">Ver en Google Maps</a></p>
+        <p style="color:#64748b;font-size:12px;">¿Necesitas reagendar? Responde este correo sin problema.</p>
+      </div>
+      <div class="footer">
+        <strong>Max Gym Costa del Este</strong><br>
+        Plaza del Super 99, Nivel 1, Costa del Este<br>
+        Lun–Vie 5am–12am | Sáb–Dom 8am–4pm<br>
+        <a href="https://maxgym.com.pa" style="color:#87f24d;">maxgym.com.pa</a> · @maxgym_pa
+      </div>
+    </div>
+  </div>
+  <div class="email-html"><![CDATA[<!DOCTYPE html><html lang="es-PA"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"></head><body style="margin:0;padding:0;background:#f0f2f5;font-family:'Inter',system-ui,sans-serif;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td align="center" style="padding:20px;"><table role="presentation" width="600" cellpadding="0" cellspacing="0" style="background:#fff;border-radius:8px;overflow:hidden;"><tr><td style="background:#000000;padding:24px 20px;text-align:center;"><h2 style="color:#fff;margin:0;font-size:20px;letter-spacing:1px;">MAX GYM</h2><div style="width:60px;height:3px;background:#87f24d;margin:8px auto 0;border-radius:2px;"></div></td></tr><tr><td style="padding:32px 24px;font-size:14px;line-height:1.7;color:#1e293b;"><p><strong>¡Hola {{contact.first_name}}!</strong></p><p>Tu tour en Max Gym está agendado para <strong>mañana</strong> y no podríamos estar más emocionados de recibirte. 🎉</p><table role="presentation" cellpadding="16" cellspacing="0" style="background:#E8F5E9;border-radius:8px;margin:16px 0;border-left:4px solid #87f24d;width:100%;"><tr><td style="font-size:14px;line-height:1.7;"><p style="margin:0;"><strong>📍 Ubicación:</strong> Plaza del Super 99, Nivel 1, Costa del Este<br><strong>🕐 Horario agendado:</strong> {{appointment.start_time}}<br><strong>⏰ Horario del gym:</strong> 5am–12am</p></td></tr></table><p><strong>¿Qué llevar?</strong><br>✅ Ropa cómoda y tenis<br>✅ Toalla (o puedes comprar una aquí)<br>✅ Agua (tenemos dispensador)<br>✅ Muchas ganas 💚</p><p>Te daremos un tour completo, conocerás nuestras máquinas Panatta, Technogym y Hammer Strength. Sin compromiso, sin presión.</p><table role="presentation" cellpadding="0" cellspacing="0" width="100%"><tr><td align="center" style="padding:8px 0 16px;"><a href="#" style="display:inline-block;background:#87f24d;color:#fff;padding:12px 28px;border-radius:8px;text-decoration:none;font-weight:600;font-size:15px;">Ver en Google Maps</a></td></tr></table><p style="color:#64748b;font-size:12px;">¿Necesitas reagendar? Responde este correo sin problema.</p></td></tr><tr><td style="padding:20px 24px;background:#f8fafc;border-top:1px solid #e2e8f0;font-size:12px;color:#64748b;text-align:center;line-height:1.8;"><strong>Max Gym Costa del Este</strong><br>Plaza del Super 99, Nivel 1, Costa del Este<br>Lun–Vie 5am–12am | Sáb–Dom 8am–4pm<br><a href="https://maxgym.com.pa" style="color:#87f24d;">maxgym.com.pa</a> · @maxgym_pa</td></tr></table></td></tr></table></body></html>]]></div>
+</div>
+
+<script>
+function copyEmailHTML(btn) {
+  const card = btn.closest('.email-card');
+  const htmlSource = card.querySelector('.email-html').textContent.trim();
+  navigator.clipboard.writeText(htmlSource).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy HTML'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+</body>
+</html>

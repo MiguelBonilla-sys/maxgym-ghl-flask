@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>05 — AI Agent Actions | Max Gym Panamá</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: #f8f9fa; color: #1a1a1a; padding: 40px 24px; line-height: 1.6; }
+.container { max-width: 960px; margin: 0 auto; }
+h1 { font-size: 28px; font-weight: 800; color: #000; margin-bottom: 4px; letter-spacing: -0.5px; }
+h1 small { font-size: 16px; font-weight: 400; color: #87f24d; display: block; margin-top: 2px; }
+.subtitle { font-size: 14px; color: #555; margin-bottom: 32px; }
+.action-card { background: #fff; border-radius: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 12px rgba(0,0,0,.04); margin-bottom: 24px; overflow: hidden; border: 1px solid #eaeaea; }
+.action-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; background: #000; color: #fff; cursor: default; }
+.action-header h2 { font-size: 16px; font-weight: 700; letter-spacing: -0.2px; }
+.action-number { display: inline-block; background: #87f24d; color: #fff; font-size: 12px; font-weight: 700; padding: 2px 10px; border-radius: 100px; margin-right: 10px; }
+.copy-btn { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); color: #fff; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; transition: .2s; font-family: 'Inter', sans-serif; }
+.copy-btn:hover { background: rgba(255,255,255,.2); }
+.copy-btn.copied { background: #87f24d; border-color: #87f24d; color: #fff; }
+.action-body { padding: 24px; }
+.action-body h3 { font-size: 14px; font-weight: 700; color: #000; margin: 20px 0 8px; }
+.action-body h3:first-child { margin-top: 0; }
+pre { background: #f4f6f8; border: 1px solid #e4e7ec; border-radius: 10px; padding: 16px; font-size: 13px; line-height: 1.65; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word; color: #1a1a1a; font-family: 'Inter', monospace; margin-bottom: 12px; }
+pre:last-child { margin-bottom: 0; }
+.field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0; }
+.field-item { background: #f4f6f8; border-radius: 10px; padding: 14px 16px; border: 1px solid #e4e7ec; }
+.field-item strong { display: block; font-size: 13px; color: #000; margin-bottom: 2px; }
+.field-item .label { font-size: 11px; color: #87f24d; font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; }
+.field-item p { font-size: 12px; color: #444; margin-top: 4px; }
+.field-item ul { margin-top: 4px; padding-left: 16px; font-size: 12px; color: #444; }
+.field-item ul li { margin-bottom: 1px; }
+.tag { display: inline-block; background: #f0f0f0; color: #000; font-size: 11px; font-weight: 600; padding: 2px 10px; border-radius: 100px; margin: 2px 4px 2px 0; }
+.tag.green { background: #E8F5E9; color: #2e7d32; }
+.tag.red { background: #ffebee; color: #c62828; }
+.tag.blue { background: #e3f2fd; color: #0d47a1; }
+.tag.yellow { background: #fff8e1; color: #f57f17; }
+.scenario { background: #fff; border: 1px solid #e4e7ec; border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; }
+.scenario:last-child { margin-bottom: 0; }
+.scenario h4 { font-size: 13px; font-weight: 700; color: #000; margin-bottom: 4px; }
+.scenario p { font-size: 12px; color: #444; }
+.scenario .msg { background: #f4f6f8; border-radius: 8px; padding: 10px 14px; margin-top: 6px; font-size: 12px; color: #1a1a1a; border-left: 3px solid #87f24d; }
+.copy-toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #87f24d; color: #fff; padding: 10px 24px; border-radius: 100px; font-size: 14px; font-weight: 600; opacity: 0; transition: opacity .3s; pointer-events: none; z-index: 999; }
+.copy-toast.show { opacity: 1; }
+.info-note { background: #E8F5E9; border: 1px solid #c8e6c9; border-radius: 10px; padding: 12px 16px; font-size: 13px; color: #1b5e20; margin: 12px 0; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>05 — AI Agent Actions <small>Max Gym Panamá · GoHighLevel</small></h1>
+  <p class="subtitle">6 acciones del bot de IA · Copia cualquier bloque con un solo clic</p>
+
+  <!-- Action 1: Agendar Tour -->
+  <div class="action-card" id="action1">
+    <div class="action-header"><h2><span class="action-number">1</span> Agendar Tour</h2><button class="copy-btn" data-target="action1-code">Copiar bloque</button></div>
+    <div class="action-body">
+      <h3>&#x1F4C5; Configuraci&oacute;n del Calendario</h3>
+<pre id="action1-code">Action: Agendar Tour
+Type: Appointment Booking
+Calendar: Tour / Visita de Instalaciones — Max Gym
+Duration: 30 minutos
+Location: Plaza del Super 99, Nivel 1, Costa del Este, Panamá
+Confirmation Template: confirmacion_tour
+Success Message:
+  "✅ ¡Listo! Te esperamos en Max Gym. Nos vemos pronto 💚"
+On Success: → WF 1 (Mover a Oportunidad)</pre>
+      <div class="info-note">&#x2139;&#xFE0F; El tour es completamente gratuito. Si el lead quiere entrenar antes de afiliarse, ofrecer day pass ($21.40).</div>
+    </div>
+  </div>
+
+  <!-- Action 2: Mover a Oportunidad -->
+  <div class="action-card" id="action2">
+    <div class="action-header"><h2><span class="action-number">2</span> Mover a Oportunidad</h2><button class="copy-btn" data-target="action2-code">Copiar bloque</button></div>
+    <div class="action-body">
+      <h3>&#x1F4C4; Crear/Actualizar Oportunidad</h3>
+<pre id="action2-code">Action: Mover a Oportunidad
+Trigger: Lead successfully books a tour
+Action: Create/Update Opportunity
+Pipeline: Membership / Subscription Services
+Stage: Tour / Visit Scheduled
+Tags to Add: ia-qualified, meeting-scheduled
+Tags to Remove: ia-qualifying
+Field Updates: bot_status → "Meeting Booked"</pre>
+      <div class="info-note">&#x2139;&#xFE0F; Esta acci&oacute;n se dispara autom&aacute;ticamente despu&eacute;s de Action 1 (Agendar Tour).</div>
+    </div>
+  </div>
+
+  <!-- Action 3: Descalificar -->
+  <div class="action-card" id="action3">
+    <div class="action-header"><h2><span class="action-number">3</span> Descalificar Lead</h2><button class="copy-btn" data-target="action3-code">Copiar bloque</button></div>
+    <div class="action-body">
+      <h3>&#x1F6AB; 6 Tipos de Descalificaci&oacute;n (A–F)</h3>
+<pre id="action3-code">Action: Descalificar Lead
+Trigger: Lead meets any DQ condition (TIPO A–F)
+Action: Update Opportunity + Add Tags + Stop Bot
+Tags to Add: ia-disqualified, dq-[type], stop-bot
+Field Updates: bot_status → "Disqualified", disqualification_reason → "[TIPO X — Description]"
+Stage: Lost (Disqualified)
+On Complete: → WF 2 (DQ workflow)
+
+Tipos de Descalificación:
+  TIPO A — dq-budget-too-low
+  TIPO B — dq-wrong-profile
+  TIPO C — dq-no-decision-maker
+  TIPO D — dq-out-of-range
+  TIPO E — dq-already-committed
+  TIPO F — dq-underage</pre>
+      <div class="info-note">&#x2139;&#xFE0F; TIPO F (dq-underage) es nuevo — edad m&iacute;nima 13 a&ntilde;os. Verificar en Paso 5 del flujo.</div>
+    </div>
+  </div>
+
+  <!-- Action 4: Transferir a Humano -->
+  <div class="action-card" id="action4">
+    <div class="action-header"><h2><span class="action-number">4</span> Transferir a Humano</h2><button class="copy-btn" data-target="action4-code">Copiar bloque</button></div>
+    <div class="action-body">
+      <h3>&#x1F91D; Transferencia a Dorayme Triana</h3>
+<pre id="action4-code">Action: Transferir a Humano
+Trigger:
+  1. Off-topic after 2 attempts
+  2. Lead requests human explicitly
+  3. Complex question outside bot scope
+Action: Add Tag + Notify
+Tags to Add: human-handover
+Internal Notification:
+  "{{contact.name}} solicita atención humana — Revisar conversación"
+Channel: Slack / Email (Dorayme Triana)</pre>
+      <div class="info-note">&#x2139;&#xFE0F; Transferir a Dorayme Triana (Operations Manager). Notificar v&iacute;a Slack o Email.</div>
+    </div>
+  </div>
+
+  <!-- Action 5: Guardar Información -->
+  <div class="action-card" id="action5">
+    <div class="action-header"><h2><span class="action-number">5</span> Guardar Informaci&oacute;n de Contacto</h2><button class="copy-btn" data-target="action5-code">Copiar bloque</button></div>
+    <div class="action-body">
+      <h3>&#x1F4CB; 19 Campos a guardar (incremental por paso)</h3>
+      <div class="field-grid">
+        <div class="field-item"><span class="label">Campo 1</span><strong>objetivo_principal</strong><p>Single Select. Objetivo del lead.</p><ul><li>Ganar músculo</li><li>Bajar de peso</li><li>Mantenerme activo</li></ul></div>
+        <div class="field-item"><span class="label">Campo 2</span><strong>situacion_actual</strong><p>Single Select. Situación actual.</p><ul><li>Nunca he ido</li><li>Voy a otro gym</li><li>He ido antes pero dejé</li></ul></div>
+        <div class="field-item"><span class="label">Campo 3</span><strong>cuando_empezar</strong><p>Single Select. Timing.</p><ul><li>Esta semana</li><li>Próxima semana</li><li>2-3 semanas</li></ul></div>
+        <div class="field-item"><span class="label">Campo 4</span><strong>presupuesto</strong><p>Single Select. Plan de interés.</p><ul><li>Rewards B/. 58.85</li><li>Mensual B/. 69.55</li><li>MAX 360 B/. 529.65</li></ul></div>
+        <div class="field-item"><span class="label">Campo 5</span><strong>objecion_sucursal</strong><p>Texto libre. Objeción de sucursal única.</p><ul><li>"Vivo en San Miguelito"</li><li>"Me queda lejos"</li></ul></div>
+        <div class="field-item"><span class="label">Campo 6</span><strong>ubicacion_referencia</strong><p>Texto libre. Zona donde se mueve.</p><ul><li>Costa del Este</li><li>San Francisco</li><li>Obarrio</li></ul></div>
+        <div class="field-item"><span class="label">Campo 7</span><strong>edad</strong><p>Number. Edad del contacto.</p><ul><li>Validar ≥ 13 años</li><li>Si menor → TIPO F</li></ul></div>
+        <div class="field-item"><span class="label">Campo 8</span><strong>tipo_entrenador</strong><p>Single Select. Preferencia.</p><ul><li>Planta (gratis, en piso)</li><li>Personalizado (costo adicional)</li></ul></div>
+        <div class="field-item"><span class="label">Campo 9</span><strong>tipo_pase</strong><p>Single Select. Tipo de pase.</p><ul><li>Day Pass $21.40</li><li>Week Pass $32.10</li><li>Single Class $10.70</li><li>Membresía</li></ul></div>
+        <div class="field-item"><span class="label">Campo 10</span><strong>visita_agendada</strong><p>Date. Fecha y hora del tour.</p><ul><li>2026-07-01 10:00</li><li>2026-07-03 15:30</li></ul></div>
+        <div class="field-item"><span class="label">Campo 11</span><strong>tour_type</strong><p>Texto. Tipo de tour.</p><ul><li>Presencial</li></ul></div>
+        <div class="field-item"><span class="label">Campo 12</span><strong>bot_status</strong><p>Texto. Estado del bot.</p><ul><li>en-curso</li><li>meeting-booked</li><li>disqualified</li><li>deactivated</li></ul></div>
+        <div class="field-item"><span class="label">Campo 13</span><strong>disqualification_reason</strong><p>Texto. Razón de DQ.</p><ul><li>TIPO A — Presupuesto bajo</li><li>TIPO F — Menor de edad</li></ul></div>
+        <div class="field-item"><span class="label">Campo 14</span><strong>nombre</strong><p>Texto. Nombre completo.</p></div>
+        <div class="field-item"><span class="label">Campo 15</span><strong>email</strong><p>Email. Correo electrónico.</p></div>
+        <div class="field-item"><span class="label">Campo 16</span><strong>telefono</strong><p>Phone. Teléfono / WhatsApp.</p></div>
+        <div class="field-item"><span class="label">Campo 17</span><strong>campana_origen</strong><p>Texto. Campaña de origen.</p></div>
+        <div class="field-item"><span class="label">Campo 18</span><strong>fuente</strong><p>Single Select. Fuente del lead.</p><ul><li>WhatsApp</li><li>Instagram</li><li>Web</li><li>Meta Ads</li><li>Google</li></ul></div>
+        <div class="field-item"><span class="label">Campo 19</span><strong>fecha_inscripcion</strong><p>Date. Fecha de registro.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action 6: Seguimiento por Inactividad -->
+  <div class="action-card" id="action6">
+    <div class="action-header"><h2><span class="action-number">6</span> Seguimiento por Inactividad</h2><button class="copy-btn" data-target="action6-code">Copiar bloque</button></div>
+    <div class="action-body">
+      <h3>&#x23F0; Workflow 11 — Re-engagement</h3>
+<pre id="action6-code">Action: Seguimiento por Inactividad
+Trigger: Lead stops replying during qualification
+Action: Start Workflow 11
+Wait: 72 hours before first follow-up
+Sequence:
+  → seguimiento_72_horas
+  → seguimiento_5_dias
+  → seguimiento_15_dias
+After Sequence:
+  Tags: cold, no-reply
+  → Move to Cold stage</pre>
+      <div class="info-note">&#x2139;&#xFE0F; WF 11 maneja toda la secuencia de re-engagement. Los tags <code>cold</code> y <code>no-reply</code> se agregan al final.</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="copy-toast" id="toast">&#x2705; Bloque copiado al portapapeles</div>
+
+<script>
+document.querySelectorAll('.copy-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const targetId = this.dataset.target;
+    const codeEl = document.getElementById(targetId);
+    if (!codeEl) return;
+    const text = codeEl.textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      this.textContent = '&#x2705; Copiado';
+      this.classList.add('copied');
+      setTimeout(() => { this.textContent = 'Copiar bloque'; this.classList.remove('copied'); }, 2000);
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
+    });
+  });
+});
+</script>
+</body>
+</html>

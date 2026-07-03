@@ -1,0 +1,2804 @@
+﻿<!DOCTYPE html>
+<html lang="es-PA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Max Gym — GHL Sprint Dashboard</title>
+<style>
+  /* ── Reset & Base ── */
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  :root {
+    --primary: #000000;
+    --primary-light: color-mix(in srgb, var(--primary) 20%, white);
+    --primary-dark: color-mix(in srgb, var(--primary) 80%, black);
+    --accent: #87f24d;
+    --accent-light: color-mix(in srgb, var(--accent) 20%, white);
+    --accent-dark: color-mix(in srgb, var(--accent) 80%, black);
+    --bg: #f0f2f5;
+    --surface: #ffffff;
+    --surface-alt: #f8fafc;
+    --text: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+    --border: #e2e8f0;
+    --success: #10b981;
+    --success-bg: #ecfdf5;
+    --warning: #f59e0b;
+    --warning-bg: #fffbeb;
+    --danger: #ef4444;
+    --danger-bg: #fef2f2;
+    --info: #3b82f6;
+    --info-bg: #eff6ff;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+    --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-lg: 0 4px 16px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+    --shadow-xl: 0 8px 32px rgba(0,0,0,0.1);
+    --radius: 12px;
+    --radius-sm: 8px;
+    --radius-xs: 4px;
+    --transition: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+    --font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', 'SF Mono', Consolas, monospace;
+    /* Smooth theme transitions */
+    --theme-transition: 0.25s ease;
+  }
+
+  /* ── Dark Theme ── */
+  [data-theme="dark"] {
+    --bg: #0b1120;
+    --surface: #1a2332;
+    --surface-alt: #243044;
+    --text: #e8edf4;
+    --text-secondary: #b0c0d4;
+    --text-muted: #6b7d99;
+    --border: #2d3a4e;
+    --success-bg: rgba(16, 185, 129, 0.15);
+    --warning-bg: rgba(245, 158, 11, 0.15);
+    --danger-bg: rgba(239, 68, 68, 0.15);
+    --info-bg: rgba(59, 130, 246, 0.15);
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.3);
+    --shadow: 0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
+    --shadow-lg: 0 4px 16px rgba(0,0,0,0.4), 0 2px 4px rgba(0,0,0,0.3);
+    --shadow-xl: 0 8px 32px rgba(0,0,0,0.5);
+  }
+
+  /* ── Smooth theme switching on supported properties ── */
+  body, .sidebar, .main, .dashboard-header, .phase-section, .sidebar-brand,
+  .sidebar-nav li a, .phase-section-header, .phase-section-header:hover,
+  .checklist-item, .tab-btn, .prompt-block, .config-table, .config-table th,
+  .config-table td, .meta-tag, .phase-badge, .sidebar-toggle, .phase-dot,
+  .agency-logo-wrap, .theme-toggle { transition: background-color var(--theme-transition),
+    color var(--theme-transition), border-color var(--theme-transition),
+    box-shadow var(--theme-transition); }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    min-height: 100vh;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Scrollbar ── */
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+  /* ── Sidebar ── */
+  .sidebar {
+    width: 280px;
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    position: fixed;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    transition: transform var(--transition);
+  }
+
+  .sidebar-brand {
+    padding: 24px 20px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .sidebar-brand .logo-mark {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 4px;
+  }
+
+  .sidebar-brand .logo-mark .agency-logo {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    object-fit: contain;
+    display: block;
+  }
+
+  .agency-logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .agency-logo-wrap .agency-logo {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  .sidebar-brand h1 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: -0.3px;
+  }
+
+  .sidebar-brand .subtitle {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+  }
+
+  /* Sidebar Progress Mini */
+  .sidebar-progress {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .sidebar-progress .mini-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .sidebar-progress .mini-bar {
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .sidebar-progress .mini-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--success));
+    border-radius: 2px;
+    width: 0%;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sidebar-progress .mini-stats {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .sidebar-nav {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 0;
+    list-style: none;
+  }
+
+  .sidebar-nav li a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 20px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all var(--transition);
+    border-left: 3px solid transparent;
+    position: relative;
+  }
+
+  .sidebar-nav li a:hover {
+    background: var(--surface-alt);
+    color: var(--text);
+  }
+
+  .sidebar-nav li a.active {
+    color: var(--primary);
+    background: var(--primary-light);
+    border-left-color: var(--accent);
+    border-left-width: 4px;
+  }
+
+  .sidebar-nav li a .phase-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    background: var(--surface-alt);
+    color: var(--text-muted);
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+    transition: all var(--transition);
+    border: 1px solid var(--border);
+  }
+
+  .sidebar-nav li a.active .phase-num {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+  }
+
+  .sidebar-nav li a.done .phase-num {
+    background: var(--success);
+    color: #fff;
+    border-color: var(--success);
+  }
+
+  .sidebar-nav li a .phase-check {
+    margin-left: auto;
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity var(--transition);
+  }
+
+  .sidebar-nav li a.done .phase-check {
+    opacity: 1;
+    color: var(--success);
+  }
+
+  .sidebar-nav .phase-label {
+    flex: 1;
+  }
+
+  /* ── Mobile sidebar toggle ── */
+  .sidebar-toggle {
+    display: none;
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 200;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: var(--text);
+  }
+
+  .sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 99;
+  }
+
+  /* ── Main ── */
+  .main {
+    margin-left: 280px;
+    flex: 1;
+    padding: 32px 40px 80px;
+    max-width: calc(100vw - 280px);
+  }
+
+  /* ── Header ── */
+  .dashboard-header {
+    background: var(--surface);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    margin-bottom: 28px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+  }
+
+  .dashboard-header .top-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .dashboard-header h2 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    line-height: 1.3;
+  }
+
+  .dashboard-header h2 span {
+    color: var(--primary);
+  }
+
+  .dashboard-header .meta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+  }
+
+  .dashboard-header .meta-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    background: var(--surface-alt);
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+  }
+
+  .dashboard-header .meta-tag .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--primary);
+  }
+
+  /* Progress in header */
+  .header-progress {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: center;
+  }
+
+  .header-progress .bar-container {
+    flex: 1;
+  }
+
+  .header-progress .main-bar {
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .header-progress .main-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), var(--success));
+    border-radius: 3px;
+    width: 0%;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .header-progress .bar-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  .header-progress .pct-badge {
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: var(--primary);
+    line-height: 1;
+    text-align: right;
+  }
+
+  .header-progress .pct-badge small {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+
+  /* ── Theme Toggle ── */
+  .theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    font-family: var(--font);
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: all var(--transition);
+    flex-shrink: 0;
+    height: 32px;
+  }
+
+  .theme-toggle:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    background: var(--primary-light);
+  }
+
+  .theme-toggle .theme-icon-light,
+  .theme-toggle .theme-icon-dark {
+    font-size: 14px;
+    line-height: 1;
+  }
+
+  .theme-toggle .theme-icon-dark { display: none; }
+  .theme-toggle .theme-icon-light { display: inline; }
+
+  [data-theme="dark"] .theme-toggle .theme-icon-dark { display: inline; }
+  [data-theme="dark"] .theme-toggle .theme-icon-light { display: none; }
+
+  /* Phase dots */
+  .phase-dots {
+    display: flex;
+    gap: 6px;
+    margin-top: 16px;
+  }
+
+  .phase-dot {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 700;
+    background: var(--surface-alt);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: all var(--transition);
+    text-decoration: none;
+  }
+
+  .phase-dot:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+  }
+
+  .phase-dot.active {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px var(--primary-light);
+  }
+
+  .phase-dot.done {
+    background: var(--success);
+    color: #fff;
+    border-color: var(--success);
+  }
+
+  /* ── Phase Sections ── */
+  .phase-section {
+    background: var(--surface);
+    border-radius: var(--radius);
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: box-shadow var(--transition);
+  }
+
+  .phase-section:hover {
+    box-shadow: var(--shadow-lg);
+  }
+
+  .phase-section-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 20px 28px;
+    cursor: pointer;
+    user-select: none;
+    transition: background var(--transition);
+    position: relative;
+  }
+
+  .phase-section-header:hover {
+    background: var(--surface-alt);
+  }
+
+  .phase-section-header .phase-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+    background: var(--primary-light);
+  }
+
+  .phase-section-header h3 {
+    font-size: 16px;
+    font-weight: 700;
+    flex: 1;
+    letter-spacing: -0.3px;
+  }
+
+  .phase-section-header .phase-count {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .phase-section-header .phase-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  .phase-badge.pending {
+    background: var(--surface-alt);
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+  }
+
+  .phase-badge.in-progress {
+    background: var(--info-bg);
+    color: var(--info);
+    border: 1px solid color-mix(in srgb, var(--info) 30%, transparent);
+  }
+
+  .phase-badge.done {
+    background: var(--success-bg);
+    color: var(--success);
+    border: 1px solid color-mix(in srgb, var(--success) 30%, transparent);
+  }
+
+  .phase-section-header .collapse-icon {
+    font-size: 18px;
+    color: var(--text-muted);
+    transition: transform var(--transition);
+  }
+
+  .phase-section.collapsed .collapse-icon {
+    transform: rotate(-90deg);
+  }
+
+  .phase-body {
+    padding: 0 28px 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .phase-section.collapsed .phase-body {
+    display: none;
+  }
+
+  /* Tabs */
+  .tab-bar {
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+    margin: 0 -28px;
+    padding: 0 28px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tab-bar::-webkit-scrollbar { height: 0; }
+
+  .tab-btn {
+    padding: 12px 20px;
+    font-size: 13px;
+    font-weight: 500;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    cursor: pointer;
+    color: var(--text-muted);
+    transition: all var(--transition);
+    white-space: nowrap;
+    font-family: var(--font);
+  }
+
+  .tab-btn:hover {
+    color: var(--text);
+  }
+
+  .tab-btn.active {
+    color: var(--primary);
+    border-bottom-color: var(--primary);
+  }
+
+  .tab-panel {
+    display: none;
+    padding-top: 20px;
+    animation: fadeIn 200ms ease;
+  }
+
+  .tab-panel.active {
+    display: block;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Checklist */
+  .checklist { list-style: none; }
+
+  .checklist-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    transition: opacity var(--transition);
+  }
+
+  .checklist-item:last-child { border-bottom: none; }
+
+  .checklist-item .check-wrap {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .checklist-item input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border);
+    border-radius: var(--radius-xs);
+    cursor: pointer;
+    transition: all var(--transition);
+    position: relative;
+  }
+
+  .checklist-item input[type="checkbox"]:checked {
+    background: var(--success);
+    border-color: var(--success);
+  }
+
+  .checklist-item input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    width: 6px;
+    height: 10px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  .checklist-item .check-label {
+    flex: 1;
+    transition: color var(--transition);
+  }
+
+  .checklist-item.done .check-label {
+    color: var(--text-muted);
+    text-decoration: line-through;
+  }
+
+  /* ── Artifact Cards ── */
+  .artifact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .artifact-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 18px;
+    transition: all var(--transition);
+    background: var(--surface);
+    position: relative;
+  }
+
+  .artifact-card:hover {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px var(--primary-light);
+  }
+
+  .artifact-card .card-icon {
+    font-size: 24px;
+    margin-bottom: 8px;
+  }
+
+  .artifact-card h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .artifact-card p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .artifact-card .card-footer {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+  }
+
+  .card-btn {
+    padding: 5px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all var(--transition);
+    font-family: var(--font);
+  }
+
+  .card-btn:hover {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+  }
+
+  .card-btn.copied {
+    background: var(--success);
+    color: #fff;
+    border-color: var(--success);
+  }
+
+  /* ── Tables ── */
+  .table-wrap {
+    overflow-x: auto;
+    margin-top: 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+  }
+
+  .config-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    min-width: 500px;
+  }
+
+  .config-table thead {
+    background: var(--surface-alt);
+  }
+
+  .config-table th {
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .config-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+  }
+
+  .config-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .config-table tr:hover td {
+    background: var(--surface-alt);
+  }
+
+  .config-table .mono {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--text);
+  }
+
+  .config-table .tag-cell {
+    display: inline-flex;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+
+  /* ── Tags ── */
+  .tags-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 12px;
+  }
+
+  .tag-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+  }
+
+  .tag-pill.source {
+    background: #eff6ff;
+    color: #2563eb;
+    border: 1px solid #bfdbfe;
+  }
+
+  .tag-pill.status {
+    background: #fff7ed;
+    color: #c2410c;
+    border: 1px solid #fed7aa;
+  }
+
+  .tag-pill.interest {
+    background: #faf5ff;
+    color: #9333ea;
+    border: 1px solid #e9d5ff;
+  }
+
+  .tag-pill.dq {
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+  }
+
+  .tag-pill.bot {
+    background: #f0fdf4;
+    color: #16a34a;
+    border: 1px solid #bbf7d0;
+  }
+
+  .tag-pill.wf {
+    background: #ecfeff;
+    color: #0891b2;
+    border: 1px solid #a5f3fc;
+  }
+
+  /* ── Prompt Blocks ── */
+  .prompt-block {
+    background: #0f172a;
+    color: #e2e8f0;
+    border-radius: var(--radius-sm);
+    padding: 20px;
+    margin-top: 12px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    line-height: 1.7;
+    white-space: pre-wrap;
+    position: relative;
+    overflow-x: auto;
+  }
+
+  .prompt-block .copy-btn {
+    position: sticky;
+    top: 8px;
+    float: right;
+    margin-left: 8px;
+    padding: 4px 12px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 6px;
+    color: #94a3b8;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition);
+    font-family: var(--font);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  .prompt-block .copy-btn:hover {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #fff;
+  }
+
+  .prompt-block .copy-btn.copied {
+    background: var(--success);
+    border-color: var(--success);
+    color: #fff;
+  }
+
+  .prompt-block .hljs {
+    color: inherit;
+  }
+
+  /* ── Pipeline Visual ── */
+  .pipeline-visual {
+    display: flex;
+    gap: 0;
+    margin-top: 16px;
+    overflow-x: auto;
+    padding: 12px 0 16px;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .pipeline-stage {
+    min-width: 150px;
+    max-width: 180px;
+    flex-shrink: 0;
+    position: relative;
+  }
+
+  .pipeline-stage .stage-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    text-align: center;
+    background: var(--surface);
+    transition: all var(--transition);
+    position: relative;
+  }
+
+  .pipeline-stage .stage-card:hover {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-light);
+  }
+
+  .pipeline-stage .stage-card .stage-icon {
+    font-size: 20px;
+    margin-bottom: 6px;
+  }
+
+  .pipeline-stage .stage-card .stage-name {
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--text);
+  }
+
+  .pipeline-stage .stage-card .stage-desc {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  .pipeline-stage .stage-card .stage-bot {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--primary);
+    margin-top: 8px;
+    padding: 3px 10px;
+    background: var(--primary-light);
+    border-radius: 10px;
+    letter-spacing: 0.2px;
+  }
+
+  .pipeline-stage .stage-card .stage-bot.stop {
+    background: var(--success-bg);
+    color: var(--success);
+  }
+
+  .pipeline-stage .stage-card .stage-bot.dq {
+    background: var(--danger-bg);
+    color: var(--danger);
+  }
+
+  .pipeline-connector {
+    display: flex;
+    align-items: center;
+    padding: 0 4px;
+    color: var(--text-muted);
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  /* ── Summary Grid ── */
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+    margin-top: 16px;
+  }
+
+  .summary-card {
+    text-align: center;
+    padding: 20px 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--surface);
+    transition: all var(--transition);
+  }
+
+  .summary-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+  }
+
+  .summary-card .number {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--primary);
+    letter-spacing: -1px;
+    line-height: 1;
+  }
+
+  .summary-card .label {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-top: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  /* ── Section title ── */
+  .section-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    margin: 20px 0 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .section-title:first-child {
+    margin-top: 0;
+  }
+
+  .section-subtitle {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+
+  /* ── Divider ── */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 20px 0;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 1024px) {
+    .main {
+      padding: 24px 20px 60px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .sidebar {
+      transform: translateX(-100%);
+    }
+
+    .sidebar.open {
+      transform: translateX(0);
+    }
+
+    .sidebar-overlay.open {
+      display: block;
+    }
+
+    .sidebar-toggle {
+      display: flex;
+    }
+
+    .main {
+      margin-left: 0;
+      max-width: 100%;
+      padding: 64px 16px 40px;
+    }
+
+    .dashboard-header .top-row {
+      flex-direction: column;
+    }
+
+    .header-progress {
+      grid-template-columns: 1fr;
+    }
+
+    .phase-section-header {
+      padding: 16px 18px;
+    }
+
+    .phase-body {
+      padding: 0 18px 18px;
+    }
+
+    .tab-bar {
+      margin: 0 -18px;
+      padding: 0 18px;
+    }
+
+    .artifact-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .summary-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .pipeline-visual {
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .pipeline-stage {
+      min-width: 100%;
+      max-width: 100%;
+    }
+
+    .pipeline-connector {
+      transform: rotate(90deg);
+      padding: 0;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .phase-dots {
+      flex-wrap: wrap;
+    }
+
+    .phase-section-header h3 {
+      font-size: 14px;
+    }
+
+    .summary-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  /* ── Screenshot Gallery ── */
+  .screenshots-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .screenshot-thumb {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all var(--transition);
+    background: var(--surface);
+  }
+
+  .screenshot-thumb:hover {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px var(--primary-light);
+    transform: translateY(-2px);
+  }
+
+  .screenshot-thumb .thumb-img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    display: block;
+    background: var(--surface-alt);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .screenshot-thumb .thumb-label {
+    padding: 8px 10px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .screenshots-note {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 16px;
+    padding: 12px 16px;
+    background: var(--info-bg);
+    border-radius: var(--radius-sm);
+    border: 1px solid color-mix(in srgb, var(--info) 30%, transparent);
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .screenshots-note .note-icon { font-size: 18px; flex-shrink: 0; }
+
+  .screenshots-empty {
+    padding: 32px;
+    text-align: center;
+    color: var(--text-muted);
+    border: 2px dashed var(--border);
+    border-radius: var(--radius-sm);
+    margin-top: 12px;
+  }
+
+  .screenshots-empty .empty-icon { font-size: 32px; margin-bottom: 8px; }
+  .screenshots-empty p { font-size: 14px; }
+  .screenshots-empty .hint { font-size: 12px; margin-top: 4px; color: var(--text-muted); }
+
+  /* ── Lightbox ── */
+  .lightbox-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(4px);
+    animation: lbFadeIn 200ms ease;
+  }
+
+  .lightbox-overlay.open {
+    display: flex;
+  }
+
+  @keyframes lbFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .lightbox-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: lbScaleIn 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @keyframes lbScaleIn {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .lightbox-content img {
+    max-width: 100%;
+    max-height: 80vh;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-xl);
+    display: block;
+  }
+
+  .lightbox-caption {
+    color: #e2e8f0;
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 12px;
+    text-align: center;
+    max-width: 600px;
+  }
+
+  .lightbox-caption .lb-count {
+    font-size: 12px;
+    color: #94a3b8;
+    margin-top: 2px;
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 28px;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background var(--transition);
+    font-family: var(--font);
+  }
+
+  .lightbox-close:hover { background: rgba(255,255,255,0.15); }
+
+  .lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.1);
+    border: none;
+    color: #fff;
+    font-size: 24px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition);
+    font-family: var(--font);
+  }
+
+  .lightbox-nav:hover { background: rgba(255,255,255,0.25); }
+
+  .lightbox-nav.prev { left: -60px; }
+  .lightbox-nav.next { right: -60px; }
+
+  @media (max-width: 768px) {
+    .screenshots-gallery {
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+    .screenshot-thumb .thumb-img { height: 90px; }
+    .lightbox-nav.prev { left: 8px; }
+    .lightbox-nav.next { right: 8px; }
+    .lightbox-close { top: 8px; right: 8px; }
+    .lightbox-content img { max-width: 95vw; }
+  }
+
+  /* ── Sub-actions & Hints ── */
+  .sub-action {
+    margin-top: 16px;
+    padding: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    border-left: 3px solid var(--primary);
+  }
+
+  .sub-action-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+  }
+
+  .step-hint {
+    margin-top: 8px;
+    padding: 8px 12px;
+    background: var(--info-bg);
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    color: var(--text-secondary);
+    border: 1px solid color-mix(in srgb, var(--info) 25%, transparent);
+  }
+
+  .hint {
+    font-size: 12px;
+    color: var(--text-muted);
+    display: block;
+    margin-top: 2px;
+    line-height: 1.4;
+  }
+
+  /* ── Utility ── */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    border: 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── Mobile Toggle ─── -->
+<button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">☰</button>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<!-- ─── SIDEBAR ─── -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="logo-mark">
+      <div class="agency-logo-wrap">
+        <img class="agency-logo" src="co.logo-60.png" alt="Agency logo">
+        <div>
+          <h1>Max Gym</h1>
+          <div class="subtitle">GHL Subaccount Setup</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sidebar-progress">
+    <div class="mini-label">Progress</div>
+    <div class="mini-bar">
+      <div class="mini-fill" id="miniFill"></div>
+    </div>
+    <div class="mini-stats">
+      <span id="miniPct">0%</span>
+      <span id="miniCount">0/8 phases</span>
+    </div>
+  </div>
+
+  <ul class="sidebar-nav">
+    <li><a href="#phase-0" data-phase="0"><span class="phase-num">0</span><span class="phase-label">Discovery &amp; Strategy</span><span class="phase-check">✓</span></a></li>
+    <li><a href="#phase-1" data-phase="1"><span class="phase-num">1</span><span class="phase-label">Account Foundation</span><span class="phase-check">✓</span></a></li>
+    <li><a href="#phase-2" data-phase="2"><span class="phase-num">2</span><span class="phase-label">Data Architecture</span><span class="phase-check">✓</span></a></li>
+    <li><a href="#phase-3" data-phase="3"><span class="phase-num">3</span><span class="phase-label">Pipeline &amp; Imports</span><span class="phase-check">✓</span></a></li>
+    <li><a href="#phase-4" data-phase="4"><span class="phase-num">4</span><span class="phase-label">AI Agent Bot</span><span class="phase-check">✓</span></a></li>
+    <li><a href="#phase-5" data-phase="5"><span class="phase-num">5</span><span class="phase-label">Marketing Channels</span><span class="phase-check">✓</span></a></li>
+    <li><a href="#phase-6" data-phase="6"><span class="phase-num">6</span><span class="phase-label">Automation Engine</span><span class="phase-check">✓</span></a></li>
+    <li><a href="#phase-7" data-phase="7"><span class="phase-num">7</span><span class="phase-label">Assets &amp; Go-Live</span><span class="phase-check">✓</span></a></li>
+  </ul>
+</nav>
+
+<!-- ─── MAIN ─── -->
+<div class="main">
+
+  <!-- ═══ HEADER ═══ -->
+  <header class="dashboard-header">
+    <div class="top-row">
+      <div>
+        <h2><span>Max Gym</span> — GHL Configuration Sprint</h2>
+        <div class="meta">
+          <span class="meta-tag"><span class="dot"></span> Gym / Fitness</span>
+          <span class="meta-tag">Pipeline: Membership / Subscription Services</span>
+          <span class="meta-tag">Started: June 22, 2026</span>
+        </div>
+      </div>
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <span class="theme-icon-light">☀</span>
+        <span class="theme-icon-dark">☾</span>
+        <span class="theme-label">Theme</span>
+      </button>
+    </div>
+
+    <div class="header-progress">
+      <div class="bar-container">
+        <div class="main-bar">
+          <div class="main-fill" id="mainFill"></div>
+        </div>
+        <div class="bar-labels">
+          <span id="progressSteps">0 / 0 steps done</span>
+          <span id="progressPhase">0 of 8 phases</span>
+        </div>
+      </div>
+      <div class="pct-badge" id="pctBadge">0<small>%</small></div>
+    </div>
+
+    <div class="phase-dots">
+      <a href="#phase-0" class="phase-dot" data-phase="0">0</a>
+      <a href="#phase-1" class="phase-dot" data-phase="1">1</a>
+      <a href="#phase-2" class="phase-dot" data-phase="2">2</a>
+      <a href="#phase-3" class="phase-dot" data-phase="3">3</a>
+      <a href="#phase-4" class="phase-dot" data-phase="4">4</a>
+      <a href="#phase-5" class="phase-dot" data-phase="5">5</a>
+      <a href="#phase-6" class="phase-dot" data-phase="6">6</a>
+      <a href="#phase-7" class="phase-dot" data-phase="7">7</a>
+    </div>
+  </header>
+
+  <!-- ═══ PHASE 0 — Discovery & Strategy ═══ -->
+  <section class="phase-section" id="phase-0">
+    <div class="phase-section-header" onclick="togglePhase(this)">
+      <div class="phase-icon">📋</div>
+      <h3>Phase 0: Discovery &amp; Strategy</h3>
+      <span class="phase-count" id="count-0">0/5</span>
+      <span class="phase-badge pending" id="badge-0">Pending</span>
+      <span class="collapse-icon">▼</span>
+    </div>
+    <div class="phase-body">
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="0-checklist">Checklist</button>
+        <button class="tab-btn" data-tab="0-artifacts">Artifacts</button>
+      </div>
+
+      <div class="tab-panel active" id="tab-0-checklist">
+        <ul class="checklist">
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Collect Marketing Brain HTML (auto-discovered or ask equivalent questions)</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Extract focus cluster, buyer persona, customer journey</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Select industry pipeline template: <strong>Membership / Subscription Services</strong></span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Map customer journey → bot role → pipeline stages</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Present strategy brief to team (see artifact for details)</span>
+          </li>
+        </ul>
+        <div class="section-subtitle" style="margin-top:16px;">Cluster: <strong>#1 High-Intent Locals</strong> · Bot role: <strong>Calificar leads entrantes de WhatsApp e Instagram, identificar objetivo, manejar objeción de precio y sucursal única, agendar tour</strong> · Pipeline: <strong>Membership / Subscription Services</strong></div>
+      </div>
+
+      <div class="tab-panel" id="tab-0-artifacts">
+        <div class="artifact-grid">
+          <div class="artifact-card">
+            <div class="card-icon">📄</div>
+            <h4>Strategy Brief</h4>
+            <p>Focus cluster, offer, pipeline template, bot role, brand voice, audience summary, channel map.</p>
+            <div class="card-footer"><a href="artifacts/01_Strategy_Brief.html" target="_blank"><button class="card-btn">📄 View file</button></a></div>
+          </div>
+          <div class="artifact-card">
+            <div class="card-icon">💬</div>
+            <h4>Conversation Flow</h4>
+            <p>Full approved bot flow with all questions, DQ types, and booking step.</p>
+            <div class="card-footer"><a href="artifacts/02_Conversation_Flow.html" target="_blank"><button class="card-btn">📄 View file</button></a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PHASE 1 — Account Foundation ═══ -->
+  <section class="phase-section" id="phase-1">
+    <div class="phase-section-header" onclick="togglePhase(this)">
+      <div class="phase-icon">🏗️</div>
+      <h3>Phase 1: Account Foundation</h3>
+      <span class="phase-count" id="count-1">0/6</span>
+      <span class="phase-badge pending" id="badge-1">Pending</span>
+      <span class="collapse-icon">▼</span>
+    </div>
+    <div class="phase-body">
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="1-checklist">Checklist</button>
+        <button class="tab-btn" data-tab="1-artifacts">Artifacts</button>
+        <button class="tab-btn" data-tab="1-screenshots">📸</button>
+      </div>
+
+      <div class="tab-panel active" id="tab-1-checklist">
+        <ul class="checklist">
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Go to Settings → Brand Kit. Click "Upload Logo" → select horizontal logo (350×180px). Set primary color to <strong>#000000</strong>, secondary to <strong>#87f24d</strong>. Click Save.</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">In Brand Kit: set heading font <strong>Inter</strong>, body font <strong>Inter</strong>. Add social links: <strong>@maxgym_pa (IG), maxgym.com.pa</strong>. Upload favicon.</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Go to Settings → Integrations. Connect: Google Calendar, Gmail/SMTP, Facebook, LinkedIn, TikTok, WhatsApp, Google Ads. Verify each shows "Connected".</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Go to Settings → Domains → "Connect Domain". Enter <strong>maxgym.com.pa</strong>. Copy DNS records shown → paste at domain provider → click "Verify" in GHL.</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Go to Settings → Account. Set timezone <strong>America/Panama</strong>, language <strong>es-PA</strong>. Verify SSL enabled, email subdomain DNS configured.</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Go to Settings → Tags. Create each tag from Tags Map artifact: Source (3), Pipeline (4), DQ (5), Bot Events (4), Workflow (6).</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="tab-panel" id="tab-1-artifacts">
+        <div class="artifact-grid">
+          <div class="artifact-card">
+            <div class="card-icon">🎨</div>
+            <h4>Brand Kit Preview</h4>
+            <p>Logo, colors, typography — copy to GHL Brand Kit.</p>
+            <div class="card-footer"><a href="assets/brand_kit_preview.html" target="_blank"><button class="card-btn">🎨 View file</button></a></div>
+          </div>
+          <div class="artifact-card">
+            <div class="card-icon">🏷️</div>
+            <h4>Tags Map</h4>
+            <p>All tags organized by category — import into GHL Tags.</p>
+            <div class="card-footer"><a href="artifacts/11_Tags_Map.html" target="_blank"><button class="card-btn">🏷️ View file</button></a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-1-screenshots">
+        <div class="screenshots-note">
+          <span class="note-icon">📸</span>
+          <span>Tutorial screenshots for account foundation setup. Click any thumbnail to open in lightbox (arrow keys to navigate).</span>
+        </div>
+        <div class="screenshots-gallery" id="gallery-1">
+          <div class="screenshot-thumb" onclick="openLightbox('1', 0)">
+            <img class="thumb-img" data-src="screenshots/phase-1/1.Crear Panel de Marca.png" data-label="Crear Panel de Marca" src="screenshots/phase-1/1.Crear Panel de Marca.png" alt="Crear Panel de Marca" loading="lazy">
+            <div class="thumb-label">Crear Panel de Marca</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('1', 1)">
+            <img class="thumb-img" data-src="screenshots/phase-1/2.Brandkit-upload-logo-colours.png" data-label="Brandkit - upload logo colours" src="screenshots/phase-1/2.Brandkit-upload-logo-colours.png" alt="Brandkit - upload logo colours" loading="lazy">
+            <div class="thumb-label">Brandkit - upload logo colours</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('1', 2)">
+            <img class="thumb-img" data-src="screenshots/phase-1/3.Crear etiquetas basicas.png" data-label="Crear etiquetas basicas" src="screenshots/phase-1/3.Crear etiquetas basicas.png" alt="Crear etiquetas basicas" loading="lazy">
+            <div class="thumb-label">Crear etiquetas basicas</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('1', 3)">
+            <img class="thumb-img" data-src="screenshots/phase-1/4.Integraciones-Conecta google calendar, una cuenta de Gmail, FacebookMeta, Linkedin, Tiktok, Whatsapp, GAnuncios.png" data-label="Integraciones - Conecta google calendar, Gmail, FacebookMeta, Linkedin, Tiktok, Whatsapp, GAnuncios" src="screenshots/phase-1/4.Integraciones-Conecta google calendar, una cuenta de Gmail, FacebookMeta, Linkedin, Tiktok, Whatsapp, GAnuncios.png" alt="Integraciones" loading="lazy">
+            <div class="thumb-label">Integraciones</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('1', 4)">
+            <img class="thumb-img" data-src="screenshots/phase-1/5.Enable External Tracking.png" data-label="Enable External Tracking" src="screenshots/phase-1/5.Enable External Tracking.png" alt="Enable External Tracking" loading="lazy">
+            <div class="thumb-label">Enable External Tracking</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('1', 5)">
+            <img class="thumb-img" data-src="screenshots/phase-1/6. Connect domain  subdomain and email subdomain.png" data-label="Connect domain subdomain and email subdomain" src="screenshots/phase-1/6. Connect domain  subdomain and email subdomain.png" alt="Connect domain subdomain and email subdomain" loading="lazy">
+            <div class="thumb-label">Connect domain subdomain and email subdomain</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('1', 6)">
+            <img class="thumb-img" data-src="screenshots/phase-1/7. Create dedicated Domain.png" data-label="Create dedicated Domain" src="screenshots/phase-1/7. Create dedicated Domain.png" alt="Create dedicated Domain" loading="lazy">
+            <div class="thumb-label">Create dedicated Domain</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PHASE 2 — Data Architecture ═══ -->
+  <section class="phase-section" id="phase-2">
+    <div class="phase-section-header" onclick="togglePhase(this)">
+      <div class="phase-icon">🗂️</div>
+      <h3>Phase 2: Data Architecture</h3>
+      <span class="phase-count" id="count-2">0/6</span>
+      <span class="phase-badge pending" id="badge-2">Pending</span>
+      <span class="collapse-icon">▼</span>
+    </div>
+    <div class="phase-body">
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="2-checklist">Checklist</button>
+        <button class="tab-btn" data-tab="2-artifacts">Artifacts</button>
+        <button class="tab-btn" data-tab="2-screenshots">📸</button>
+      </div>
+
+      <div class="tab-panel active" id="tab-2-checklist">
+        <ul class="checklist">
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Go to Settings → Custom Fields. Click "Add Field" for each field in the Custom Fields Table artifact. Create ALL contact fields first, THEN opportunity fields. Use exact labels and keys from artifact.</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Go to Settings → WhatsApp. Connect number (or use existing). Then go to Marketing → WhatsApp Templates → "New Template". Create each template from artifact: Meeting Confirmation, Follow-up 24h, 3d, 5d, Re-engagement.</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Go to Settings → Integrations → Email Services. Set up LeadConnector Email or connect SMTP. Create dedicated email domain. Verify SPF/DKIM records.</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Go to Settings → Users → "Add User" for each team member (see User & Calendar artifact). Then go to Settings → Calendars → create calendars per user. Set booking rules, notifications, availability.</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Go to Settings → Business Profile. Fill all 17 fields from Business Profile Settings artifact: name, phone, address, hours, description, services. Copy-paste each value from artifact.</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Test: Create a test contact. Verify all custom fields appear. Send test WhatsApp template. Schedule test calendar event. Verify email delivery.</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="tab-panel" id="tab-2-artifacts">
+        <div class="artifact-grid">
+          <div class="artifact-card">
+            <div class="card-icon">📊</div>
+            <h4>Custom Fields Table</h4>
+            <p>All contact &amp; opportunity fields with types and keys.</p>
+            <div class="card-footer"><a href="artifacts/03_Custom_Fields_Table.html" target="_blank"><button class="card-btn">📊 View file</button></a></div>
+          </div>
+          <div class="artifact-card">
+            <div class="card-icon">💬</div>
+            <h4>WhatsApp Templates</h4>
+            <p>Approved WhatsApp message templates.</p>
+            <div class="card-footer"><a href="artifacts/08_WhatsApp_Templates.html" target="_blank"><button class="card-btn">💬 View file</button></a></div>
+          </div>
+          <div class="artifact-card">
+            <div class="card-icon">📅</div>
+            <h4>User &amp; Calendar Config</h4>
+            <p>Calendar settings and user configuration.</p>
+            <div class="card-footer"><a href="artifacts/07_User_Calendar_Config.html" target="_blank"><button class="card-btn">📅 View file</button></a></div>
+          </div>
+          <div class="artifact-card">
+            <div class="card-icon">🏪</div>
+            <h4>Business Profile Settings</h4>
+            <p>17-field GHL Business Profile config — copy-paste ready.</p>
+            <div class="card-footer"><a href="artifacts/13_Business_Profile_Settings.html" target="_blank"><button class="card-btn">🏪 View file</button></a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-2-screenshots">
+        <div class="screenshots-note">
+          <span class="note-icon">📸</span>
+          <span>Tutorial screenshots for data architecture setup. Click any thumbnail to open in lightbox (arrow keys to navigate).</span>
+        </div>
+        <div class="screenshots-gallery" id="gallery-2">
+          <div class="screenshot-thumb" onclick="openLightbox('2', 0)">
+            <img class="thumb-img" data-src="screenshots/phase-2/8.Crear Campos personalizados.png" data-label="Crear Campos personalizados" src="screenshots/phase-2/8.Crear Campos personalizados.png" alt="Crear Campos personalizados" loading="lazy">
+            <div class="thumb-label">Crear Campos personalizados</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('2', 1)">
+            <img class="thumb-img" data-src="screenshots/phase-2/9.conectar whatsapp.png" data-label="Conectar whatsapp" src="screenshots/phase-2/9.conectar whatsapp.png" alt="Conectar whatsapp" loading="lazy">
+            <div class="thumb-label">Conectar whatsapp</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('2', 2)">
+            <img class="thumb-img" data-src="screenshots/phase-2/10.Conectar WhatsApp. Y crear las siguientes plantillas.png" data-label="Conectar WhatsApp. Y crear las siguientes plantillas" src="screenshots/phase-2/10.Conectar WhatsApp. Y crear las siguientes plantillas.png" alt="Conectar WhatsApp" loading="lazy">
+            <div class="thumb-label">Conectar WhatsApp</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('2', 3)">
+            <img class="thumb-img" data-src="screenshots/phase-2/11.Gestionar números (si aplica)1.png" data-label="Gestionar números (si aplica) 1" src="screenshots/phase-2/11.Gestionar números (si aplica)1.png" alt="Gestionar números 1" loading="lazy">
+            <div class="thumb-label">Gestionar números 1</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('2', 4)">
+            <img class="thumb-img" data-src="screenshots/phase-2/12.Gestionar números (si aplica)2.png" data-label="Gestionar números (si aplica) 2" src="screenshots/phase-2/12.Gestionar números (si aplica)2.png" alt="Gestionar números 2" loading="lazy">
+            <div class="thumb-label">Gestionar números 2</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('2', 5)">
+            <img class="thumb-img" data-src="screenshots/phase-2/13.Gestionar números 3.png" data-label="Gestionar números 3" src="screenshots/phase-2/13.Gestionar números 3.png" alt="Gestionar números 3" loading="lazy">
+            <div class="thumb-label">Gestionar números 3</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('2', 6)">
+            <img class="thumb-img" data-src="screenshots/phase-2/14.Asegurate de usar LeadConnector Email Systems y crear un dedicated domain.png" data-label="Asegurate de usar LeadConnector Email Systems" src="screenshots/phase-2/14.Asegurate de usar LeadConnector Email Systems y crear un dedicated domain.png" alt="LeadConnector Email Systems" loading="lazy">
+            <div class="thumb-label">LeadConnector Email Systems</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('2', 7)">
+            <img class="thumb-img" data-src="screenshots/phase-2/15.crear un dedicated domain.png" data-label="Crear un dedicated domain" src="screenshots/phase-2/15.crear un dedicated domain.png" alt="Crear un dedicated domain" loading="lazy">
+            <div class="thumb-label">Crear un dedicated domain</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('2', 8)">
+            <img class="thumb-img" data-src="screenshots/phase-2/16. check los email settings.png" data-label="Check los email settings" src="screenshots/phase-2/16. check los email settings.png" alt="Check los email settings" loading="lazy">
+            <div class="thumb-label">Check los email settings</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('2', 9)">
+            <img class="thumb-img" data-src="screenshots/phase-2/17.Crear Calendarios Puedes crear calendarios por cada usuario o como se haya definido con el cliente.png" data-label="Crear Calendarios" src="screenshots/phase-2/17.Crear Calendarios Puedes crear calendarios por cada usuario o como se haya definido con el cliente.png" alt="Crear Calendarios" loading="lazy">
+            <div class="thumb-label">Crear Calendarios</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('2', 10)">
+            <img class="thumb-img" data-src="screenshots/phase-2/18.Create 'Personal' Calendars for the team members.png" data-label="Create 'Personal' Calendars for the team members" src="screenshots/phase-2/18.Create 'Personal' Calendars for the team members.png" alt="Create Personal Calendars" loading="lazy">
+            <div class="thumb-label">Create Personal Calendars</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('2', 11)">
+            <img class="thumb-img" data-src="screenshots/phase-2/19.Calendar-Notifications – Assign at least in-app notifications to 'Assigned User'.png" data-label="Calendar-Notifications" src="screenshots/phase-2/19.Calendar-Notifications – Assign at least in-app notifications to 'Assigned User'.png" alt="Calendar Notifications" loading="lazy">
+            <div class="thumb-label">Calendar Notifications</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('2', 12)">
+            <img class="thumb-img" data-src="screenshots/phase-2/20.Crear usuarios.png" data-label="Crear usuarios" src="screenshots/phase-2/20.Crear usuarios.png" alt="Crear usuarios" loading="lazy">
+            <div class="thumb-label">Crear usuarios</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('2', 13)">
+            <img class="thumb-img" data-src="screenshots/phase-2/21.Asegurate de seleccionar el Calendario correcto para el contacto.png" data-label="Seleccionar el Calendario correcto" src="screenshots/phase-2/21.Asegurate de seleccionar el Calendario correcto para el contacto.png" alt="Seleccionar Calendario correcto" loading="lazy">
+            <div class="thumb-label">Seleccionar Calendario correcto</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('2', 14)">
+            <img class="thumb-img" data-src="screenshots/phase-2/22.Business Profile settings.png" data-label="Business Profile settings" src="screenshots/phase-2/22.Business Profile settings.png" alt="Business Profile settings" loading="lazy">
+            <div class="thumb-label">Business Profile settings</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PHASE 3 — Pipeline & Imports ═══ -->
+  <section class="phase-section" id="phase-3">
+    <div class="phase-section-header" onclick="togglePhase(this)">
+      <div class="phase-icon">🔄</div>
+      <h3>Phase 3: Pipeline &amp; Imports</h3>
+      <span class="phase-count" id="count-3">0/5</span>
+      <span class="phase-badge pending" id="badge-3">Pending</span>
+      <span class="collapse-icon">▼</span>
+    </div>
+    <div class="phase-body">
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="3-checklist">Checklist</button>
+        <button class="tab-btn" data-tab="3-stages">Stages</button>
+        <button class="tab-btn" data-tab="3-artifacts">Artifacts</button>
+        <button class="tab-btn" data-tab="3-screenshots">📸</button>
+      </div>
+
+      <div class="tab-panel active" id="tab-3-checklist">
+        <ul class="checklist">
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Go to Settings → Labs. Enable "Opportunity Forecasting" toggle.</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Go to Opportunities → Pipelines. Click "Create Pipeline". Name it <strong>Membership / Subscription Services</strong>. Select type <strong>Membership / Subscription Services</strong>.</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Add stages from Pipeline Stage Map: open each stage, set name, probability, order. See <strong>Stages</strong> tab for copyable names.</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Import existing contacts (CSV) — go to Contacts → Import. Map CSV columns to custom fields. Verify 5 sample imports.</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Go to Automation → Pipeline Automations. Set stage enter/exit triggers for each stage per workflow map.</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="tab-panel" id="tab-3-stages">
+        <div class="section-subtitle">Copy these stage names into GHL when creating the pipeline. Paste each name into the "Stage Name" field.</div>
+        <div class="table-wrap">
+          <table class="config-table">
+            <thead><tr><th>#</th><th>Stage Name</th><th>Probability</th><th>Bot Phase</th><th>Copy</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td><span class="mono">New Lead</span></td><td>10%</td><td>Phase 0 — Greeting</td><td><button class="card-btn" onclick="copyText('New Lead',this)">Copy</button></td></tr>
+              <tr><td>2</td><td><span class="mono">Tour / Visit Scheduled</span></td><td>25%</td><td>Phases 1-3 — Qualification</td><td><button class="card-btn" onclick="copyText('Tour / Visit Scheduled',this)">Copy</button></td></tr>
+              <tr><td>3</td><td><span class="mono">Prospect</span></td><td>50%</td><td>Phase N — Booking</td><td><button class="card-btn" onclick="copyText('Prospect',this)">Copy</button></td></tr>
+              <tr><td>4</td><td><span class="mono">Member Signed</span></td><td>80%</td><td>Human takes over</td><td><button class="card-btn" onclick="copyText('Member Signed',this)">Copy</button></td></tr>
+              <tr><td>5</td><td><span class="mono">Active Member</span></td><td>95%</td><td>Human takes over</td><td><button class="card-btn" onclick="copyText('Active Member',this)">Copy</button></td></tr>
+              <tr><td>—</td><td><span class="mono">Won</span></td><td>100%</td><td>GHL auto</td><td><button class="card-btn" onclick="copyText('Won',this)">Copy</button></td></tr>
+              <tr><td>—</td><td><span class="mono">Lost</span></td><td>0%</td><td>GHL auto</td><td><button class="card-btn" onclick="copyText('Lost',this)">Copy</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="step-hint">💡 Pipeline stages must match exactly what the Bot Pipeline Map expects. Copy names from Stage Map artifact to verify.</div>
+      </div>
+
+      <div class="tab-panel" id="tab-3-artifacts">
+        <div class="artifact-grid">
+          <div class="artifact-card">
+            <div class="card-icon">🔄</div>
+            <h4>Bot Pipeline Map</h4>
+            <p>Bot role → pipeline stage mapping with disqualified handling.</p>
+            <div class="card-footer"><a href="artifacts/02_Bot_Pipeline_Map.html" target="_blank"><button class="card-btn">🔄 View file</button></a></div>
+          </div>
+          <div class="artifact-card">
+            <div class="card-icon">📋</div>
+            <h4>Pipeline Stage Map</h4>
+            <p>Detailed stage config with probability, order, and bot assignments.</p>
+            <div class="card-footer"><a href="artifacts/06_Pipeline_Stage_Map.html" target="_blank"><button class="card-btn">📋 View file</button></a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-3-screenshots">
+        <div class="screenshots-note">
+          <span class="note-icon">📸</span>
+          <span>Tutorial screenshots for pipeline and imports setup. Click any thumbnail to open in lightbox (arrow keys to navigate).</span>
+        </div>
+        <div class="screenshots-gallery" id="gallery-3">
+          <div class="screenshot-thumb" onclick="openLightbox('3', 0)">
+            <img class="thumb-img" data-src="screenshots/phase-3/23.First Go to Settings Labs and turn this setting on-opportunity forecasting.png" data-label="First Go to Settings Labs - opportunity forecasting" src="screenshots/phase-3/23.First Go to Settings Labs and turn this setting on-opportunity forecasting.png" alt="Opportunity forecasting" loading="lazy">
+            <div class="thumb-label">Opportunity forecasting</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('3', 1)">
+            <img class="thumb-img" data-src="screenshots/phase-3/24.Then create the Pipeline and Stages.png" data-label="Then create the Pipeline and Stages" src="screenshots/phase-3/24.Then create the Pipeline and Stages.png" alt="Create Pipeline and Stages" loading="lazy">
+            <div class="thumb-label">Create Pipeline and Stages</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PHASE 4 — AI Agent Bot ═══ -->
+  <section class="phase-section" id="phase-4">
+    <div class="phase-section-header" onclick="togglePhase(this)">
+      <div class="phase-icon">🤖</div>
+      <h3>Phase 4: AI Agent Bot</h3>
+      <span class="phase-count" id="count-4">0/7</span>
+      <span class="phase-badge pending" id="badge-4">Pending</span>
+      <span class="collapse-icon">▼</span>
+    </div>
+    <div class="phase-body">
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="4-checklist">Checklist</button>
+        <button class="tab-btn" data-tab="4-personality">🧠 Personality</button>
+        <button class="tab-btn" data-tab="4-objective">🎯 Objective</button>
+        <button class="tab-btn" data-tab="4-flow">📋 Full Flow</button>
+        <button class="tab-btn" data-tab="4-actions">⚙️ Actions</button>
+        <button class="tab-btn" data-tab="4-artifacts">Artifacts</button>
+        <button class="tab-btn" data-tab="4-screenshots">📸</button>
+      </div>
+
+      <div class="tab-panel active" id="tab-4-checklist">
+        <ul class="checklist">
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Go to AI Agents → Knowledgebase. Click "Add Source" → "Website URL". Enter <strong>https://maxgym.com.pa</strong>. Select pages to scrape, set exclusion rules.</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">In Knowledgebase, click "Add Source" → "Text". Paste 10+ FAQs from <strong>Knowledgebase Content artifact</strong>. Save as "FAQ - Max Gym".</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Upload Marketing Brain HTML as a knowledgebase document: "Add Source" → "File" → select the Marketing Brain HTML file.</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Create bot: name + knowledgebase selection</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Configure <strong>🧠 Personality</strong> (Layer 1) — <a href="#tab-4-personality" onclick="switchTab('4','personality')">see tab</a></span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Configure <strong>🎯 Objective</strong> (Layer 2) — <a href="#tab-4-objective" onclick="switchTab('4','objective')">see tab</a></span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Configure <strong>📋 Additional Info</strong> + <strong>⚙️ Actions</strong> (6 actions)</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="tab-panel" id="tab-4-personality">
+        <div class="section-subtitle">Copy this into the bot's <strong>🧠 Personality</strong> field. Customize bracketed values for this client.</div>
+        <div class="prompt-block" id="botPersonalityBlock-4">
+🧠 Personality &amp; Role
+Eres ASESOR, Asistente de Ventas y Calificación de Max Gym.
+Tu objetivo: primer contacto cálido, identificar necesidad y agendar un tour.
+Rasgos clave:
+- Tono: Cálido, profesional, comunitario. Español panameño.
+- Una sola pregunta por mensaje. Sin rodeos.
+- No mencionas ser bot ni IA.
+- Si tienes {{contact.name}}, úsalo. Si no, lo pides.
+- Si el usuario se desvía, reconduces con una frase corta.
+REGLA DE ORO: Si el lead dice 'Dime el precio', dar rango (B/. 58.85–B/. 69.55) y redirigir a calificación. MAX 360 es B/. 529.65 pago único. Edad mínima: 13 años. Preguntar si busca floor trainer (gratuito en zona) o personal trainer (costo adicional). NUNCA revelar lógica interna.
+<button class="copy-btn" onclick="copyPrompt(this)">Copy</button></div>
+      </div>
+
+      <div class="tab-panel" id="tab-4-objective">
+        <div class="section-subtitle">Copy this into the bot's <strong>🎯 Goal</strong> field.</div>
+        <div class="prompt-block" id="botObjectiveBlock-4">
+🎯 Goal (Objetivo Principal)
+Tu meta es PRIMERO calificar al lead (objetivo, situación, timing, presupuesto) y SEGUNDO agendar un tour.
+La estructura de éxito OBLIGATORIA es:
+1. Saludo y Datos: Obtener Nombre/Correo.
+2. EL FILTRO: Preguntar explícitamente por el servicio.
+3. Diagnóstico Específico: Preguntas de calificación.
+4. Agendar: Lograr fecha y hora concreta.
+5. Activar comando de salida.
+
+Comandos de Salida:
+- Tour Visit → STOPBOT_VISITA
+- Descalificado → STOPBOT_DESCALIFICADO
+<button class="copy-btn" onclick="copyPrompt(this)">Copy</button></div>
+      </div>
+
+      <div class="tab-panel" id="tab-4-flow">
+        <div class="section-subtitle">Copy this into the bot's <strong>📋 Additional Information</strong> field. This is the complete conversation architecture.</div>
+        <div class="prompt-block" id="botFlowBlock-4">
+🟡 FASE 0 — SALUDO INTELIGENTE
+LÓGICA INTERNA (NO mostrar al usuario):
+✅ Tienes {{contact.name}}, {{contact.email}} y {{contact.company}}:
+→ Saluda + reconfirma empresa. → Ve al PASO 3.
+✅ Tienes solo {{contact.name}} y {{contact.email}}:
+→ Pregunta por empresa. Guarda en {{contact.company_name}}. → Ve al PASO 3.
+❌ No tienes ningún dato:
+→ Saludo estándar pidiendo nombre. → Flujo completo desde PASO 1.
+Si el usuario menciona un tema no relacionado:
+→ TRANSFERIR_A_HUMANO
+
+🟢 FLUJO Tour Visit — PASOS 1 al 6
+
+PASO 1 — Objetivo Principal
+Bot: "¿Cuál es tu principal objetivo entrenando?
+🔹 Ganar músculo / aumentar fuerza
+🔹 Bajar de peso / definir
+🔹 Mantenerme activo / salud general
+🔹 Mejorar mi condición física / rendimiento
+🔹 No estoy seguro / necesito orientación"
+→ Guarda en: {{contact.objetivo_principal}}
+LÓGICA INTERNA: Si "No estoy seguro" → redirigir a MAX 360
+
+PASO 2 — Situación Actual
+Bot: "Cuéntame sobre tu situación actual:
+🔹 Nunca he ido a un gimnasio / principiante
+🔹 Voy actualmente a otro gimnasio
+🔹 He ido antes pero dejé de ir
+🔹 Entreno en casa / al aire libre"
+→ Guarda en: {{contact.situacion_actual}}
+LÓGICA INTERNA: Si "otro gym" → tag currently-member-elsewhere, warm-lead. Si "dejé" → tag lapsed-member. Si "nunca" → tag beginner.
+
+PASO 3 — Timing / Urgencia
+Bot: "¿Y cuándo te gustaría empezar?
+🔹 Esta semana / lo antes posible
+🔹 La próxima semana
+🔹 En las próximas 2–3 semanas
+🔹 Aún no estoy seguro"
+→ Guarda en: {{contact.cuando_empezar}}
+LÓGICA INTERNA: Si "Esta semana" → tag high-urgency. Si "No estoy seguro" → TIPO B check.
+
+PASO 4 — Presupuesto / Plan
+Bot: "Nuestros planes están entre B/. 58.85 y B/. 69.55 al mes (ITBMS incluido).
+¿Cuál se ajusta más a ti?
+🔹 Plan Max Rewards — B/. 58.85/mes (mejor relación calidad-precio)
+🔹 Plan Mensual (Max PRO) — B/. 69.55/mes (sin permanencia)
+🔹 MAX 360 — B/. 529.65 (pago único, 3 meses gym + PT + nutrición + fisio + 3 valoraciones)
+🔹 Day Pass $21.40 / quiero probar antes
+🔹 Aún no estoy seguro"
+→ Guarda en: {{contact.presupuesto}}
+LÓGICA INTERNA: Si lead pregunta precio antes → dar rango B/. 58.85–B/. 69.55 y redirigir aquí.
+
+PASO 5 — Objeción de Sucursal Única + Ubicación
+Bot: "Tenemos una sola sucursal en Costa del Este. Es INTENCIONAL: mejor equipamiento del país, abierto 5am–12am, parqueo gratis, sauna. Power Club tiene 10 sucursales pero ninguna abre a las 11pm. ¿En qué zona te mueves?"
+→ Guarda en: {{contact.objecion_sucursal}}, {{contact.ubicacion_referencia}}
+LÓGICA INTERNA: Si lead vive/trabaja a >30 min → TIPO B (dq-wrong-profile).
+
+PASO 6 — Tour + Day Pass + Booking
+Bot: "¡Te invito a conocer Max Gym! Tour completo sin compromiso. Si quieres entrenar el mismo día, day pass de $21.40. ¿Qué día te queda mejor?
+🔹 Mañana en la mañana (5am–12pm)
+🔹 Mañana en la tarde/noche (12pm–10pm)
+🔹 Pasado mañana
+🔹 Fin de semana
+O dime tú qué día y hora."
+→ Guarda en: {{contact.visita_agendada}}, {{contact.tour_type}} = "Tour"
+→ STOPBOT_VISITA
+
+🔴 DESCALIFICACIÓN (TIPO A–F)
+🔴 TIPO A — Presupuesto < B/. 50/mes firmemente → "Entendemos que nuestro precio no se ajusta a tu presupuesto. Si cambias de opinión, aquí estamos." → STOPBOT_DESCALIFICADO → tag dq-budget-too-low
+🔴 TIPO B — Vive/trabaja a >30 min de Costa del Este → "Actualmente solo tenemos sede en Costa del Este. Si te mudas más cerca, encantados de recibirte." → STOPBOT_DESCALIFICADO → tag dq-wrong-profile
+🔴 TIPO C — Necesita aprobación de pareja y no se da → "Entendemos que es decisión en pareja. Cuando ambos estén listos, encantados de darles un tour." → STOPBOT_DESCALIFICADO → tag dq-no-decision-maker
+🔴 TIPO D — Busca algo que Max Gym no ofrece → "Lamentamos no tener lo que buscas. Te deseamos éxito." → STOPBOT_DESCALIFICADO → tag dq-out-of-range
+🔴 TIPO E — Ya tiene membresía activa y no quiere cambiar → "Qué bien que ya estés activo. Si algo cambia, aquí estamos." → STOPBOT_DESCALIFICADO → tag dq-already-committed
+🔴 TIPO F — Menor de 13 años → "Lo sentimos, la edad mínima para ingresar a Max Gym es 13 años. Esperamos verte cuando cumplas." → STOPBOT_DESCALIFICADO → tag dq-underage
+
+🧩 REGLAS CRÍTICAS DE COMPORTAMIENTO
+1. DATOS PREVIOS: Antes de cada paso, verifica si ya tienes el dato. NUNCA preguntar dos veces.
+2. HUMANIZACIÓN: Usa {{contact.name}} al menos cada 2 mensajes.
+3. EMPATÍA ACTIVA: Siempre valida la respuesta antes de continuar ("Entiendo", "Perfecto").
+4. CALIFICACIÓN SILENCIOSA: La lógica interna (SI/ENTONCES) nunca se muestra al usuario.
+5. CALENDARIO: Siempre ofrece horarios concretos. Nunca "voy a revisar mi calendario".
+6. STOPBOT: NUNCA actives STOPBOT sin confirmación (excepto DQ).
+7. SUCURSAL ÚNICA: Explicar que es calidad sobre cantidad — mejor equipamiento, 5am–12am.
+8. NOTACIÓN B/.: Usar siempre B/. para planes. Day Pass en $ (USD).
+9. EDAD MÍNIMA: Verificar ≥ 13 años. Si menor → TIPO F.
+10. TOUR vs DAY PASS: Tour es gratis. Entrenar requiere day pass $21.40.
+11. REFERIDOS: Los 3 amigos deben seguir activos al momento de reclamar el mes gratis.
+12. VALORACIÓN INICIAL: Es post-inscripción con entrenador de planta, no prueba previa.
+13. GUEST POLICY: Invitado solo una vez por persona, el mismo no se repite.
+
+📦 CAMPOS A GUARDAR (19):
+- {{contact.objetivo_principal}} — Single Select (Paso 1)
+- {{contact.situacion_actual}} — Single Select (Paso 2)
+- {{contact.cuando_empezar}} — Single Select (Paso 3)
+- {{contact.presupuesto}} — Single Select (Paso 4)
+- {{contact.objecion_sucursal}} — Text (Paso 5)
+- {{contact.ubicacion_referencia}} — Text (Paso 5)
+- {{contact.visita_agendada}} — Date (Paso 6)
+- {{contact.tour_type}} — Text (Paso 6)
+- {{contact.edad}} — Number
+- {{contact.tipo_entrenador}} — Single Select: Floor trainer / Personal trainer / No estoy seguro
+- {{contact.tipo_pase}} — Single Select: Day Pass $21.40 / Week Pass $32.10 / Single Class $10.70 / Ninguno
+- {{contact.bot_status}} — Text: Qualifying / Meeting Booked / Disqualified / Deactivated
+- {{contact.disqualification_reason}} — Text: TIPO A–F + descripción
+- {{contact.disqualification_date}} — Date
+- {{contact.bot_conversation_summary}} — Text Area
+- {{contact.bot_actions_summary}} — Text Area
+- {{contact.loss_reason}} — Text
+- {{contact.pixel_event_sent}} — Yes/No
+- {{contact.membresia_plan}} — Single Select
+<button class="copy-btn" onclick="copyPrompt(this)">Copy</button></div>
+      </div>
+
+      <div class="tab-panel" id="tab-4-actions">
+        <div class="section-subtitle" style="margin-bottom:16px;padding:12px 16px;background:var(--info-bg);border-radius:var(--radius-sm);border:1px solid color-mix(in srgb, var(--info) 30%, transparent);">
+          ⚠️ Configure these 6 actions <strong>in order</strong> inside your AI Agent Bot → Actions tab.
+          See <a href="artifacts/05_AI_Agent_Actions.html" target="_blank"><strong>artifacts/05_AI_Agent_Actions.html</strong></a> for the complete configuration with real client values.
+        </div>
+
+        <div class="table-wrap">
+          <table class="config-table">
+            <thead><tr><th>#</th><th>Action</th><th>Purpose</th><th>Artifact</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>Book Appointment</td><td>Calendar booking with reschedule</td><td><a href="artifacts/05_AI_Agent_Actions.html" target="_blank">🔗</a></td></tr>
+              <tr><td>2</td><td>Start Workflow</td><td>2 sub-actions: Descalificados + Mover a Oportunidad</td><td><a href="artifacts/05_AI_Agent_Actions.html" target="_blank">🔗</a></td></tr>
+              <tr><td>3</td><td>Add Contact Info</td><td>1 action per field in approved flow</td><td><a href="artifacts/05_AI_Agent_Actions.html" target="_blank">🔗</a></td></tr>
+              <tr><td>4</td><td>Stop Bot</td><td>3 scenarios: Goodbye, STOPBOT_Tour Visit, STOPBOT_DESCALIFICADO</td><td><a href="artifacts/05_AI_Agent_Actions.html" target="_blank">🔗</a></td></tr>
+              <tr><td>5</td><td>Transfer to Human</td><td>4 scenarios: Requested, Missing Info, Unresolved, Wrong Service</td><td><a href="artifacts/05_AI_Agent_Actions.html" target="_blank">🔗</a></td></tr>
+              <tr><td>6</td><td>No Reply Follow-up</td><td>2h / 22h re-engagement sequence</td><td><a href="artifacts/05_AI_Agent_Actions.html" target="_blank">🔗</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-4-artifacts">
+        <div class="artifact-grid">
+          <div class="artifact-card">
+            <div class="card-icon">📄</div>
+            <h4>Bot Agent Summary</h4>
+            <p>Complete 🧠 Personality, 🎯 Objective, 📋 Additional Info prompts — all copyable.</p>
+            <div class="card-footer"><a href="artifacts/04_Bot_Agent_Summary.html" target="_blank"><button class="card-btn">📄 View file</button></a></div>
+          </div>
+          <div class="artifact-card">
+            <div class="card-icon">⚙️</div>
+            <h4>AI Agent Actions</h4>
+            <p>All 6 actions with real client values, field mappings, trigger phrases.</p>
+            <div class="card-footer"><a href="artifacts/05_AI_Agent_Actions.html" target="_blank"><button class="card-btn">📄 View file</button></a></div>
+          </div>
+          <div class="artifact-card">
+            <div class="card-icon">🧠</div>
+            <h4>Knowledgebase Content</h4>
+            <p>Website scrape URL, 10+ FAQs, Marketing Brain upload instruction — all in TARGET_LANG.</p>
+            <div class="card-footer"><a href="artifacts/14_Knowledgebase_Content.html" target="_blank"><button class="card-btn">🧠 View file</button></a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-4-screenshots">
+        <div class="screenshots-note">
+          <span class="note-icon">📸</span>
+          <span>Tutorial screenshots for bot setup. Click any thumbnail to open in lightbox (arrow keys to navigate).</span>
+        </div>
+        <div class="screenshots-gallery" id="gallery-4">
+          <div class="screenshot-thumb" onclick="openLightbox('4', 0)">
+            <img class="thumb-img" data-src="screenshots/phase-4/25.Go to Ai Agents - Knowledgebase.png" data-label="Go to Ai Agents - Knowledgebase" src="screenshots/phase-4/25.Go to Ai Agents - Knowledgebase.png" alt="Go to Ai Agents - Knowledgebase" loading="lazy">
+            <div class="thumb-label">Go to Ai Agents - Knowledgebase</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('4', 1)">
+            <img class="thumb-img" data-src="screenshots/phase-4/26.Train the bot with as much info as you have and needs.png" data-label="Train the bot" src="screenshots/phase-4/26.Train the bot with as much info as you have and needs.png" alt="Train the bot" loading="lazy">
+            <div class="thumb-label">Train the bot</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('4', 2)">
+            <img class="thumb-img" data-src="screenshots/phase-4/27.Now go Back and then go to Conversation AI and click on Create Bot.png" data-label="Create Bot" src="screenshots/phase-4/27.Now go Back and then go to Conversation AI and click on Create Bot.png" alt="Create Bot" loading="lazy">
+            <div class="thumb-label">Create Bot</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('4', 3)">
+            <img class="thumb-img" data-src="screenshots/phase-4/29. Set the Correct Goals and Actions1.png" data-label="Set Goals and Actions" src="screenshots/phase-4/29. Set the Correct Goals and Actions1.png" alt="Set Goals and Actions" loading="lazy">
+            <div class="thumb-label">Set Goals and Actions</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('4', 4)">
+            <img class="thumb-img" data-src="screenshots/phase-4/31. Finish the Configuration and Save the Bot.png" data-label="Save Bot" src="screenshots/phase-4/31. Finish the Configuration and Save the Bot.png" alt="Save Bot" loading="lazy">
+            <div class="thumb-label">Save Bot</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PHASE 5 — Marketing Channels ═══ -->
+  <section class="phase-section" id="phase-5">
+    <div class="phase-section-header" onclick="togglePhase(this)">
+      <div class="phase-icon">📡</div>
+      <h3>Phase 5: Marketing Channels</h3>
+      <span class="phase-count" id="count-5">0/4</span>
+      <span class="phase-badge pending" id="badge-5">Pending</span>
+      <span class="collapse-icon">▼</span>
+    </div>
+    <div class="phase-body">
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="5-checklist">Checklist</button>
+        <button class="tab-btn" data-tab="5-integrations">Integrations</button>
+        <button class="tab-btn" data-tab="5-artifacts">Artifacts</button>
+        <button class="tab-btn" data-tab="5-screenshots">📸</button>
+      </div>
+
+      <div class="tab-panel active" id="tab-5-checklist">
+        <ul class="checklist">
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Go to Marketing → Social Media. Click "Connect" for each platform: Facebook, Instagram, LinkedIn, Google Business Profile, TikTok, YouTube, Pinterest. Authorize each account.</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Go to Marketing → Emails → "New Template". Create 4 templates from Email Templates artifact: Follow-up D3 (educational), D5 (case study), D15 (last touch CTA), Meeting Reminder (24h before).</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Go to Settings → Integrations → Phone Numbers. Set up SMS provider (Twilio or GHL native). Verify VoIP settings if applicable.</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Go to Settings → Email Services → Dedicated Domain. Enter subdomain. Copy DNS records to domain provider. Verify SPF, DKIM, MX records are propagated.</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="tab-panel" id="tab-5-integrations">
+        <div class="section-title">🔌 Integration Checklist</div>
+        <div class="table-wrap">
+          <table class="config-table">
+            <thead><tr><th>Platform</th><th>Status</th><th>Notes</th></tr></thead>
+            <tbody>
+              <tr><td>Facebook / Instagram</td><td><span style="color:var(--text-muted)">Pending</span></td><td>Social + ads connection</td></tr>
+              <tr><td>LinkedIn</td><td><span style="color:var(--text-muted)">Pending</span></td><td>Professional network</td></tr>
+              <tr><td>Google Business Profile</td><td><span style="color:var(--text-muted)">Pending</span></td><td>Local presence</td></tr>
+              <tr><td>TikTok</td><td><span style="color:var(--text-muted)">Pending</span></td><td>Social reach</td></tr>
+              <tr><td>YouTube</td><td><span style="color:var(--text-muted)">Pending</span></td><td>Video content</td></tr>
+              <tr><td>WhatsApp Business</td><td><span style="color:var(--text-muted)">Pending</span></td><td>Primary messaging channel</td></tr>
+              <tr><td>Google Calendar</td><td><span style="color:var(--text-muted)">Pending</span></td><td>Primary calendar for booking</td></tr>
+              <tr><td>Gmail / SMTP</td><td><span style="color:var(--text-muted)">Pending</span></td><td>Email sending</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="section-title" style="margin-top:24px;">✉️ Email Templates</div>
+        <div class="section-subtitle">Created in Marketing → Emails. Copy adapted from Marketing Brain Message Block Library.</div>
+        <div class="table-wrap">
+          <table class="config-table">
+            <thead><tr><th>Template</th><th>Send After</th><th>Purpose</th><th>Artifact</th></tr></thead>
+            <tbody>
+              <tr><td>Follow-up Day 3</td><td>3 days</td><td>Educational / value-add content</td><td><a href="artifacts/09_Email_Templates.html" target="_blank">🔗</a></td></tr>
+              <tr><td>Follow-up Day 5</td><td>5 days</td><td>Case study / social proof</td><td><a href="artifacts/09_Email_Templates.html" target="_blank">🔗</a></td></tr>
+              <tr><td>Follow-up Day 15</td><td>15 days</td><td>Last touch with clear CTA</td><td><a href="artifacts/09_Email_Templates.html" target="_blank">🔗</a></td></tr>
+              <tr><td>Meeting Reminder</td><td>24h before</td><td>Date/time confirmation, prep notes, link</td><td><a href="artifacts/09_Email_Templates.html" target="_blank">🔗</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-5-artifacts">
+        <div class="artifact-grid">
+          <div class="artifact-card">
+            <div class="card-icon">✉️</div>
+            <h4>Email Templates</h4>
+            <p>4 branded templates with HTML structure.</p>
+            <div class="card-footer"><a href="artifacts/09_Email_Templates.html" target="_blank"><button class="card-btn">📄 View file</button></a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-5-screenshots">
+        <div class="screenshots-note">
+          <span class="note-icon">📸</span>
+          <span>Tutorial screenshots for marketing channels setup. Click any thumbnail to open in lightbox (arrow keys to navigate).</span>
+        </div>
+        <div class="screenshots-gallery" id="gallery-5">
+          <div class="screenshot-thumb" onclick="openLightbox('5', 0)">
+            <img class="thumb-img" data-src="screenshots/phase-5/32. Go to Marketing and connect all the Brand's social media.png" data-label="Go to Marketing and connect all the Brand's social media" src="screenshots/phase-5/32. Go to Marketing and connect all the Brand's social media.png" alt="Connect social media" loading="lazy">
+            <div class="thumb-label">Connect social media</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('5', 1)">
+            <img class="thumb-img" data-src="screenshots/phase-5/33. social media once connected.png" data-label="Social media once connected" src="screenshots/phase-5/33. social media once connected.png" alt="Social media connected" loading="lazy">
+            <div class="thumb-label">Social media connected</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('5', 2)">
+            <img class="thumb-img" data-src="screenshots/phase-5/34. Go to the Emails Tab and create at least one template with the company's branding.png" data-label="Go to the Emails Tab and create at least one template with company branding" src="screenshots/phase-5/34. Go to the Emails Tab and create at least one template with the company's branding.png" alt="Create email template" loading="lazy">
+            <div class="thumb-label">Create email template</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('5', 3)">
+            <img class="thumb-img" data-src="screenshots/phase-5/35. Emails-email template example.png" data-label="Emails - email template example" src="screenshots/phase-5/35. Emails-email template example.png" alt="Email template example" loading="lazy">
+            <div class="thumb-label">Email template example</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PHASE 6 — Automation Engine ═══ -->
+  <section class="phase-section" id="phase-6">
+    <div class="phase-section-header" onclick="togglePhase(this)">
+      <div class="phase-icon">🔧</div>
+      <h3>Phase 6: Automation Engine</h3>
+      <span class="phase-count" id="count-6">0/2</span>
+      <span class="phase-badge pending" id="badge-6">Pending</span>
+      <span class="collapse-icon">▼</span>
+    </div>
+    <div class="phase-body">
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="6-checklist">Checklist</button>
+        <button class="tab-btn" data-tab="6-workflows">Workflows</button>
+        <button class="tab-btn" data-tab="6-artifacts">Artifacts</button>
+        <button class="tab-btn" data-tab="6-screenshots">📸</button>
+      </div>
+
+      <div class="tab-panel active" id="tab-6-checklist">
+        <ul class="checklist">
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Go to Automation → Workflows → "New Workflow". Create all 13 workflows from Workflow Templates artifact. Follow each trigger → condition → action chain exactly. Use real stage names, tag names, and field keys from artifacts.</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Test: Create test contact → trigger each workflow → verify stage moves, tags applied, notifications sent. Fix any broken triggers.</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="tab-panel" id="tab-6-workflows">
+        <div class="section-title">🔧 Workflow Templates (13 Automations)</div>
+        <div class="section-subtitle">All 13 workflows with triggers, conditions, actions, and dependency map. See <a href="artifacts/10_Workflow_Templates.html" target="_blank"><strong>artifact</strong></a> for full node-level config.</div>
+        <div class="table-wrap">
+          <table class="config-table">
+            <thead><tr><th>#</th><th>Workflow</th><th>Trigger</th><th>Key Actions</th><th>Artifact</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>Update status when IA books meeting</td><td>Bot: Mover a Oportunidad</td><td>Move stage, add tags, notify</td><td><a href="artifacts/10_Workflow_Templates.html" target="_blank">🔗</a></td></tr>
+              <tr><td>2</td><td>Update status when IA disqualifies</td><td>Bot: Descalificados</td><td>Move to Lost, tag DQ reason</td><td><a href="artifacts/10_Workflow_Templates.html" target="_blank">🔗</a></td></tr>
+              <tr><td>3</td><td>Update disqualified (system)</td><td>Tag or stage change</td><td>Move stage, log date</td><td><a href="artifacts/10_Workflow_Templates.html" target="_blank">🔗</a></td></tr>
+              <tr><td>4</td><td>Disqualified + pixel</td><td>Stage: Lost + DQ tag</td><td>Send pixel event</td><td><a href="artifacts/10_Workflow_Templates.html" target="_blank">🔗</a></td></tr>
+              <tr><td>5</td><td>Cold leads</td><td>14d inactivity</td><td>Tag cold, move stage</td><td><a href="artifacts/10_Workflow_Templates.html" target="_blank">🔗</a></td></tr>
+              <tr><td>6</td><td>Won + pixel</td><td>Stage: Won</td><td>Pixel event, onboarding, notify</td><td><a href="artifacts/10_Workflow_Templates.html" target="_blank">🔗</a></td></tr>
+              <tr><td>7</td><td>Lost</td><td>Stage: Lost</td><td>Capture reason, nurture</td><td><a href="artifacts/10_Workflow_Templates.html" target="_blank">🔗</a></td></tr>
+              <tr><td>8</td><td>Duplicate contact to opp</td><td>Opportunity created</td><td>Copy contact fields</td><td><a href="artifacts/10_Workflow_Templates.html" target="_blank">🔗</a></td></tr>
+              <tr><td>9</td><td>Meeting reminder</td><td>24h/1h pre-appointment</td><td>Send WhatsApp template</td><td><a href="artifacts/10_Workflow_Templates.html" target="_blank">🔗</a></td></tr>
+              <tr><td>10</td><td>Deactivate IA on disqualify</td><td>Tag: ia-disqualified</td><td>Stop bot, add tag</td><td><a href="artifacts/10_Workflow_Templates.html" target="_blank">🔗</a></td></tr>
+              <tr><td>11</td><td>Follow-up 72h</td><td>72h no response</td><td>WA seq: 24h→3d→5d→10d→15d</td><td><a href="artifacts/10_Workflow_Templates.html" target="_blank">🔗</a></td></tr>
+              <tr><td>12</td><td>Create lead from form</td><td>Form submission</td><td>Create contact + opp + start bot</td><td><a href="artifacts/10_Workflow_Templates.html" target="_blank">🔗</a></td></tr>
+              <tr><td>13</td><td>Google Ads conversions</td><td>Stage: Won / Contact created</td><td>Send conversion to Google</td><td><a href="artifacts/10_Workflow_Templates.html" target="_blank">🔗</a></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-6-artifacts">
+        <div class="artifact-grid">
+          <div class="artifact-card">
+            <div class="card-icon">🔧</div>
+            <h4>Workflow Templates</h4>
+            <p>All 13 workflows with triggers, conditions, actions, and dependency map — full node-level config.</p>
+            <div class="card-footer"><a href="artifacts/10_Workflow_Templates.html" target="_blank"><button class="card-btn">📄 View file</button></a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-6-screenshots">
+        <div class="screenshots-note">
+          <span class="note-icon">📸</span>
+          <span>Tutorial screenshots for automation engine setup. Click any thumbnail to open in lightbox (arrow keys to navigate).</span>
+        </div>
+        <div class="screenshots-gallery" id="gallery-6">
+          <div class="screenshot-thumb" onclick="openLightbox('6', 0)">
+            <img class="thumb-img" data-src="screenshots/phase-6/36. Set up Automations-Configura al menos las siguientes Workflows1.png" data-label="Set up Automations - Workflows 1" src="screenshots/phase-6/36. Set up Automations-Configura al menos las siguientes Workflows1.png" alt="Workflows 1" loading="lazy">
+            <div class="thumb-label">Workflows 1</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('6', 1)">
+            <img class="thumb-img" data-src="screenshots/phase-6/37. Set up Automations-Configura al menos las siguientes Workflows2.png" data-label="Set up Automations - Workflows 2" src="screenshots/phase-6/37. Set up Automations-Configura al menos las siguientes Workflows2.png" alt="Workflows 2" loading="lazy">
+            <div class="thumb-label">Workflows 2</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PHASE 7 — Assets & Go-Live ═══ -->
+  <section class="phase-section" id="phase-7">
+    <div class="phase-section-header" onclick="togglePhase(this)">
+      <div class="phase-icon">🚀</div>
+      <h3>Phase 7: Assets &amp; Go-Live</h3>
+      <span class="phase-count" id="count-7">0/5</span>
+      <span class="phase-badge pending" id="badge-7">Pending</span>
+      <span class="collapse-icon">▼</span>
+    </div>
+    <div class="phase-body">
+      <div class="tab-bar">
+        <button class="tab-btn active" data-tab="7-checklist">Checklist</button>
+        <button class="tab-btn" data-tab="7-domain">Domain</button>
+        <button class="tab-btn" data-tab="7-artifacts">Artifacts</button>
+        <button class="tab-btn" data-tab="7-screenshots">📸</button>
+      </div>
+
+      <div class="tab-panel active" id="tab-7-checklist">
+        <ul class="checklist">
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Go to Funnels → "Create Funnel". Choose "Landing Page". Use Landing Page Mockup artifact as design reference. Add form element → map each form field to the corresponding custom field key from Fields Table.</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Go to Settings → Domains. Verify main domain and email subdomain are connected. Go to Settings → Email Services → verify DNS records (SPF, DKIM, MX) are green/verified.</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Go to Funnels → Settings → Tracking Codes. Paste Meta Pixel ID, Google Ads conversion tag, and any other tracking codes. Set up Google Ads conversion in Automation → Workflows.</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">E2E test: Submit test form → verify contact created → bot greets → answer all questions → book calendar → verify workflow fires → check tags applied → check stage movement.</span>
+          </li>
+          <li class="checklist-item">
+            <span class="check-wrap"><input type="checkbox" onchange="updateProgress()"></span>
+            <span class="check-label">Final sign-off: Review all 8 phases. Confirm all artifacts created. Run go-live checklist: DNS propagated, bot active, workflows enabled, landing page published, tracking verified.</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="tab-panel" id="tab-7-domain">
+        <div class="section-title">🌐 DNS Record Table</div>
+        <div class="section-subtitle">Add these records at the domain provider. Create email subdomain in Settings → Email Services.</div>
+        <div class="table-wrap">
+          <table class="config-table">
+            <thead><tr><th>Type</th><th>Name</th><th>Value</th><th>Purpose</th></tr></thead>
+            <tbody>
+              <tr><td>CNAME</td><td>mail.maxgym.com.pa</td><td>Pendiente — copiar de GHL</td><td>Email subdomain</td></tr>
+              <tr><td>TXT</td><td>maxgym.com.pa</td><td>Pendiente — copiar de GHL</td><td>SPF record</td></tr>
+              <tr><td>TXT</td><td>Pendiente — copiar de GHL._domainkey.maxgym.com.pa</td><td>Pendiente — copiar de GHL</td><td>DKIM signing</td></tr>
+              <tr><td>CNAME</td><td>www</td><td>Pendiente — copiar de GHL</td><td>Subdomain routing</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-7-artifacts">
+        <div class="artifact-grid">
+          <div class="artifact-card">
+            <div class="card-icon">🖥️</div>
+            <h4>Landing Page Mockup</h4>
+            <p>Self-contained responsive HTML: Hero → Form → Social Proof → CTA → Footer.</p>
+            <div class="card-footer"><a href="artifacts/12_Landing_Page_Mockup.html" target="_blank"><button class="card-btn">📄 View file</button></a></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-7-screenshots">
+        <div class="screenshots-note">
+          <span class="note-icon">📸</span>
+          <span>Tutorial screenshots for landing pages and forms setup.</span>
+        </div>
+        <div class="screenshots-gallery" id="gallery-7">
+          <div class="screenshot-thumb" onclick="openLightbox('7', 0)">
+            <img class="thumb-img" data-src="screenshots/phase-7/38. list of funnels.png" data-label="list of funnels" src="screenshots/phase-7/38. list of funnels.png" alt="list of funnels" loading="lazy">
+            <div class="thumb-label">list of funnels</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('7', 1)">
+            <img class="thumb-img" data-src="screenshots/phase-7/39. Funnels-landing pages.png" data-label="Funnels-landing pages" src="screenshots/phase-7/39. Funnels-landing pages.png" alt="Funnels-landing pages" loading="lazy">
+            <div class="thumb-label">Funnels-landing pages</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('7', 2)">
+            <img class="thumb-img" data-src="screenshots/phase-7/40. funnel details.png" data-label="funnel details" src="screenshots/phase-7/40. funnel details.png" alt="funnel details" loading="lazy">
+            <div class="thumb-label">funnel details</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('7', 3)">
+            <img class="thumb-img" data-src="screenshots/phase-7/41. funnel settings tracking codes.png" data-label="funnel settings tracking codes" src="screenshots/phase-7/41. funnel settings tracking codes.png" alt="funnel settings tracking codes" loading="lazy">
+            <div class="thumb-label">funnel settings tracking codes</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('7', 4)">
+            <img class="thumb-img" data-src="screenshots/phase-7/43. Marketing - Forms.png" data-label="Marketing - Forms" src="screenshots/phase-7/43. Marketing - Forms.png" alt="Marketing - Forms" loading="lazy">
+            <div class="thumb-label">Marketing - Forms</div>
+          </div>
+          <div class="screenshot-thumb" onclick="openLightbox('7', 5)">
+            <img class="thumb-img" data-src="screenshots/phase-7/44. set up forms.png" data-label="set up forms" src="screenshots/phase-7/44. set up forms.png" alt="set up forms" loading="lazy">
+            <div class="thumb-label">set up forms</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SUMMARY ═══ -->
+  <section class="phase-section">
+    <div class="phase-section-header" onclick="togglePhase(this)" style="cursor:default">
+      <div class="phase-icon">📈</div>
+      <h3>Summary</h3>
+    </div>
+    <div class="phase-body" style="display:block">
+      <div class="summary-grid">
+        <div class="summary-card">
+          <div class="number">8</div>
+          <div class="label">Phases</div>
+        </div>
+        <div class="summary-card">
+          <div class="number" id="phasesDone">0</div>
+          <div class="label">Completed</div>
+        </div>
+        <div class="summary-card">
+          <div class="number" id="totalStepsDisplay">0</div>
+          <div class="label">Total Steps</div>
+        </div>
+        <div class="summary-card">
+          <div class="number" id="stepsDoneDisplay">0</div>
+          <div class="label">Steps Done</div>
+        </div>
+        <div class="summary-card">
+          <div class="number">13</div>
+          <div class="label">Workflows</div>
+        </div>
+        <div class="summary-card">
+          <div class="number">25+</div>
+          <div class="label">Tags</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  // ─── Dark mode toggle ───
+  function toggleTheme() {
+    const html = document.documentElement;
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    if (isDark) {
+      html.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'light');
+    } else {
+      html.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+    }
+  }
+
+  // Restore saved theme on load
+  (function initTheme() {
+    const saved = localStorage.getItem('theme');
+    if (saved === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else if (saved === 'light') {
+      document.documentElement.removeAttribute('data-theme');
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  })();
+
+  // ─── Sidebar toggle (mobile) ───
+  document.getElementById('sidebarToggle').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('sidebarOverlay').classList.toggle('open');
+  });
+  document.getElementById('sidebarOverlay')?.addEventListener('click', () => {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('sidebarOverlay').classList.remove('open');
+  });
+
+  // ─── Active sidebar link on scroll ───
+  const sections = document.querySelectorAll('.phase-section');
+  const navLinks = document.querySelectorAll('.sidebar-nav a');
+  const phaseDots = document.querySelectorAll('.phase-dot');
+
+  function updateActiveSection() {
+    let current = '';
+    sections.forEach(section => {
+      const top = section.getBoundingClientRect().top;
+      if (top < 150) current = section.id;
+    });
+    navLinks.forEach(link => {
+      link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+    });
+  }
+
+  window.addEventListener('scroll', updateActiveSection);
+  window.addEventListener('load', updateActiveSection);
+
+  // ─── Collapse phases ───
+  function togglePhase(header) {
+    const section = header.closest('.phase-section');
+    section.classList.toggle('collapsed');
+  }
+
+  // ─── Tab switching ───
+  function switchTab(phaseId, tabName) {
+    const section = document.getElementById('phase-' + phaseId);
+    if (!section) return;
+    const fullTab = phaseId + '-' + tabName;
+    section.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    section.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    const btn = section.querySelector(`.tab-btn[data-tab="${fullTab}"]`);
+    const panel = section.querySelector('#tab-' + fullTab);
+    if (btn) btn.classList.add('active');
+    if (panel) panel.classList.add('active');
+  }
+
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      const section = this.closest('.phase-section');
+      section.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      section.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      this.classList.add('active');
+      const panel = section.querySelector('#tab-' + this.getAttribute('data-tab'));
+      if (panel) panel.classList.add('active');
+    });
+  });
+
+  // ─── Copy text helper (for stage names, field labels, etc.) ───
+  function copyText(text, btn) {
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'Copy';
+        btn.classList.remove('copied');
+      }, 2000);
+    }).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'Copy';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+
+  // ─── Copy prompt with feedback ───
+  function copyPrompt(btn) {
+    const block = btn.closest('.prompt-block');
+    const text = block.textContent.replace('Copy', '').trim();
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'Copy';
+        btn.classList.remove('copied');
+      }, 2000);
+    }).catch(() => {
+      // Fallback for environments where clipboard is blocked
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      btn.textContent = 'Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'Copy';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+
+  // ─── Progress tracking ───
+  function updateProgress() {
+    const allCheckboxes = document.querySelectorAll('.phase-section .checklist input[type="checkbox"]');
+    const total = allCheckboxes.length;
+    const done = Array.from(allCheckboxes).filter(c => c.checked).length;
+    const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+
+    // Update header progress
+    document.getElementById('mainFill').style.width = pct + '%';
+    document.getElementById('miniFill').style.width = pct + '%';
+    document.getElementById('pctBadge').innerHTML = pct + '<small>%</small>';
+    document.getElementById('progressSteps').textContent = done + ' / ' + total + ' steps done';
+    document.getElementById('miniPct').textContent = pct + '%';
+    document.getElementById('stepsDoneDisplay').textContent = done;
+    document.getElementById('totalStepsDisplay').textContent = total;
+
+    // Update per-phase
+    let phasesCompleted = 0;
+    sections.forEach(section => {
+      const sectionCheckboxes = section.querySelectorAll('.checklist input[type="checkbox"]');
+      const sectionTotal = sectionCheckboxes.length;
+      const sectionDone = Array.from(sectionCheckboxes).filter(c => c.checked).length;
+      const phaseId = section.id.replace('phase-', '');
+      const countEl = document.getElementById('count-' + phaseId);
+      const badgeEl = document.getElementById('badge-' + phaseId);
+      const linkEl = document.querySelector(`.sidebar-nav a[data-phase="${phaseId}"]`);
+      const dotEl = document.querySelector(`.phase-dot[data-phase="${phaseId}"]`);
+
+      if (countEl) countEl.textContent = sectionDone + '/' + sectionTotal;
+
+      if (badgeEl) {
+        if (sectionTotal === 0) return;
+        if (sectionDone === sectionTotal) {
+          badgeEl.className = 'phase-badge done';
+          badgeEl.textContent = '✓ Done';
+          if (linkEl) { linkEl.classList.add('done'); }
+          if (dotEl) { dotEl.className = 'phase-dot done'; }
+          phasesCompleted++;
+        } else if (sectionDone > 0) {
+          badgeEl.className = 'phase-badge in-progress';
+          badgeEl.textContent = 'In Progress';
+          if (linkEl) linkEl.classList.remove('done');
+          if (dotEl) dotEl.className = 'phase-dot active';
+        } else {
+          badgeEl.className = 'phase-badge pending';
+          badgeEl.textContent = 'Pending';
+          if (linkEl) linkEl.classList.remove('done');
+          if (dotEl) dotEl.className = 'phase-dot';
+        }
+      }
+
+      // Mark checklist items as done
+      section.querySelectorAll('.checklist-item').forEach((item, idx) => {
+        const cb = item.querySelector('input[type="checkbox"]');
+        item.classList.toggle('done', cb && cb.checked);
+      });
+    });
+
+    document.getElementById('phasesDone').textContent = phasesCompleted;
+    document.getElementById('miniCount').textContent = phasesCompleted + '/8 phases';
+    document.getElementById('progressPhase').textContent = phasesCompleted + ' of 8 phases';
+  }
+
+  // ─── Lightbox ───
+  const lightboxData = {
+    images: [],
+    current: 0,
+    phaseLabel: ''
+  };
+
+  function openLightbox(phase, index) {
+    const gallery = document.getElementById('gallery-' + phase);
+    if (!gallery) return;
+    const items = gallery.querySelectorAll('[data-src]');
+    if (!items.length) return;
+
+    lightboxData.images = Array.from(items).map(el => ({
+      src: el.getAttribute('data-src'),
+      label: el.getAttribute('data-label') || ''
+    }));
+    lightboxData.current = index;
+    lightboxData.phaseLabel = phase;
+
+    showLightboxImage();
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function showLightboxImage() {
+    const data = lightboxData.images[lightboxData.current];
+    if (!data) return;
+    document.getElementById('lb-image').src = data.src;
+    document.getElementById('lb-label').textContent = data.label;
+    document.getElementById('lb-count').textContent = (lightboxData.current + 1) + ' / ' + lightboxData.images.length;
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function prevImage() {
+    if (lightboxData.current > 0) {
+      lightboxData.current--;
+      showLightboxImage();
+    }
+  }
+
+  function nextImage() {
+    if (lightboxData.current < lightboxData.images.length - 1) {
+      lightboxData.current++;
+      showLightboxImage();
+    }
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (!document.getElementById('lightbox').classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') prevImage();
+    if (e.key === 'ArrowRight') nextImage();
+  });
+
+  // ─── Initial progress calc ───
+  document.addEventListener('DOMContentLoaded', updateProgress);
+</script>
+
+<!-- ─── Lightbox ─── -->
+<div class="lightbox-overlay" id="lightbox" onclick="if(event.target===this)closeLightbox()">
+  <div class="lightbox-content">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close">&times;</button>
+    <button class="lightbox-nav prev" onclick="prevImage()" aria-label="Previous">&#8249;</button>
+    <img id="lb-image" src="" alt="Screenshot">
+    <button class="lightbox-nav next" onclick="nextImage()" aria-label="Next">&#8250;</button>
+    <div class="lightbox-caption">
+      <div id="lb-label"></div>
+      <div class="lb-count" id="lb-count"></div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

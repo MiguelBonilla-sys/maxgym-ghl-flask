@@ -1,0 +1,195 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>14 — Knowledgebase Content | Max Gym Panamá</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', sans-serif; background: #f8f9fa; color: #1a1a1a; padding: 40px 24px; line-height: 1.6; }
+.container { max-width: 960px; margin: 0 auto; }
+h1 { font-size: 28px; font-weight: 800; color: #000; margin-bottom: 4px; letter-spacing: -0.5px; }
+h1 small { font-size: 16px; font-weight: 400; color: #87f24d; display: block; margin-top: 2px; }
+.subtitle { font-size: 14px; color: #555; margin-bottom: 32px; }
+.section-card { background: #fff; border-radius: 16px; box-shadow: 0 1px 3px rgba(0,0,0,.06), 0 4px 12px rgba(0,0,0,.04); margin-bottom: 24px; overflow: hidden; border: 1px solid #eaeaea; }
+.section-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 24px; background: #000; color: #fff; cursor: default; }
+.section-header h2 { font-size: 16px; font-weight: 700; letter-spacing: -0.2px; }
+.section-number { display: inline-block; background: #87f24d; color: #fff; font-size: 12px; font-weight: 700; padding: 2px 10px; border-radius: 100px; margin-right: 10px; }
+.copy-btn { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); color: #fff; padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; transition: .2s; font-family: 'Inter', sans-serif; }
+.copy-btn:hover { background: rgba(255,255,255,.2); }
+.copy-btn.copied { background: #87f24d; border-color: #87f24d; color: #fff; }
+.section-body { padding: 24px; }
+.section-body h3 { font-size: 15px; font-weight: 700; color: #000; margin: 20px 0 8px; }
+.section-body h3:first-child { margin-top: 0; }
+pre { background: #f4f6f8; border: 1px solid #e4e7ec; border-radius: 10px; padding: 16px; font-size: 13px; line-height: 1.65; overflow-x: auto; white-space: pre-wrap; word-wrap: break-word; color: #1a1a1a; font-family: 'Inter', monospace; margin-bottom: 12px; }
+pre:last-child { margin-bottom: 0; }
+.qa-entry { background: #f9fafb; border: 1px solid #e4e7ec; border-radius: 10px; padding: 14px 16px; margin-bottom: 8px; }
+.qa-entry:last-child { margin-bottom: 0; }
+.qa-entry .q { font-weight: 700; color: #000; font-size: 13px; }
+.qa-entry .q::before { content: "Q: "; color: #87f24d; }
+.qa-entry .a { font-size: 13px; color: #444; margin-top: 2px; }
+.qa-entry .a::before { content: "A: "; color: #87f24d; font-weight: 600; }
+.qa-entry .qa-label { font-size: 10px; font-weight: 700; color: #87f24d; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 12px 0; }
+.section-card.inline-layout .section-body { padding: 24px; }
+.copy-toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #87f24d; color: #fff; padding: 10px 24px; border-radius: 100px; font-size: 14px; font-weight: 600; opacity: 0; transition: opacity .3s; pointer-events: none; z-index: 999; }
+.copy-toast.show { opacity: 1; }
+.page-list { display: flex; flex-wrap: wrap; gap: 8px; margin: 8px 0; }
+.page-tag { background: #E8F5E9; color: #2e7d32; font-size: 12px; font-weight: 600; padding: 4px 14px; border-radius: 100px; }
+.page-tag.excluded { background: #ffebee; color: #c62828; }
+.info-note { background: #E8F5E9; border: 1px solid #c8e6c9; border-radius: 10px; padding: 12px 16px; font-size: 13px; color: #1b5e20; margin: 12px 0; }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>14 — Knowledgebase Content <small>Max Gym Panamá · GoHighLevel</small></h1>
+  <p class="subtitle">Contenido completo para la base de conocimiento del AI Agent · 23 preguntas FAQ</p>
+
+  <!-- Section 1: Website Scrape -->
+  <div class="section-card" id="section1">
+    <div class="section-header"><h2><span class="section-number">1</span> Website Scrape</h2><button class="copy-btn" data-target="section1-code">Copiar bloque</button></div>
+    <div class="section-body">
+      <h3>&#x1F310; Configuraci&oacute;n de Scrapeo</h3>
+<pre id="section1-code">URL Base: https://maxgym.com.pa
+Páginas a incluir:
+  /inicio
+  /planes
+  /horarios
+  /ubicacion
+  /clases
+  /contacto
+  /faq
+
+Páginas a excluir:
+  /blog
+  /aviso-privacidad
+
+Frecuencia: Una vez (carga inicial)
+Nota: Verificar que el scraper capture textos de horarios (5am-12am), precios (B/.) y servicios.</pre>
+      <div class="page-list">
+        <span class="page-tag">/inicio</span>
+        <span class="page-tag">/planes</span>
+        <span class="page-tag">/horarios</span>
+        <span class="page-tag">/ubicacion</span>
+        <span class="page-tag">/clases</span>
+        <span class="page-tag">/contacto</span>
+        <span class="page-tag">/faq</span>
+        <span class="page-tag excluded">/blog (excluido)</span>
+        <span class="page-tag excluded">/aviso-privacidad (excluido)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 2: FAQ Document -->
+  <div class="section-card" id="section2">
+    <div class="section-header"><h2><span class="section-number">2</span> FAQ Document (23 preguntas)</h2><button class="copy-btn" data-target="section2-code">Copiar bloque</button></div>
+    <div class="section-body">
+<pre id="section2-code">--- FAQ MAX GYM PANAMÁ ---
+23 preguntas frecuentes para la base de conocimiento del AI Agent. Contenido actualizado con datos reales del cliente.</pre>
+
+      <div class="qa-entry"><div class="qa-label">QA-1</div><div class="q">¿Cuáles son los horarios de Max Gym?</div><div class="a">Lun–Vie 5:00 a.m. a 12:00 medianoche. Fines de semana 8:00 a.m. a 4:00 p.m. ¡19 horas al día para que entrenes cuando quieras!</div></div>
+
+      <div class="qa-entry"><div class="qa-label">QA-2</div><div class="q">¿Dónde queda Max Gym?</div><div class="a">Estamos en Costa del Este, dentro de Plaza del Super 99, Nivel 1. WhatsApp: 6535-1411 / 6969-8010</div></div>
+
+      <div class="qa-entry"><div class="qa-label">QA-3</div><div class="q">¿Cuánto cuesta la membresía?</div><div class="a">Nuestros planes: Plan Mensual (Max PRO) B/. 69.55/mes sin permanencia, Plan Max Rewards B/. 58.85/mes (compromiso 6 meses), MAX 360 B/. 529.65 pago único por 3 meses (incluye PT + nutrición + fisio + valoraciones). ITBMS incluido.</div></div>
+
+      <div class="qa-entry"><div class="qa-label">QA-4</div><div class="q">¿Hay prueba gratis?</div><div class="a">El tour por las instalaciones es completamente gratis. Puedes venir a conocer, te damos un recorrido por todas las áreas. Si quieres entrenar antes de inscribirte, ofrecemos day pass de $21.40, week pass de $32.10, o clase individual de $10.70.</div></div>
+
+      <div class="qa-entry"><div class="qa-label">QA-5</div><div class="q">¿Tienen clases grupales?</div><div class="a">Sí. Clases ilimitadas incluidas: Power Bike, Yoga, Baile, Funcionales, CrossTraining, Movilidad, Pilates, Body Combat, Spinning, Cycling. Somos el único gimnasio en Panamá con licencia Les Mills.</div></div>
+
+      <div class="qa-entry"><div class="qa-label">QA-6</div><div class="q">¿Hay parqueo?</div><div class="a">Sí. Parqueo incluido y gratis para todos nuestros miembros. Estamos en Plaza del Super 99, Costa del Este. Más de 60 espacios disponibles.</div></div>
+
+      <div class="qa-entry"><div class="qa-label">QA-7</div><div class="q">¿Tienen sauna?</div><div class="a">Sí. El sauna está incluido en todas nuestras membresías. Perfecto para después de tu entrenamiento.</div></div>
+
+      <div class="qa-entry"><div class="qa-label">QA-8</div><div class="q">¿Tienen entrenadores personales?</div><div class="a">Tenemos entrenadores de planta (gratis, disponibles en piso para orientarte, 2 por turno) y entrenadores personalizados (costo adicional, atención individualizada). Todos los planes incluyen valoración inicial gratuita con entrenador de planta.</div></div>
+
+      <div class="qa-entry"><div class="qa-label">QA-9</div><div class="q">¿Por qué eres más caro que Smart Fit?</div><div class="a">Smart Fit tiene un modelo diferente — bajo precio, alta rotación, equipamiento básico. Max Gym es premium: máquinas Panatta, Technogym y Hammer Strength que no existen en otro gym de Panamá, horario 5am–12am, sauna, parqueo gratis, clases ilimitadas, y valoración inicial incluida. Son B/. 2.32 al día por una experiencia que no consigues en ningún otro lado.</div></div>
+
+      <div class="qa-entry"><div class="qa-label">QA-10</div><div class="q">¿Solo tienen una sucursal?</div><div class="a">Así es, tenemos una sola sucursal en Costa del Este. Pero es INTENCIONAL. Preferimos tener una sucursal EXCEPCIONAL: mejor equipamiento del país, abierta 19 horas al día, parqueo gratis, sauna. Power Club tiene 10 sucursales pero ninguna te deja entrenar a las 11 de la noche. Calidad sobre cantidad.</div></div>
+
+      <div class="qa-entry"><div class="qa-label">QA-11</div><div class="q">¿Qué es la valoración inicial?</div><div class="a">La valoración inicial es gratuita y la realiza un entrenador de planta. Incluye medición de composición corporal y te asignan una rutina general en la app según tus objetivos.</div></div>
+
+      <div class="qa-entry"><div class="qa-label">QA-12</div><div class="q">¿Puedo cancelar cuando quiera?</div><div class="a">Plan Mensual: cancelas cuando quieras, sin penalidad. Solo avísanos con mínimo 3 días antes de tu fecha de pago por WhatsApp. Plan Max Rewards: cancelación debe ser presencial en el gym. Penalidad del 30% sobre mensualidades pendientes si cancelas antes de los 6 meses. En ambos casos, debes llenar nuestro formulario de cancelación.</div></div>
+
+      <div class="qa-entry"><div class="qa-label">QA-13</div><div class="q">¿Hay descuento para parejas?</div><div class="a">Tenemos un programa de referidos. Si vienes con un amigo o pareja, ambos pueden acumular beneficios. Programa de referidos: refieres a 3 amigos, todos deben seguir activos al momento de reclamar tu mes gratis.</div></div>
+
+      <div class="qa-entry"><div class="qa-label">QA-14</div><div class="q">¿Cómo funciona el programa de referidos?</div><div class="a">Cuando te inscribes, puedes referir amigos. Si refieres a 3 amigos y los 3 siguen activos en el gym al momento de reclamar, te ganas un mes gratis. Importante: si alguno ha cancelado, el beneficio no aplica.</div></div>
+
+      <div class="qa-entry"><div class="qa-label">QA-15</div><div class="q">¿Cuándo hay alguien disponible para atender?</div><div class="a">Puedes escribirnos aquí por WhatsApp en cualquier momento y te responderemos lo antes posible. Nuestro horario de atención en el club es Lun–Vie 5am–12am, Sáb–Dom 8am–4pm.</div></div>
+
+      <div class="qa-entry"><div class="qa-label">QA-16</div><div class="q">¿Qué métodos de pago aceptan?</div><div class="a">Aceptamos efectivo, tarjeta de crédito/débito, link de pago recurrente (débito automático) y débito automático de cuenta bancaria. Para el Plan Rewards se requiere débito automático.</div></div>
+
+      <div class="qa-entry"><div class="qa-label">QA-17</div><div class="q">¿Hay estacionamiento para bicicletas?</div><div class="a">Sí, tenemos espacio para bicicletas en el estacionamiento de Plaza del Super 99. Más de 60 estacionamientos disponibles.</div></div>
+
+      <div class="qa-entry"><div class="qa-label">QA-18</div><div class="q">¿A partir de qué edad puedo inscribirme?</div><div class="a">13 años (con autorización de padre o representante para menores de 18).</div></div>
+
+      <div class="qa-entry"><div class="qa-label">QA-19 (NEW)</div><div class="q">¿Puedo entrenar un día sin inscribirme?</div><div class="a">Sí. Day pass: $21.40. Week pass: $32.10. Clase individual: $10.70. Todos incluyen ITBMS.</div></div>
+
+      <div class="qa-entry"><div class="qa-label">QA-20 (NEW)</div><div class="q">¿Puedo llevar un invitado?</div><div class="a">Sí, puedes traer un invitado, pero solo una vez. El mismo invitado no se puede repetir.</div></div>
+
+      <div class="qa-entry"><div class="qa-label">QA-21 (NEW)</div><div class="q">¿Tienen clases Les Mills?</div><div class="a">Sí, somos el único gimnasio en Panamá con licencia Les Mills. Clases certificadas con estándares internacionales: Body Combat, RPM, Body Pump y más.</div></div>
+
+      <div class="qa-entry"><div class="qa-label">QA-22 (NEW)</div><div class="q">¿Cuál es el proceso para inscribirme?</div><div class="a">Firmas tu contrato, te presentamos la app (Trainingym), te tomamos la presión arterial, un entrenador de planta te hace una valoración inicial y te asigna una rutina general. Si quieres entrenar ese mismo día, el entrenador te guía en las máquinas.</div></div>
+
+      <div class="qa-entry"><div class="qa-label">QA-23 (NEW)</div><div class="q">¿Cuántos entrenadores tienen disponibles?</div><div class="a">Tenemos 2 entrenadores de planta por turno, distribuidos por zona. Están en el piso para resolver tus dudas sobre máquinas y ejercicios. Los entrenadores personalizados se contratan aparte.</div></div>
+
+    </div>
+  </div>
+
+  <!-- Section 3: Marketing Brain Upload -->
+  <div class="section-card" id="section3">
+    <div class="section-header"><h2><span class="section-number">3</span> Marketing Brain Upload</h2><button class="copy-btn" data-target="section3-code">Copiar bloque</button></div>
+    <div class="section-body">
+      <h3>&#x1F9E0; Instrucciones de Carga</h3>
+<pre id="section3-code">📄 Acción: Subir Marketing Brain HTML como documento de conocimiento
+
+Pasos:
+1. Generar el archivo Marketing Brain HTML completo desde el pipeline.
+2. Ir a Settings > Knowledgebase > AI Agent en GoHighLevel.
+3. Seleccionar "Upload Document".
+4. Elegir el archivo: marketing_brain_MAX_GYM.html
+5. Configurar:
+   - Título: "Marketing Brain - Max Gym Panamá"
+   - Categoría: Documentos Estratégicos
+   - Visibilidad: Solo AI Agent
+6. Guardar y activar en el AI Agent.
+
+Este documento contiene:
+- Buyer personas detallados
+- Mapa de psicología del comprador
+- Sistema de mensajería y tono de voz
+- Propuesta única de valor
+- Análisis competitivo
+- Estrategia de contenido y canales
+- Journey del cliente
+
+⚠️ Importante: El Marketing Brain debe subirse DESPUÉS del Website Scrape y el FAQ para que el AI Agent tenga prioridad de datos factuales primero.</pre>
+      <div class="info-note">&#x2139;&#xFE0F; Orden recomendado de carga: 1. Website Scrape &#x2192; 2. FAQ Document &#x2192; 3. Marketing Brain Upload. Esto asegura que los datos concretos tengan prioridad.</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="copy-toast" id="toast">&#x2705; Bloque copiado al portapapeles</div>
+
+<script>
+document.querySelectorAll('.copy-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const targetId = this.dataset.target;
+    const codeEl = document.getElementById(targetId);
+    if (!codeEl) return;
+    const text = codeEl.textContent;
+    navigator.clipboard.writeText(text).then(() => {
+      this.textContent = '&#x2705; Copiado';
+      this.classList.add('copied');
+      setTimeout(() => { this.textContent = 'Copiar bloque'; this.classList.remove('copied'); }, 2000);
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
+    });
+  });
+});
+</script>
+</body>
+</html>

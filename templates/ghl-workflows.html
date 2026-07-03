@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="[TARGET_LANG]">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Max Gym — GHL Workflows</title>
+<style>
+  :root {
+    --primary: #87f24d;
+    --bg: #0d1117;
+    --surface: #161b22;
+    --border: #30363d;
+    --text: #e6edf3;
+    --muted: #8b949e;
+    --trigger: #6366f1;
+    --email: #3b82f6;
+    --wait: #d29922;
+    --condition: #bc8cff;
+    --stage: #f0883e;
+    --end: #6e7681;
+    --notify: #39d353;
+    --sms: #58a6ff;
+    --task: #f0883e;
+    --field: #8b5cf6;
+    --tag: #3fb950;
+    --bot: #f85149;
+    --http: #58a6ff;
+    --opp: #f0883e;
+    --mono: 'SF Mono', 'Fira Code', Consolas, monospace;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+  ::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: var(--bg); } ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  .header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 16px 24px; display: flex; align-items: center; gap: 16px; }
+  .header h1 { font-size: 20px; font-weight: 700; }
+  .header .meta { font-size: 12px; color: var(--muted); }
+  .brand-badge { background: var(--primary); color: #fff; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 20px; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 24px; }
+  .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+  .section-header h2 { font-size: 16px; font-weight: 700; }
+  .workflow-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 20px; overflow: hidden; }
+  .workflow-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; }
+  .workflow-num { background: var(--trigger); color: #fff; font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 6px; }
+  .workflow-title { font-size: 15px; font-weight: 600; }
+  .workflow-meta { font-size: 12px; color: var(--muted); margin-left: auto; }
+  .workflow-body { padding: 16px 20px; }
+  .node-list { display: flex; flex-direction: column; gap: 8px; }
+  .node { background: #0d1117; border: 1px solid var(--border); border-left: 3px solid var(--node-color, var(--trigger)); border-radius: 8px; padding: 12px 16px; }
+  .node-trigger { --node-color: var(--trigger); }
+  .node-email { --node-color: var(--email); }
+  .node-wait { --node-color: var(--wait); }
+  .node-condition { --node-color: var(--condition); }
+  .node-stage { --node-color: var(--stage); }
+  .node-end { --node-color: var(--end); }
+  .node-notify { --node-color: var(--notify); }
+  .node-sms { --node-color: var(--sms); }
+  .node-task { --node-color: var(--task); }
+  .node-field { --node-color: var(--field); }
+  .node-tag { --node-color: var(--tag); }
+  .node-bot { --node-color: var(--bot); }
+  .node-http { --node-color: var(--http); }
+  .node-opp { --node-color: var(--opp); }
+  .node-header { display: flex; align-items: center; gap: 10px; }
+  .node-icon { font-size: 16px; }
+  .node-type { font-size: 10px; font-weight: 700; color: var(--node-color); text-transform: uppercase; letter-spacing: 0.08em; }
+  .node-title { font-size: 13px; font-weight: 600; margin-top: 2px; }
+  .node-details { margin-top: 12px; border-top: 1px solid var(--border); padding-top: 12px; }
+  .node-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  .node-table td { padding: 4px 0; vertical-align: top; }
+  .node-table td:first-child { color: var(--muted); padding-right: 16px; white-space: nowrap; font-weight: 500; }
+  .node-table td:last-child { color: var(--text); font-family: var(--mono); font-size: 11px; word-break: break-all; }
+  .copy-btn { padding: 3px 10px; font-size: 11px; font-weight: 600; border-radius: 6px; border: 1px solid var(--border); background: var(--surface); color: var(--muted); cursor: pointer; transition: all 0.15s; }
+  .copy-btn:hover { background: var(--primary); color: #fff; border-color: var(--primary); }
+  .copy-btn.copied { background: #059669; color: #fff; border-color: #059669; }
+  .branch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+  .branch { background: #0d1117; border: 1px solid var(--border); border-radius: 8px; padding: 12px; }
+  .branch-label { font-size: 11px; font-weight: 700; margin-bottom: 8px; }
+  .branch-yes .branch-label { color: #3fb950; }
+  .branch-no .branch-label { color: #f85149; }
+  .connector { width: 1px; height: 20px; background: var(--border); margin-left: 24px; }
+  .info-box { background: #1c2030; border: 1px solid var(--border); border-radius: 6px; padding: 10px 14px; font-size: 12px; color: var(--wait); margin-top: 12px; }
+  .tag { display: inline-block; background: var(--primary); color: #fff; font-size: 10px; font-weight: 600; padding: 2px 8px; border-radius: 4px; margin-right: 4px; }
+  pre { font-family: var(--mono); white-space: pre-wrap; word-break: break-word; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1>GHL Workflows</h1>
+    <div class="meta">13 Automations · Max Gym</div>
+  </div>
+  <div class="brand-badge">Español (Panamá)</div>
+</div>
+
+<div class="container">
+
+<!-- WF 1 -->
+<div class="workflow-card">
+  <div class="workflow-header">
+    <span class="workflow-num">WF 1</span>
+    <span class="workflow-title">Meeting Booked — Update on IA Meeting</span>
+    <span class="workflow-meta">5 nodes · Bot Action</span>
+  </div>
+  <div class="workflow-body">
+    <div class="node-list">
+      <div class="node node-trigger">
+        <div class="node-header">
+          <span class="node-icon">⚡</span>
+          <span class="node-type">Trigger</span>
+        </div>
+        <div class="node-title">Bot Action: Mover a Oportunidad</div>
+        <div class="node-details">
+          <table class="node-table">
+            <tr><td>Trigger Type</td><td>Bot Action</td></tr>
+            <tr><td>Action Name</td><td>Mover a Oportunidad</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="node node-field">
+        <div class="node-header">
+          <span class="node-icon">📝</span>
+          <span class="node-type">Update Field</span>
+        </div>
+        <div class="node-title">Update Contact Field</div>
+        <div class="node-details">
+          <table class="node-table">
+            <tr><td>Field</td><td>IA Stage</td></tr>
+            <tr><td>Value</td><td>Meeting Booked</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="node node-tag">
+        <div class="node-header">
+          <span class="node-icon">🏷</span>
+          <span class="node-type">Add Tags</span>
+        </div>
+        <div class="node-title">Add Tags</div>
+        <div class="node-details">
+          <table class="node-table">
+            <tr><td>Add Tags</td><td>meeting-scheduled, ia-qualified</td></tr>
+            <tr><td>Remove Tags</td><td>ia-qualifying</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="node node-stage">
+        <div class="node-header">
+          <span class="node-icon">→</span>
+          <span class="node-type">Stage Change</span>
+        </div>
+        <div class="node-title">Update Opportunity Stage</div>
+        <div class="node-details">
+          <table class="node-table">
+            <tr><td>Pipeline</td><td>[PIPELINE_NAME]</td></tr>
+            <tr><td>New Stage</td><td>Meeting Scheduled</td></tr>
+            <tr><td>Stage ID</td><td>[STAGE_ID]</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="node node-notify">
+        <div class="node-header">
+          <span class="node-icon">🔔</span>
+          <span class="node-type">Notification</span>
+        </div>
+        <div class="node-title">Send Internal Notification</div>
+        <div class="node-details">
+          <table class="node-table">
+            <tr><td>Channel</td><td>Email / Slack</td></tr>
+            <tr><td>Message</td><td>{{contact.name}} agendó reunión vía IA</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WF 2 -->
+<div class="workflow-card">
+  <div class="workflow-header">
+    <span class="workflow-num">WF 2</span>
+    <span class="workflow-title">IA Disqualifies — Update Deal Status</span>
+    <span class="workflow-meta">7 nodes · Bot Action</span>
+  </div>
+  <div class="workflow-body">
+    <div class="node-list">
+      <div class="node node-trigger">
+        <div class="node-header">
+          <span class="node-icon">⚡</span>
+          <span class="node-type">Trigger</span>
+        </div>
+        <div class="node-title">Bot Action: Descalificados</div>
+        <div class="node-details">
+          <table class="node-table">
+            <tr><td>Trigger Type</td><td>Bot Action</td></tr>
+            <tr><td>Action Name</td><td>Descalificados</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="node node-condition">
+        <div class="node-header">
+          <span class="node-icon">🔀</span>
+          <span class="node-type">If / Else</span>
+        </div>
+        <div class="node-title">What disqualification type?</div>
+        <div class="node-details">
+          <table class="node-table">
+            <tr><td>Condition Type</td><td>Contact Field</td></tr>
+            <tr><td>Field</td><td>disqualification_type</td></tr>
+          </table>
+          <div class="branch-grid">
+            <div class="branch branch-yes">
+              <div class="branch-label">TIPO A →</div>
+              <div class="node" style="margin:0;border:none;background:#0d2719">
+                <div class="node-title">Tag: dq-budget-too-low</div>
+              </div>
+            </div>
+            <div class="branch branch-no">
+              <div class="branch-label">TIPO B-E →</div>
+              <div class="node" style="margin:0;border:none;background:#2d0e0e">
+                <div class="node-title">dq-too-small, dq-no-history, dq-wrong-profile, dq-revenue-below-threshold</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="node node-tag">
+        <div class="node-header">
+          <span class="node-icon">🏷</span>
+          <span class="node-type">Add Tags</span>
+        </div>
+        <div class="node-title">Add Tags</div>
+        <div class="node-details">
+          <table class="node-table">
+            <tr><td>Add Tags</td><td>ia-disqualified, dq-[type], stop-bot</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="node node-stage">
+        <div class="node-header">
+          <span class="node-icon">→</span>
+          <span class="node-type">Stage Change</span>
+        </div>
+        <div class="node-title">Update Opportunity Stage → Lost</div>
+        <div class="node-details">
+          <table class="node-table">
+            <tr><td>Pipeline</td><td>[PIPELINE_NAME]</td></tr>
+            <tr><td>New Stage</td><td>Lost</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="node node-field">
+        <div class="node-header">
+          <span class="node-icon">📝</span>
+          <span class="node-type">Update Field</span>
+        </div>
+        <div class="node-title">Update Contact Field</div>
+        <div class="node-details">
+          <table class="node-table">
+            <tr><td>Field</td><td>Disqualification Reason</td></tr>
+            <tr><td>Value</td><td>[TIPO X - Description]</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="node node-bot">
+        <div class="node-header">
+          <span class="node-icon">🤖</span>
+          <span class="node-type">Bot Action</span>
+        </div>
+        <div class="node-title">Stop Bot for this contact</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WF 3 -->
+<div class="workflow-card">
+  <div class="workflow-header">
+    <span class="workflow-num">WF 3</span>
+    <span class="workflow-title">Stage Lost (Manual) — Update Disqualified</span>
+    <span class="workflow-meta">5 nodes · Stage Change</span>
+  </div>
+  <div class="workflow-body">
+    <div class="node-list">
+      <div class="node node-trigger">
+        <div class="node-header">
+          <span class="node-icon">⚡</span>
+          <span class="node-type">Trigger</span>
+        </div>
+        <div class="node-title">Opportunity Stage Changed → Lost</div>
+        <div class="node-details">
+          <table class="node-table">
+            <tr><td>Trigger Type</td><td>Opportunity Stage Changed</td></tr>
+            <tr><td>New Stage</td><td>Lost</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="node node-tag">
+        <div class="node-header">
+          <span class="node-icon">🏷</span>
+          <span class="node-type">Add Tags</span>
+        </div>
+        <div class="node-title">Add Tags</div>
+        <div class="node-details">
+          <table class="node-table">
+            <tr><td>Add Tags</td><td>disqualified, lost</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="node node-field">
+        <div class="node-header">
+          <span class="node-icon">📝</span>
+          <span class="node-type">Update Field</span>
+        </div>
+        <div class="node-title">Update Contact Field</div>
+        <div class="node-details">
+          <table class="node-table">
+            <tr><td>Field</td><td>Disqualification Date</td></tr>
+            <tr><td>Value</td><td>Current Date</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WF 4 -->
+<div class="workflow-card">
+  <div class="workflow-header">
+    <span class="workflow-num">WF 4</span>
+    <span class="workflow-title">Disqualified — Send Pixel Event</span>
+    <span class="workflow-meta">4 nodes · Stage Change + HTTP</span>
+  </div>
+  <div class="workflow-body">
+    <div class="node-list">
+      <div class="node node-trigger">
+        <div class="node-header">
+          <span class="node-icon">⚡</span>
+          <span class="node-type">Trigger</span>
+        </div>
+        <div class="node-title">Opportunity Stage Changed → Lost</div>
+      </div>
+      <div class="node node-condition">
+        <div class="node-header">
+          <span class="node-icon">🔀</span>
+          <span class="node-type">If / Else</span>
+        </div>
+        <div class="node-title">Tag "ia-disqualified" present?</div>
+        <div class="branch-grid">
+          <div class="branch branch-yes">
+            <div class="branch-label">YES →</div>
+            <div class="node" style="margin:0;border:none;background:#051d3e">
+              <div class="node-title">Send Conversion Event</div>
+              <table class="node-table">
+                <tr><td>Platform</td><td>Google Ads / Facebook Pixel</td></tr>
+                <tr><td>Event</td><td>Disqualified Lead</td></tr>
+                <tr><td>Value</td><td>0</td></tr>
+              </table>
+            </div>
+          </div>
+          <div class="branch branch-no">
+            <div class="branch-label">NO →</div>
+            <div class="node" style="margin:0;border:none;background:#161b22">
+              <div class="node-title">No Action</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WF 5 -->
+<div class="workflow-card">
+  <div class="workflow-header">
+    <span class="workflow-num">WF 5</span>
+    <span class="workflow-title">Cold Status — Mark Inactive Leads</span>
+    <span class="workflow-meta">6 nodes · Scheduled</span>
+  </div>
+  <div class="workflow-body">
+    <div class="node-list">
+      <div class="node node-trigger">
+        <div class="node-header">
+          <span class="node-icon">⚡</span>
+          <span class="node-type">Trigger</span>
+        </div>
+        <div class="node-title">Scheduled: Daily at 8:00 AM</div>
+      </div>
+      <div class="node node-condition">
+        <div class="node-header">
+          <span class="node-icon">🔀</span>
+          <span class="node-type">If / Else</span>
+        </div>
+        <div class="node-title">Contact has no activity in 14 days?</div>
+      </div>
+      <div class="node node-condition">
+        <div class="node-header">
+          <span class="node-icon">🔀</span>
+          <span class="node-type">If / Else</span>
+        </div>
+        <div class="node-title">Opportunity in New Lead or Qualifying?</div>
+      </div>
+      <div class="node node-tag">
+        <div class="node-header">
+          <span class="node-icon">🏷</span>
+          <span class="node-type">Add Tags</span>
+        </div>
+        <div class="node-title">Add Tags: cold, nurturing</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WF 6 -->
+<div class="workflow-card">
+  <div class="workflow-header">
+    <span class="workflow-num">WF 6</span>
+    <span class="workflow-title">Deal Won — Celebrate + Pixel + Onboarding</span>
+    <span class="workflow-meta">7 nodes · Stage Won</span>
+  </div>
+  <div class="workflow-body">
+    <div class="node-list">
+      <div class="node node-trigger">
+        <div class="node-header">
+          <span class="node-icon">⚡</span>
+          <span class="node-type">Trigger</span>
+        </div>
+        <div class="node-title">Opportunity Stage Changed → Won</div>
+      </div>
+      <div class="node node-tag">
+        <div class="node-header"><span class="node-icon">🏷</span><span class="node-type">Tags</span></div>
+        <div class="node-title">Add Tags: won, onboarding-start · Remove: meeting-scheduled, qualifying</div>
+      </div>
+      <div class="node node-http">
+        <div class="node-header">
+          <span class="node-icon">🌐</span>
+          <span class="node-type">HTTP / Pixel</span>
+        </div>
+        <div class="node-title">Send Conversion Event</div>
+        <div class="node-details">
+          <table class="node-table">
+            <tr><td>Platform</td><td>Google Ads / Facebook Pixel</td></tr>
+            <tr><td>Event</td><td>Purchase / Lead Conversion</td></tr>
+            <tr><td>Value</td><td>{{opportunity.proposal_value}}</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="node node-notify">
+        <div class="node-header"><span class="node-icon">🔔</span><span class="node-type">Notify</span></div>
+        <div class="node-title">Internal Notification: 🎉 {{contact.company}} ganado!</div>
+      </div>
+      <div class="node node-sms">
+        <div class="node-header"><span class="node-icon">💬</span><span class="node-type">WhatsApp</span></div>
+        <div class="node-title">Send Thank You Template: win-congratulations</div>
+      </div>
+      <div class="node node-task">
+        <div class="node-header"><span class="node-icon">☑</span><span class="node-type">Task</span></div>
+        <div class="node-title">Create Task: Kickoff call with {{contact.name}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WF 7 -->
+<div class="workflow-card">
+  <div class="workflow-header">
+    <span class="workflow-num">WF 7</span>
+    <span class="workflow-title">Deal Lost — Handle + Nurture</span>
+    <span class="workflow-meta">5 nodes · Stage Lost</span>
+  </div>
+  <div class="workflow-body">
+    <div class="node-list">
+      <div class="node node-trigger">
+        <div class="node-header"><span class="node-icon">⚡</span><span class="node-type">Trigger</span></div>
+        <div class="node-title">Opportunity Stage Changed → Lost</div>
+      </div>
+      <div class="node node-condition">
+        <div class="node-header"><span class="node-icon">🔀</span><span class="node-type">If / Else</span></div>
+        <div class="node-title">Tag "ia-disqualified" NOT present?</div>
+        <div class="branch-grid">
+          <div class="branch branch-yes">
+            <div class="branch-label">YES →</div>
+            <div class="node" style="margin:0;border:none;background:#0d2719">
+              <div class="node-title">Add Tags + Update Loss Reason</div>
+            </div>
+          </div>
+          <div class="branch branch-no">
+            <div class="branch-label">NO →</div>
+            <div class="node" style="margin:0;border:none;background:#161b22">
+              <div class="node-title">Already handled by WF 2/3</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WF 8 -->
+<div class="workflow-card">
+  <div class="workflow-header">
+    <span class="workflow-num">WF 8</span>
+    <span class="workflow-title">Copy Contact Fields to Opportunity</span>
+    <span class="workflow-meta">4 nodes · Opportunity Created</span>
+  </div>
+  <div class="workflow-body">
+    <div class="node-list">
+      <div class="node node-trigger">
+        <div class="node-header"><span class="node-icon">⚡</span><span class="node-type">Trigger</span></div>
+        <div class="node-title">Opportunity Created</div>
+      </div>
+      <div class="node node-field">
+        <div class="node-header"><span class="node-icon">📝</span><span class="node-type">Copy Fields</span></div>
+        <div class="node-title">Copy Contact Field to Opportunity</div>
+        <div class="node-details">
+          <table class="node-table">
+            <tr><td>{{contact.company_name}}</td><td>→ {{opportunity.company_name}}</td></tr>
+            <tr><td>{{contact.email}}</td><td>→ {{opportunity.email}}</td></tr>
+            <tr><td>{{contact.phone}}</td><td>→ {{opportunity.phone}}</td></tr>
+            <tr><td>{{contact.bot_summary}}</td><td>→ {{opportunity.bot_summary}}</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="node node-tag">
+        <div class="node-header"><span class="node-icon">🏷</span><span class="node-type">Tags</span></div>
+        <div class="node-title">Add Tag: bot-created (if created via bot)</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WF 9 -->
+<div class="workflow-card">
+  <div class="workflow-header">
+    <span class="workflow-num">WF 9</span>
+    <span class="workflow-title">Meeting Reminder — 24h Before</span>
+    <span class="workflow-meta">4 nodes · Calendar Event</span>
+  </div>
+  <div class="workflow-body">
+    <div class="node-list">
+      <div class="node node-trigger">
+        <div class="node-header"><span class="node-icon">⚡</span><span class="node-type">Trigger</span></div>
+        <div class="node-title">Calendar Event: 24 hours before</div>
+      </div>
+      <div class="node node-condition">
+        <div class="node-header"><span class="node-icon">🔀</span><span class="node-type">If / Else</span></div>
+        <div class="node-title">Appointment status = Scheduled?</div>
+      </div>
+      <div class="node node-sms">
+        <div class="node-header"><span class="node-icon">💬</span><span class="node-type">WhatsApp</span></div>
+        <div class="node-title">Send Meeting Reminder Template</div>
+        <div class="node-details">
+          <table class="node-table">
+            <tr><td>Template</td><td>confirmacion_reunion_meet</td></tr>
+            <tr><td>Variables</td><td>{{1}}={{contact.first_name}}, {{2}}={{appointment.start_time}}, {{3}}={{user.first_name}}, {{4}}={{appointment.meeting_location}}</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="node node-tag">
+        <div class="node-header"><span class="node-icon">🏷</span><span class="node-type">Tags</span></div>
+        <div class="node-title">Add Tag: meeting-reminder-sent</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WF 10 -->
+<div class="workflow-card">
+  <div class="workflow-header">
+    <span class="workflow-num">WF 10</span>
+    <span class="workflow-title">Stop Bot on Disqualification</span>
+    <span class="workflow-meta">5 nodes · Tag Added</span>
+  </div>
+  <div class="workflow-body">
+    <div class="node-list">
+      <div class="node node-trigger">
+        <div class="node-header"><span class="node-icon">⚡</span><span class="node-type">Trigger</span></div>
+        <div class="node-title">Tag Added: "ia-disqualified"</div>
+      </div>
+      <div class="node node-bot">
+        <div class="node-header"><span class="node-icon">🤖</span><span class="node-type">Bot</span></div>
+        <div class="node-title">Stop AI Agent Bot for this contact</div>
+      </div>
+      <div class="node node-tag">
+        <div class="node-header"><span class="node-icon">🏷</span><span class="node-type">Tags</span></div>
+        <div class="node-title">Add Tag: stop-bot</div>
+      </div>
+      <div class="node node-field">
+        <div class="node-header"><span class="node-icon">📝</span><span class="node-type">Field</span></div>
+        <div class="node-title">Update Contact Field: Bot Status = Deactivated</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WF 11 -->
+<div class="workflow-card">
+  <div class="workflow-header">
+    <span class="workflow-num">WF 11</span>
+    <span class="workflow-title">72h Follow-up Sequence</span>
+    <span class="workflow-meta">9 nodes · Time-based</span>
+  </div>
+  <div class="workflow-body">
+    <div class="node-list">
+      <div class="node node-trigger">
+        <div class="node-header"><span class="node-icon">⚡</span><span class="node-type">Trigger</span></div>
+        <div class="node-title">Time-based: 72 hours since last message</div>
+      </div>
+      <div class="node node-condition">
+        <div class="node-header"><span class="node-icon">🔀</span><span class="node-type">If / Else</span></div>
+        <div class="node-title">Contact in Qualifying or New Lead?</div>
+        <div class="branch-grid">
+          <div class="branch branch-yes">
+            <div class="branch-label">YES →</div>
+            <div class="node" style="margin:0;border:none;background:#051d3e">
+              <div class="node-title">Send WA: 72h template → Wait 5d → Send WA: 5d template → Wait 7d → Send WA: 15d template → Add Tag: cold</div>
+            </div>
+          </div>
+          <div class="branch branch-no">
+            <div class="branch-label">NO →</div>
+            <div class="node" style="margin:0;border:none;background:#161b22">
+              <div class="node-title">No Action</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WF 12 -->
+<div class="workflow-card">
+  <div class="workflow-header">
+    <span class="workflow-num">WF 12</span>
+    <span class="workflow-title">Create Lead + Start Bot</span>
+    <span class="workflow-meta">8 nodes · Form Submit</span>
+  </div>
+  <div class="workflow-body">
+    <div class="node-list">
+      <div class="node node-trigger">
+        <div class="node-header"><span class="node-icon">⚡</span><span class="node-type">Trigger</span></div>
+        <div class="node-title">Form Submitted OR Contact Created</div>
+        <div class="node-details">
+          <table class="node-table">
+            <tr><td>Source</td><td>Landing Page / Website / Form</td></tr>
+          </table>
+        </div>
+      </div>
+      <div class="node node-field">
+        <div class="node-header"><span class="node-icon">📝</span><span class="node-type">Contact</span></div>
+        <div class="node-title">Create/Update Contact with form fields</div>
+      </div>
+      <div class="node node-tag">
+        <div class="node-header"><span class="node-icon">🏷</span><span class="node-type">Tags</span></div>
+        <div class="node-title">Add Tags: new-lead, source-[source]</div>
+      </div>
+      <div class="node node-opp">
+        <div class="node-header"><span class="node-icon">💼</span><span class="node-type">Opportunity</span></div>
+        <div class="node-title">Create Opportunity in [PIPELINE_NAME] → New Lead</div>
+      </div>
+      <div class="node node-bot">
+        <div class="node-header"><span class="node-icon">🤖</span><span class="node-type">Bot</span></div>
+        <div class="node-title">Start AI Agent Conversation</div>
+      </div>
+      <div class="node node-notify">
+        <div class="node-header"><span class="node-icon">🔔</span><span class="node-type">Notify</span></div>
+        <div class="node-title">Internal Notification: Nuevo lead {{contact.name}}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WF 13 -->
+<div class="workflow-card">
+  <div class="workflow-header">
+    <span class="workflow-num">WF 13</span>
+    <span class="workflow-title">Google Ads Conversion Tracking</span>
+    <span class="workflow-meta">6 nodes · Contact Created</span>
+  </div>
+  <div class="workflow-body">
+    <div class="node-list">
+      <div class="node node-trigger">
+        <div class="node-header"><span class="node-icon">⚡</span><span class="node-type">Trigger</span></div>
+        <div class="node-title">Contact Created with source = "google-ads"</div>
+      </div>
+      <div class="node node-tag">
+        <div class="node-header"><span class="node-icon">🏷</span><span class="node-type">Tags</span></div>
+        <div class="node-title">Add Tags: google-ads, source-paid</div>
+      </div>
+      <div class="node node-http">
+        <div class="node-header"><span class="node-icon">🌐</span><span class="node-type">Pixel</span></div>
+        <div class="node-title">Send Conversion: Lead Form Submitted</div>
+      </div>
+      <div class="node node-condition">
+        <div class="node-header"><span class="node-icon">🔀</span><span class="node-type">If / Else</span></div>
+        <div class="node-title">When opportunity moves to Won?</div>
+        <div class="branch-grid">
+          <div class="branch branch-yes">
+            <div class="branch-label">YES →</div>
+            <div class="node" style="margin:0;border:none;background:#051d3e">
+              <div class="node-title">Send Conversion: Sale with value {{opportunity.proposal_value}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<script>
+function copyText(text) {
+  if (navigator.clipboard && window.isSecureContext) {
+    return navigator.clipboard.writeText(text)
+  }
+  const el = document.createElement('textarea')
+  el.value = text
+  el.style.cssText = 'position:fixed;opacity:0;pointer-events:none'
+  document.body.appendChild(el)
+  el.focus()
+  el.select()
+  document.execCommand('copy')
+  document.body.removeChild(el)
+  return Promise.resolve()
+}
+
+document.querySelectorAll('.copy-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const text = btn.getAttribute('data-copy')
+    if (!text) return
+    copyText(text).then(() => {
+      btn.textContent = '✓ Copiado'
+      btn.classList.add('copied')
+      setTimeout(() => {
+        btn.textContent = 'Copiar'
+        btn.classList.remove('copied')
+      }, 1500)
+    })
+  })
+})
+</script>
+
+</body>
+</html>

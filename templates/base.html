@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page_title }} — Max Gym Panama</title>
+  <style>
+    :root {
+      --bg: #0d1117; --surface: #161b22; --border: #30363d; --text: #e6edf3;
+      --muted: #8b949e; --primary: #6366f1; --green: #3fb950; --red: #f85149;
+      --yellow: #d29922; --blue: #58a6ff; --purple: #bc8cff; --orange: #f0883e;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.5; }
+    nav { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 1rem; position: sticky; top: 0; z-index: 100; }
+    nav ul { display: flex; list-style: none; gap: 0; overflow-x: auto; max-width: 1400px; margin: 0 auto; }
+    nav li { flex-shrink: 0; }
+    nav a { display: block; padding: 0.75rem 1rem; color: var(--muted); text-decoration: none; font-size: 0.875rem; border-bottom: 2px solid transparent; white-space: nowrap; }
+    nav a:hover { color: var(--text); }
+    nav a.active { color: var(--primary); border-bottom-color: var(--primary); }
+    main { max-width: 1400px; margin: 0 auto; padding: 1.5rem; }
+    iframe { width: 100%; height: calc(100vh - 120px); border: 1px solid var(--border); border-radius: 8px; background: #fff; }
+  </style>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="/dashboard" {% if request.path == '/dashboard' %}class="active"{% endif %}>📊 Dashboard</a></li>
+      <li><a href="/ghl-workflows" {% if request.path == '/ghl-workflows' %}class="active"{% endif %}>⚡ Workflows</a></li>
+      <li><a href="/strategy-brief" {% if request.path == '/strategy-brief' %}class="active"{% endif %}>Strategy Brief</a></li>
+      <li><a href="/conversation-flow" {% if request.path == '/conversation-flow' %}class="active"{% endif %}>Conversation Flow</a></li>
+      <li><a href="/bot-agent-summary" {% if request.path == '/bot-agent-summary' %}class="active"{% endif %}>Bot Agent</a></li>
+      <li><a href="/ai-agent-actions" {% if request.path == '/ai-agent-actions' %}class="active"{% endif %}>AI Actions</a></li>
+      <li><a href="/pipeline-stage-map" {% if request.path == '/pipeline-stage-map' %}class="active"{% endif %}>Pipeline</a></li>
+      <li><a href="/custom-fields" {% if request.path == '/custom-fields' %}class="active"{% endif %}>Custom Fields</a></li>
+      <li><a href="/workflow-templates" {% if request.path == '/workflow-templates' %}class="active"{% endif %}>WF Templates</a></li>
+      <li><a href="/whatsapp-templates" {% if request.path == '/whatsapp-templates' %}class="active"{% endif %}>WhatsApp</a></li>
+      <li><a href="/email-templates" {% if request.path == '/email-templates' %}class="active"{% endif %}>Email</a></li>
+      <li><a href="/tags-map" {% if request.path == '/tags-map' %}class="active"{% endif %}>Tags</a></li>
+      <li><a href="/knowledgebase" {% if request.path == '/knowledgebase' %}class="active"{% endif %}>Knowledge Base</a></li>
+      <li><a href="/landing-mockup" {% if request.path == '/landing-mockup' %}class="active"{% endif %}>Landing</a></li>
+      <li><a href="/business-profile" {% if request.path == '/business-profile' %}class="active"{% endif %}>Business</a></li>
+    </ul>
+  </nav>
+  <main>
+    <iframe src="{{ iframe_src }}" sandbox="allow-scripts allow-same-origin" loading="lazy"></iframe>
+  </main>
+</body>
+</html>

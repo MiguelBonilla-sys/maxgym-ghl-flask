@@ -1,0 +1,608 @@
+﻿<!DOCTYPE html>
+<html lang="es-PA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Max Gym — Workflow Templates (13 Automations)</title>
+<style>
+  :root { --primary: #000000; --secondary: #87f24d; --accent: #E8F5E9; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: #0f172a; color: #e2e8f0; padding: 40px; line-height: 1.6; }
+  h1 { color: #fff; font-size: 28px; margin-bottom: 4px; }
+  .subtitle { color: #94a3b8; margin-bottom: 24px; }
+  .summary { background: #1e293b; border-radius: 12px; padding: 20px; margin-bottom: 32px; border: 1px solid #334155; }
+  .summary h2 { color: var(--secondary); font-size: 16px; margin-bottom: 8px; }
+  .summary ul { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 6px; }
+  .summary ul li::before { content: "⚡ "; color: var(--secondary); }
+  .summary ul li { font-size: 13px; color: #cbd5e1; }
+  .workflow { background: #1e293b; border-radius: 12px; margin-bottom: 20px; border: 1px solid #334155; overflow: hidden; }
+  .wf-header { padding: 16px 20px; border-bottom: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; background: #0f172a; }
+  .wf-number { font-size: 11px; font-weight: 700; color: var(--secondary); background: rgba(46,125,50,0.15); padding: 2px 10px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .wf-title { font-weight: 700; font-size: 15px; color: #fff; }
+  .wf-purpose { font-size: 12px; color: #94a3b8; margin-top: 2px; }
+  .wf-body { padding: 20px; }
+  .wf-meta { display: flex; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+  .wf-meta-item { font-size: 12px; color: #94a3b8; }
+  .wf-meta-item strong { color: var(--secondary); }
+  .node-flow { background: #0f172a; border-radius: 8px; padding: 16px; font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace; font-size: 12px; line-height: 1.8; color: #e2e8f0; overflow-x: auto; border: 1px solid #334155; }
+  .node-flow .trigger { color: #22c55e; }
+  .node-flow .condition { color: #eab308; }
+  .node-flow .action { color: #60a5fa; }
+  .node-flow .tag { color: #c084fc; }
+  .node-flow .field { color: #f472b6; }
+  .node-flow .comment { color: #64748b; font-style: normal; }
+  .wf-notes { margin-top: 12px; padding: 12px; background: rgba(46,125,50,0.08); border-radius: 6px; border-left: 3px solid var(--secondary); font-size: 12px; color: #cbd5e1; }
+  .wf-notes strong { color: var(--secondary); }
+  .wf-notes code { background: #0f172a; padding: 1px 5px; border-radius: 3px; font-size: 11px; color: #e2e8f0; }
+  .arrow { color: #475569; margin: 0 4px; }
+  .dep-map { background: #1e293b; border-radius: 12px; padding: 20px; margin-top: 24px; border: 1px solid #334155; overflow-x: auto; }
+  .dep-map h2 { color: var(--secondary); font-size: 16px; margin-bottom: 12px; }
+  .dep-map pre { font-family: 'JetBrains Mono', 'Consolas', monospace; font-size: 11px; line-height: 1.6; color: #94a3b8; }
+</style>
+</head>
+<body>
+<h1>⚡ Max Gym — Workflow Templates</h1>
+<div class="subtitle">13 automations for GHL. Configure these in Automations → Workflows. All labels in Spanish. Pipeline stage: "Tour / Visit Scheduled".</div>
+
+<div class="summary">
+  <h2>📋 Pipeline Stage Mapping (Max Gym)</h2>
+  <ul>
+    <li><strong>New Lead</strong> — Any inbound lead (WhatsApp, IG, Meta Ads, Google, referral)</li>
+    <li><strong>Tour / Visit Scheduled</strong> — Tour booked via bot</li>
+    <li><strong>Prospect</strong> — Tour completed, interested, human follows up</li>
+    <li><strong>Member Signed</strong> — Agreement + payment completed</li>
+    <li><strong>Active Member</strong> — Member active 30+ days</li>
+    <li><strong>Lost</strong> — Human-marked as lost (not DQ)</li>
+    <li>Internal: <strong>Disqualified</strong> (via bot), <strong>Cold</strong> (inactivity), <strong>Won</strong></li>
+  </ul>
+</div>
+
+<!-- WF 1 -->
+<div class="workflow">
+  <div class="wf-header">
+    <div>
+      <div class="wf-title"><span class="wf-number">WF 1</span> Actualizar estado negocio cuando IA agenda tour</div>
+      <div class="wf-purpose">When the bot successfully books a tour, move the opportunity forward</div>
+    </div>
+  </div>
+  <div class="wf-body">
+    <div class="wf-meta">
+      <span class="wf-meta-item"><strong>Trigger:</strong> Bot Action "Mover a Oportunidad"</span>
+      <span class="wf-meta-item"><strong>Pipeline:</strong> Membership / Subscription Services</span>
+    </div>
+    <div class="node-flow">
+<span class="trigger">[TRIGGER]</span> Bot Action: Mover a Oportunidad
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Update Contact Field</span>
+    <span class="arrow">│</span> Field: "Bot Status" → <span class="tag">"Meeting Booked"</span>
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Add Tags</span>
+    <span class="arrow">│</span> Add: <span class="tag">meeting-scheduled</span>, <span class="tag">ia-qualified</span>
+    <span class="arrow">│</span> Remove: <span class="tag">ia-qualifying</span>, <span class="tag">new-lead</span>
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Update Opportunity Stage</span>
+    <span class="arrow">│</span> Pipeline → Stage: <span class="tag">"Tour / Visit Scheduled"</span>
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Send Internal Notification</span>
+    <span class="arrow">│</span> Channel: Slack/Email → Dorayme
+    <span class="arrow">│</span> Message: "{{contact.name}} agendó un tour vía IA"
+    </div>
+    <div class="wf-notes">
+      <strong>Max Gym customization:</strong> Stage changed to <strong>Tour / Visit Scheduled</strong>. Tags updated to match Max Gym tag library. Notify Dorayme.
+    </div>
+  </div>
+</div>
+
+<!-- WF 2 -->
+<div class="workflow">
+  <div class="wf-header">
+    <div>
+      <div class="wf-title"><span class="wf-number">WF 2</span> Actualizar estado negocio cuando IA descalifica</div>
+      <div class="wf-purpose">When the bot disqualifies a lead (TIPO A–F), move to disqualified with reason</div>
+    </div>
+  </div>
+  <div class="wf-body">
+    <div class="wf-meta">
+      <span class="wf-meta-item"><strong>Trigger:</strong> Bot Action "Descalificar Lead"</span>
+      <span class="wf-meta-item"><strong>6 DQ Types:</strong> A (budget), B (location), C (no decision), D (out of range), E (committed), F (underage)</span>
+    </div>
+    <div class="node-flow">
+<span class="trigger">[TRIGGER]</span> Bot Action: Descalificar Lead
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="condition">[CONDITION]</span> What disqualification type?
+    <span class="arrow">│</span> ├── TIPO A → tag: <span class="tag">dq-budget-too-low</span>
+    <span class="arrow">│</span> ├── TIPO B → tag: <span class="tag">dq-wrong-profile</span>
+    <span class="arrow">│</span> ├── TIPO C → tag: <span class="tag">dq-no-decision-maker</span>
+    <span class="arrow">│</span> ├── TIPO D → tag: <span class="tag">dq-out-of-range</span>
+    <span class="arrow">│</span> ├── TIPO E → tag: <span class="tag">dq-already-committed</span>
+    <span class="arrow">│</span> └── TIPO F → tag: <span class="tag">dq-underage</span>
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Add Tags</span>
+    <span class="arrow">│</span> Add: <span class="tag">ia-disqualified</span>, <span class="tag">dq-[type]</span>, <span class="tag">stop-bot</span>
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Update Opportunity Stage</span>
+    <span class="arrow">│</span> Pipeline → Stage: <span class="tag">"Lost"</span> (Disqualified)
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Update Contact Field</span>
+    <span class="arrow">│</span> Field: "Disqualification Reason" → "[TIPO X - Description]"
+    <span class="arrow">│</span> Field: "Bot Status" → "Disqualified"
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Stop Bot</span> for this contact
+    </div>
+    <div class="wf-notes">
+      <strong>Max Gym customization:</strong> 6 DQ types (A–F). New TIPO F = <code>dq-underage</code> (edad mínima 13 años). STOPBOT_DESCALIFICADO message sent before workflow fires.
+    </div>
+  </div>
+</div>
+
+<!-- WF 3 -->
+<div class="workflow">
+  <div class="wf-header">
+    <div>
+      <div class="wf-title"><span class="wf-number">WF 3</span> Actualizar estado negocios descalificado (manual)</div>
+      <div class="wf-purpose">Secondary handling when a lead is manually marked as disqualified by staff</div>
+    </div>
+  </div>
+  <div class="wf-body">
+    <div class="wf-meta">
+      <span class="wf-meta-item"><strong>Trigger:</strong> Opportunity stage changes to "Lost" + manual DQ</span>
+    </div>
+    <div class="node-flow">
+<span class="trigger">[TRIGGER]</span> Opportunity Stage Changed → <span class="tag">"Lost"</span>
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="condition">[CONDITION]</span> If stage reason = "Disqualified"
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Add Tags</span>
+    <span class="arrow">│</span> Add: <span class="tag">disqualified</span>, <span class="tag">lost</span>
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Update Contact Field</span>
+    <span class="arrow">│</span> Field: "Bot Status" → <span class="tag">"Disqualified"</span>
+    </div>
+    <div class="wf-notes">
+      <strong>Max Gym customization:</strong> Manual DQ by staff. Checks for <code>ia-disqualified</code> tag presence.
+    </div>
+  </div>
+</div>
+
+<!-- WF 4 -->
+<div class="workflow">
+  <div class="wf-header">
+    <div>
+      <div class="wf-title"><span class="wf-number">WF 4</span> Envío de info a píxel por descalificados</div>
+      <div class="wf-purpose">Send conversion event to ad platform when a lead is disqualified (for audience exclusion)</div>
+    </div>
+  </div>
+  <div class="wf-body">
+    <div class="wf-meta">
+      <span class="wf-meta-item"><strong>Trigger:</strong> Opportunity stage changes to "Lost" with disqualified tag</span>
+    </div>
+    <div class="node-flow">
+<span class="trigger">[TRIGGER]</span> Opportunity Stage Changed → <span class="tag">"Lost"</span>
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="condition">[CONDITION]</span> Tag contains <span class="tag">"ia-disqualified"</span>
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Send Conversion Event</span> (Google Ads / Facebook)
+    <span class="arrow">│</span> Event: "Disqualified Lead"
+    <span class="arrow">│</span> Value: 0
+    <span class="arrow">│</span> Currency: USD
+    </div>
+    <div class="wf-notes">
+      <strong>Max Gym customization:</strong> Ensures ad platforms don't retarget disqualified leads. Protects ad spend efficiency.
+    </div>
+  </div>
+</div>
+
+<!-- WF 5 -->
+<div class="workflow">
+  <div class="wf-header">
+    <div>
+      <div class="wf-title"><span class="wf-number">WF 5</span> Actualizar estado negocios fríos</div>
+      <div class="wf-purpose">Automatically move leads to "Cold" after 14 days of inactivity</div>
+    </div>
+  </div>
+  <div class="wf-body">
+    <div class="wf-meta">
+      <span class="wf-meta-item"><strong>Trigger:</strong> Scheduled — Daily at 8:00 AM</span>
+    </div>
+    <div class="node-flow">
+<span class="trigger">[TRIGGER]</span> Scheduled: Daily at 8:00 AM
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="condition">[CONDITION]</span> Contact has NO activity in 14 days
+    <span class="arrow">│</span> AND opportunity stage = <span class="tag">"New Lead"</span> or <span class="tag">"Tour / Visit Scheduled"</span>
+    <span class="arrow">│</span> AND tag <span class="tag">"cold"</span> is NOT present
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Add Tags</span>
+    <span class="arrow">│</span> Add: <span class="tag">cold</span>, <span class="tag">nurturing</span>
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Update Opportunity Stage</span>
+    <span class="arrow">│</span> Stage: Cold
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> Start <strong>Workflow 11</strong> (Follow-up after 72h sequence)
+    </div>
+    <div class="wf-notes">
+      <strong>Max Gym customization:</strong> Uses Max Gym stages (<code>New Lead</code>, <code>Tour / Visit Scheduled</code>). Tags: <code>cold</code>, <code>nurturing</code>.
+    </div>
+  </div>
+</div>
+
+<!-- WF 6 -->
+<div class="workflow">
+  <div class="wf-header">
+    <div>
+      <div class="wf-title"><span class="wf-number">WF 6</span> Actualizar estado negocios ganados y envío a píxel</div>
+      <div class="wf-purpose">When a deal is Won (Member Signed), trigger celebration + pixel event + onboarding</div>
+    </div>
+  </div>
+  <div class="wf-body">
+    <div class="wf-meta">
+      <span class="wf-meta-item"><strong>Trigger:</strong> Opportunity stage changes to "Member Signed"</span>
+    </div>
+    <div class="node-flow">
+<span class="trigger">[TRIGGER]</span> Opportunity Stage Changed → <span class="tag">"Member Signed"</span>
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Add Tags</span>
+    <span class="arrow">│</span> Add: <span class="tag">won</span>, <span class="tag">onboarding-start</span>
+    <span class="arrow">│</span> Remove: <span class="tag">meeting-scheduled</span>, <span class="tag">ia-qualified</span>
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Send Conversion Event</span> (Google Ads / Facebook)
+    <span class="arrow">│</span> Event: "Purchase"
+    <span class="arrow">│</span> Value: {{opportunity.proposal_value}}
+    <span class="arrow">│</span> Currency: USD
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Send Internal Notification</span>
+    <span class="arrow">│</span> Message: "🎉 {{contact.name}} nuevo miembro! B/. {{value}}"
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Send WhatsApp</span>
+    <span class="arrow">│</span> Template: <span class="tag">bienvenida_max_gym</span>
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Start Onboarding Sequence</span>
+    <span class="arrow">│</span> Create task: "Onboarding call with {{contact.name}}"
+    </div>
+    <div class="wf-notes">
+      <strong>Max Gym customization:</strong> Stage "Won" → <strong>Member Signed</strong>. Sends WhatsApp welcome. Tags: <code>won</code>, <code>onboarding-start</code>.
+    </div>
+  </div>
+</div>
+
+<!-- WF 7 -->
+<div class="workflow">
+  <div class="wf-header">
+    <div>
+      <div class="wf-title"><span class="wf-number">WF 7</span> Actualizar estado negocios perdidos</div>
+      <div class="wf-purpose">Handle lost deals gracefully — capture reason, tag, and move to nurture if appropriate</div>
+    </div>
+  </div>
+  <div class="wf-body">
+    <div class="wf-meta">
+      <span class="wf-meta-item"><strong>Trigger:</strong> Opportunity stage changes to "Lost" (NOT via disqualified)</span>
+    </div>
+    <div class="node-flow">
+<span class="trigger">[TRIGGER]</span> Opportunity Stage Changed → <span class="tag">"Lost"</span>
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="condition">[CONDITION]</span> Tag <span class="tag">"ia-disqualified"</span> is NOT present
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Add Tags</span>
+    <span class="arrow">│</span> Add: <span class="tag">lost</span>
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Update Contact Field</span>
+    <span class="arrow">│</span> Field: "Loss Reason" → from human input
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> Add to Nurture Sequence
+    <span class="arrow">│</span> Start <strong>Workflow 11</strong> if salvageable
+    </div>
+    <div class="wf-notes">
+      <strong>Max Gym customization:</strong> "Lost" stage used. <code>lost</code> tag added. Human enters loss reason.
+    </div>
+  </div>
+</div>
+
+<!-- WF 8 -->
+<div class="workflow">
+  <div class="wf-header">
+    <div>
+      <div class="wf-title"><span class="wf-number">WF 8</span> Duplicar info de contacto a oportunidad</div>
+      <div class="wf-purpose">Automatically copy key contact fields to the opportunity when created</div>
+    </div>
+  </div>
+  <div class="wf-body">
+    <div class="wf-meta">
+      <span class="wf-meta-item"><strong>Trigger:</strong> Opportunity created</span>
+    </div>
+    <div class="node-flow">
+<span class="trigger">[TRIGGER]</span> Opportunity Created
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Copy Contact Field to Opportunity</span>
+    <span class="arrow">│</span> {{contact.name}} → {{opportunity.name}}
+    <span class="arrow">│</span> {{contact.email}} → {{opportunity.email}}
+    <span class="arrow">│</span> {{contact.phone}} → {{opportunity.phone}}
+    <span class="arrow">│</span> {{contact.objetivo_principal}} → custom field
+    <span class="arrow">│</span> {{contact.situacion_actual}} → custom field
+    <span class="arrow">│</span> {{contact.presupuesto}} → custom field
+    <span class="arrow">│</span> {{contact.edad}} → custom field
+    <span class="arrow">│</span> {{contact.tipo_entrenador}} → custom field
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Add Opportunity Tag</span>
+    <span class="arrow">│</span> Add: <span class="tag">bot-created</span> (if from bot)
+    </div>
+    <div class="wf-notes">
+      <strong>Max Gym customization:</strong> Copies Max Gym qualification fields (<code>objetivo_principal</code>, <code>situacion_actual</code>, <code>presupuesto</code>, <code>edad</code>, <code>tipo_entrenador</code>) to opportunity for human sales visibility.
+    </div>
+  </div>
+</div>
+
+<!-- WF 9 -->
+<div class="workflow">
+  <div class="wf-header">
+    <div>
+      <div class="wf-title"><span class="wf-number">WF 9</span> Recordatorio de Tour (WhatsApp)</div>
+      <div class="wf-purpose">Send meeting reminder via WhatsApp before scheduled tour</div>
+    </div>
+  </div>
+  <div class="wf-body">
+    <div class="wf-meta">
+      <span class="wf-meta-item"><strong>Trigger:</strong> Calendar event — 24h before AND 1h before</span>
+    </div>
+    <div class="node-flow">
+<span class="trigger">[TRIGGER]</span> Calendar Event: 24 hours before
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="condition">[CONDITION]</span> Appointment status = "Scheduled"
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Send WhatsApp Template</span>
+    <span class="arrow">│</span> Template: <span class="tag">recordatorio_visita_24h</span>
+    <span class="arrow">│</span> {{1}} = {{contact.first_name}}
+    <span class="arrow">│</span> {{2}} = {{appointment.start_time}}
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Add Tags</span>
+    <span class="arrow">│</span> Add: <span class="tag">meeting-reminder-sent</span>
+    </div>
+    <div style="margin-top:12px;border-top:1px solid #334155;padding-top:12px;" class="node-flow">
+<span class="trigger">[ALTERNATE TRIGGER]</span> Calendar Event: 1 hour before
+    <span class="arrow">│</span> Template: <span class="tag">recordatorio_visita_1h</span>
+    <span class="arrow">│</span> Same variables as 24h
+    </div>
+    <div class="wf-notes">
+      <strong>Max Gym customization:</strong> Uses Max Gym WhatsApp templates (<code>recordatorio_visita_24h</code>, <code>recordatorio_visita_1h</code>). Calendar event = Tour / Visit Scheduled.
+    </div>
+  </div>
+</div>
+
+<!-- WF 10 -->
+<div class="workflow">
+  <div class="wf-header">
+    <div>
+      <div class="wf-title"><span class="wf-number">WF 10</span> Desactivar IA cuando un lead se marque como descalificado</div>
+      <div class="wf-purpose">When a lead is disqualified (by bot or human), stop the bot from engaging further</div>
+    </div>
+  </div>
+  <div class="wf-body">
+    <div class="wf-meta">
+      <span class="wf-meta-item"><strong>Trigger:</strong> Tag "ia-disqualified" added OR stage = "Lost" with DQ reason</span>
+    </div>
+    <div class="node-flow">
+<span class="trigger">[TRIGGER]</span> Tag Added: <span class="tag">"ia-disqualified"</span>
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Stop AI Agent Bot</span> for this contact
+    <span class="arrow">│</span> Setting: Bot deactivated
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Add Tags</span>
+    <span class="arrow">│</span> Add: <span class="tag">stop-bot</span>
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Update Contact Field</span>
+    <span class="arrow">│</span> Field: "Bot Status" → <span class="tag">"Deactivated"</span>
+    </div>
+    <div class="wf-notes">
+      <strong>Max Gym customization:</strong> Uses Max Gym's <code>ia-disqualified</code> and <code>stop-bot</code> tags. Bot Status field tracks deactivation.
+    </div>
+  </div>
+</div>
+
+<!-- WF 11 -->
+<div class="workflow">
+  <div class="wf-header">
+    <div>
+      <div class="wf-title"><span class="wf-number">WF 11</span> Seguimiento leads — secuencia de re-engagement</div>
+      <div class="wf-purpose">Re-engage leads who haven't responded after 72 hours, with follow-up touches</div>
+    </div>
+  </div>
+  <div class="wf-body">
+    <div class="wf-meta">
+      <span class="wf-meta-item"><strong>Trigger:</strong> Time-based — 72h since last message</span>
+    </div>
+    <div class="node-flow">
+<span class="trigger">[TRIGGER]</span> Time-based: 72 hours since last message
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="condition">[CONDITION]</span> Contact is in <span class="tag">"New Lead"</span> or <span class="tag">"Tour / Visit Scheduled"</span> stage
+    <span class="arrow">│</span> AND <span class="tag">"stop-bot"</span> tag NOT present
+    <span class="arrow">│</span> AND <span class="tag">"human-handover"</span> tag NOT present
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Send WhatsApp</span> — <span class="tag">seguimiento_72_horas</span>
+    <span class="arrow">│</span> Variable: {{contact.first_name}}
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> Wait 5 days
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Send WhatsApp</span> — <span class="tag">seguimiento_5_dias</span>
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> Wait 7 days
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Send WhatsApp</span> — <span class="tag">seguimiento_15_dias</span>
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="condition">[CONDITION]</span> If no response after all follow-ups:
+    <span class="arrow">│</span> Tags: <span class="tag">cold</span>, <span class="tag">no-reply</span>
+    <span class="arrow">│</span> Move to Cold / Lost
+    </div>
+    <div class="wf-notes">
+      <strong>Max Gym customization:</strong> Sequence uses Max Gym WhatsApp templates. Stages: <code>New Lead</code>, <code>Tour / Visit Scheduled</code>. Tags: <code>cold</code>, <code>no-reply</code>.
+    </div>
+  </div>
+</div>
+
+<!-- WF 12 -->
+<div class="workflow">
+  <div class="wf-header">
+    <div>
+      <div class="wf-title"><span class="wf-number">WF 12</span> Creación de negocio leads entrantes</div>
+      <div class="wf-purpose">When a new lead comes in (form, website, manual), create contact + opportunity + start bot</div>
+    </div>
+  </div>
+  <div class="wf-body">
+    <div class="wf-meta">
+      <span class="wf-meta-item"><strong>Trigger:</strong> Form submitted OR new contact created with source</span>
+    </div>
+    <div class="node-flow">
+<span class="trigger">[TRIGGER]</span> Form Submitted OR Contact Created
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="condition">[CONDITION]</span> Contact source = <span class="tag">"Landing Page"</span> OR <span class="tag">"Website"</span> OR <span class="tag">"Form"</span>
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Create/Update Contact</span>
+    <span class="arrow">│</span> Fields: name, email, phone, objetivo_principal, edad
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Add Tags</span>
+    <span class="arrow">│</span> Add: <span class="tag">new-lead</span>, <span class="tag">source-[source]</span>, <span class="tag">ia-qualifying</span>
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Create Opportunity</span>
+    <span class="arrow">│</span> Pipeline: Membership / Subscription Services
+    <span class="arrow">│</span> Stage: <span class="tag">"New Lead"</span>
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Start AI Agent Conversation</span>
+    <span class="arrow">│</span> Bot: Max Gym Sales Bot
+    <span class="arrow">│</span> Trigger: Automatic first message (Phase 0 greeting)
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Send Internal Notification</span>
+    <span class="arrow">│</span> Message: "Nuevo lead: {{contact.name}}"
+    </div>
+    <div class="wf-notes">
+      <strong>Max Gym customization:</strong> Pipeline = Membership / Subscription Services. Stage = <strong>New Lead</strong>. Bot = Max Gym Sales Bot with Phase 0 greeting. Source tags: <code>source-whatsapp</code>, <code>source-instagram</code>, <code>source-website</code>, etc.
+    </div>
+  </div>
+</div>
+
+<!-- WF 13 -->
+<div class="workflow">
+  <div class="wf-header">
+    <div>
+      <div class="wf-title"><span class="wf-number">WF 13</span> Conversiones Google Ads (BORRADOR)</div>
+      <div class="wf-purpose">Track conversions from Google Ads campaigns and attribute properly</div>
+    </div>
+  </div>
+  <div class="wf-body">
+    <div class="wf-meta">
+      <span class="wf-meta-item"><strong>Trigger:</strong> Contact created with source "google-ads" / stage change to "Member Signed"</span>
+    </div>
+    <div class="node-flow">
+<span class="trigger">[TRIGGER]</span> Contact Created with source = <span class="tag">"google-ads"</span>
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Add Tags</span>
+    <span class="arrow">│</span> Add: <span class="tag">google-ads</span>, <span class="tag">source-paid</span>
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Send Conversion to Google Ads</span>
+    <span class="arrow">│</span> Conversion Action: "Lead Form Submitted"
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="condition">[CONDITION]</span> When opportunity moves to <span class="tag">"Member Signed"</span>
+    <span class="arrow">│</span>
+    <span class="arrow">▼</span>
+<span class="action">[ACTION]</span> <span class="field">Send Conversion to Google Ads</span>
+    <span class="arrow">│</span> Conversion Action: "Sale"
+    <span class="arrow">│</span> Value: {{opportunity.proposal_value}}
+    </div>
+    <div class="wf-notes">
+      <strong>Max Gym customization:</strong> Stage "Won" → <strong>Member Signed</strong>. Tags: <code>google-ads</code>, <code>source-paid</code>. Requires Google Ads conversion tracking setup.
+    </div>
+  </div>
+</div>
+
+<div class="dep-map">
+  <h2>📊 Workflow Dependency Map</h2>
+  <pre>
+                    ┌─────────────────────────────┐
+                    │  BOT ACTIONS (inside bot)    │
+                    │  ┌───────────────────────┐   │
+                    │  │ Descalificar Lead     │───┼──→ WF 2
+                    │  │ Mover a Oportunidad   │───┼──→ WF 1
+                    │  │ Guardar Información   │───┼──→ (direct)
+                    │  │ Stop Bot              │───┼──→ WF 10
+                    │  │ Transferir a Humano   │───┼──→ (human-handover tag)
+                    │  │ Seguimiento por       │───┼──→ WF 11
+                    │  │ Inactividad           │   │
+                    │  └───────────────────────┘   │
+                    └─────────────────────────────┘
+
+    External Events:
+    ┌──────────────┐    ┌──────────────────────────────────┐
+    │ Form Submit  │───→│ WF 12: Create Lead + Bot         │
+    └──────────────┘    └──────────────────────────────────┘
+    ┌────────────────┐  ┌──────────────────────────────────┐
+    │ Stage: Member  │──→│ WF 6: Celebrate + Pixel          │
+    │ Signed (Won)   │   └──────────────────────────────────┘
+    └────────────────┘
+    ┌──────────────┐    ┌──────────────────────────────────┐
+    │ Stage: Lost  │───→│ WF 7: Handle + Nurture           │
+    └──────────────┘    └──────────────────────────────────┘
+    ┌────────────────┐  ┌──────────────────────────────────┐
+    │ Opportunity    │──→│ WF 8: Copy Fields                │
+    │ Created        │   └──────────────────────────────────┘
+    └────────────────┘
+    ┌────────────────┐  ┌──────────────────────────────────┐
+    │ Appointment    │──→│ WF 9: Reminder (24h + 1h)        │
+    └────────────────┘    └──────────────────────────────────┘
+    ┌────────────────┐  ┌──────────────────────────────────┐
+    │ Inactivity     │──→│ WF 5: Cold Status                │
+    └────────────────┘    └──────────────────────────────────┘
+    ┌────────────────┐  ┌──────────────────────────────────┐
+    │ Google Ads     │──→│ WF 13: Conversion Tracking       │
+    └────────────────┘    └──────────────────────────────────┘
+  </pre>
+</div>
+
+</body>
+</html>

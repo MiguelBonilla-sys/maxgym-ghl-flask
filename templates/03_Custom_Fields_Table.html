@@ -1,0 +1,307 @@
+﻿<!DOCTYPE html>
+<html lang="es-PA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Custom Fields Table — Max Gym</title>
+<style>
+  :root { --primary: #000000; --secondary: #87f24d; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1a1a1a; background: #f8f9fa; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
+  h1 { font-size: 2rem; margin-bottom: 4px; color: var(--primary); }
+  .subtitle { color: #666; margin-bottom: 32px; font-size: 0.95rem; }
+  h2 { font-size: 1.3rem; margin: 36px 0 16px; padding-bottom: 8px; border-bottom: 3px solid var(--secondary); color: var(--primary); }
+
+  table { width: 100%; border-collapse: collapse; margin: 16px 0 32px; font-size: 0.88rem; }
+  th, td { padding: 10px 12px; text-align: left; border: 1px solid #ddd; vertical-align: top; }
+  th { background: var(--primary); color: #fff; font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.3px; }
+  tr:nth-child(even) { background: #f1f3f5; }
+  tr:hover { background: #e8f5e9; }
+
+  .field-key { font-family: 'JetBrains Mono', 'Cascadia Code', monospace; font-size: 0.82rem; background: #eaeaea; padding: 2px 8px; border-radius: 4px; white-space: nowrap; }
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; }
+  .badge-qual { background: #d1ecf1; color: #0c5460; }
+  .badge-sys { background: #e8daef; color: #6c3483; }
+  .badge-rev { background: #d5f5e3; color: #1e8449; }
+  .badge-add { background: #fdebd0; color: #935116; }
+  .badge-opp { background: #d4e6f1; color: #1a5276; }
+
+  .copy-btn { background: none; border: 1px solid #ccc; border-radius: 4px; padding: 1px 6px; font-size: 0.7rem; cursor: pointer; color: #666; margin-left: 4px; }
+  .copy-btn:hover { background: var(--secondary); border-color: var(--secondary); color: #000; }
+  .copy-btn.copied { background: #27ae60; border-color: #27ae60; color: #fff; }
+
+  .summary { display: flex; gap: 24px; margin-bottom: 24px; flex-wrap: wrap; }
+  .summary-item { background: #fff; border: 1px solid #e0e0e0; border-radius: 8px; padding: 12px 24px; text-align: center; }
+  .summary-item .num { font-size: 1.8rem; font-weight: 700; color: var(--primary); }
+  .summary-item .label { font-size: 0.75rem; color: #888; text-transform: uppercase; }
+
+  .field-type { font-size: 0.78rem; color: #666; }
+  .select-options { font-size: 0.78rem; color: #555; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Custom Fields Table</h1>
+<p class="subtitle">Max Gym (Panamá) — 19 Contact Fields + 6 Opportunity Fields</p>
+
+<div class="summary">
+  <div class="summary-item"><div class="num">19</div><div class="label">Contact Fields</div></div>
+  <div class="summary-item"><div class="num">6</div><div class="label">Opportunity Fields</div></div>
+  <div class="summary-item"><div class="num">25</div><div class="label">Total Fields</div></div>
+</div>
+
+<!-- Contact Fields -->
+<h2>Contact Fields — Qualification <span class="badge badge-qual">Qualification</span></h2>
+<table>
+  <tr>
+    <th style="width:8%;">#</th>
+    <th style="width:28%;">Field Key</th>
+    <th style="width:14%;">Type</th>
+    <th style="width:30%;">Options / Values</th>
+    <th style="width:20%;">Maps To</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td><code class="field-key">objetivo_principal</code><button class="copy-btn" onclick="copyKey(this,'objetivo_principal')">Copy</button></td>
+    <td><span class="field-type">Single Select</span></td>
+    <td class="select-options">Ganar músculo / Bajar de peso / Mantenerme activo / Mejorar condición / No estoy seguro</td>
+    <td>Paso 1 — Objective</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td><code class="field-key">situacion_actual</code><button class="copy-btn" onclick="copyKey(this,'situacion_actual')">Copy</button></td>
+    <td><span class="field-type">Single Select</span></td>
+    <td class="select-options">Nunca he ido / Voy actualmente a otro gym / He ido antes pero dejé / Entreno en casa</td>
+    <td>Paso 2 — Current Situation</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td><code class="field-key">cuando_empezar</code><button class="copy-btn" onclick="copyKey(this,'cuando_empezar')">Copy</button></td>
+    <td><span class="field-type">Single Select</span></td>
+    <td class="select-options">Esta semana / La próxima semana / En 2-3 semanas / No estoy seguro</td>
+    <td>Paso 3 — Timing / Urgency</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td><code class="field-key">presupuesto</code><button class="copy-btn" onclick="copyKey(this,'presupuesto')">Copy</button></td>
+    <td><span class="field-type">Single Select</span></td>
+    <td class="select-options">Plan Max Rewards B/. 58.85 / Plan Mensual (Max PRO) B/. 69.55 / MAX 360 (B/. 529.65 pago único) / Day Pass $21.40 / No estoy seguro</td>
+    <td>Paso 4 — Budget / Price</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td><code class="field-key">objecion_sucursal</code><button class="copy-btn" onclick="copyKey(this,'objecion_sucursal')">Copy</button></td>
+    <td><span class="field-type">Text</span></td>
+    <td class="select-options">Free text — single location objection handling</td>
+    <td>Paso 5 — Location Objection</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td><code class="field-key">ubicacion_referencia</code><button class="copy-btn" onclick="copyKey(this,'ubicacion_referencia')">Copy</button></td>
+    <td><span class="field-type">Text</span></td>
+    <td class="select-options">Free text — zone where lead lives/works</td>
+    <td>Paso 5 — Reference Location</td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td><code class="field-key">visita_agendada</code><button class="copy-btn" onclick="copyKey(this,'visita_agendada')">Copy</button></td>
+    <td><span class="field-type">Date</span></td>
+    <td class="select-options">Date/time of scheduled tour visit</td>
+    <td>Paso 6 — Tour Booking</td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td><code class="field-key">tour_type</code><button class="copy-btn" onclick="copyKey(this,'tour_type')">Copy</button></td>
+    <td><span class="field-type">Text</span></td>
+    <td class="select-options">"Tour"</td>
+    <td>Paso 6 — Tour Type</td>
+  </tr>
+</table>
+
+<h2>Contact Fields — System <span class="badge badge-sys">System</span></h2>
+<table>
+  <tr>
+    <th style="width:8%;">#</th>
+    <th style="width:28%;">Field Key</th>
+    <th style="width:14%;">Type</th>
+    <th style="width:48%;">Purpose</th>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td><code class="field-key">bot_status</code><button class="copy-btn" onclick="copyKey(this,'bot_status')">Copy</button></td>
+    <td><span class="field-type">Text</span></td>
+    <td>"Qualifying" / "Meeting Booked" / "Disqualified" / "Deactivated"</td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td><code class="field-key">disqualification_reason</code><button class="copy-btn" onclick="copyKey(this,'disqualification_reason')">Copy</button></td>
+    <td><span class="field-type">Text</span></td>
+    <td>TIPO A–F + description</td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td><code class="field-key">disqualification_date</code><button class="copy-btn" onclick="copyKey(this,'disqualification_date')">Copy</button></td>
+    <td><span class="field-type">Date</span></td>
+    <td>When DQ occurred</td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td><code class="field-key">bot_conversation_summary</code><button class="copy-btn" onclick="copyKey(this,'bot_conversation_summary')">Copy</button></td>
+    <td><span class="field-type">Text Area</span></td>
+    <td>Full summary of bot-lead exchange</td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td><code class="field-key">bot_actions_summary</code><button class="copy-btn" onclick="copyKey(this,'bot_actions_summary')">Copy</button></td>
+    <td><span class="field-type">Text Area</span></td>
+    <td>Actions bot executed (for debugging)</td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td><code class="field-key">loss_reason</code><button class="copy-btn" onclick="copyKey(this,'loss_reason')">Copy</button></td>
+    <td><span class="field-type">Text</span></td>
+    <td>Human-entered loss reason</td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td><code class="field-key">pixel_event_sent</code><button class="copy-btn" onclick="copyKey(this,'pixel_event_sent')">Copy</button></td>
+    <td><span class="field-type">Yes/No</span></td>
+    <td>Whether conversion pixel event was sent</td>
+  </tr>
+</table>
+
+<h2>Contact Fields — Revenue <span class="badge badge-rev">Revenue</span></h2>
+<table>
+  <tr>
+    <th style="width:8%;">#</th>
+    <th style="width:28%;">Field Key</th>
+    <th style="width:14%;">Type</th>
+    <th style="width:30%;">Options</th>
+    <th style="width:20%;">Purpose</th>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td><code class="field-key">membresia_plan</code><button class="copy-btn" onclick="copyKey(this,'membresia_plan')">Copy</button></td>
+    <td><span class="field-type">Single Select</span></td>
+    <td class="select-options">Plan Mensual (Max PRO) / Max Rewards / MAX 360 (pago único) / Day Pass / Otro</td>
+    <td>Selected membership plan</td>
+  </tr>
+</table>
+
+<h2>Contact Fields — Additional <span class="badge badge-add">Additional</span></h2>
+<table>
+  <tr>
+    <th style="width:8%;">#</th>
+    <th style="width:28%;">Field Key</th>
+    <th style="width:14%;">Type</th>
+    <th style="width:30%;">Options / Values</th>
+    <th style="width:20%;">Purpose</th>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td><code class="field-key">edad</code><button class="copy-btn" onclick="copyKey(this,'edad')">Copy</button></td>
+    <td><span class="field-type">Number</span></td>
+    <td class="select-options">—</td>
+    <td>Edad del lead — verify ≥ 13</td>
+  </tr>
+  <tr>
+    <td>18</td>
+    <td><code class="field-key">tipo_entrenador</code><button class="copy-btn" onclick="copyKey(this,'tipo_entrenador')">Copy</button></td>
+    <td><span class="field-type">Single Select</span></td>
+    <td class="select-options">Floor trainer (gratis) / Personal trainer (costo extra) / No estoy seguro</td>
+    <td>Trainer type preference</td>
+  </tr>
+  <tr>
+    <td>19</td>
+    <td><code class="field-key">tipo_pase</code><button class="copy-btn" onclick="copyKey(this,'tipo_pase')">Copy</button></td>
+    <td><span class="field-type">Single Select</span></td>
+    <td class="select-options">Day Pass $21.40 / Week Pass $32.10 / Single Class $10.70 / Ninguno</td>
+    <td>Pass type selection</td>
+  </tr>
+</table>
+
+<!-- Opportunity Fields -->
+<h2>Opportunity Fields <span class="badge badge-opp">Opportunity</span></h2>
+<table>
+  <tr>
+    <th style="width:8%;">#</th>
+    <th style="width:26%;">Field Key</th>
+    <th style="width:12%;">Type</th>
+    <th style="width:24%;">Purpose</th>
+    <th style="width:30%;">Notes</th>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td><code class="field-key">pipeline_stage_entered</code><button class="copy-btn" onclick="copyKey(this,'pipeline_stage_entered')">Copy</button></td>
+    <td><span class="field-type">Text</span></td>
+    <td>Tracks when opportunity entered each pipeline stage</td>
+    <td>System-managed timestamp per stage</td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td><code class="field-key">disqualification_reason</code><button class="copy-btn" onclick="copyKey(this,'disqualification_reason')">Copy</button></td>
+    <td><span class="field-type">Text</span></td>
+    <td>Reason for DQ at opportunity level</td>
+    <td>Copied from contact field on opportunity creation</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td><code class="field-key">proposal_value</code><button class="copy-btn" onclick="copyKey(this,'proposal_value')">Copy</button></td>
+    <td><span class="field-type">Currency</span></td>
+    <td>Value of the proposed membership plan</td>
+    <td>Set when human proposes a plan</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td><code class="field-key">expected_close_date</code><button class="copy-btn" onclick="copyKey(this,'expected_close_date')">Copy</button></td>
+    <td><span class="field-type">Date</span></td>
+    <td>Expected date for deal closure</td>
+    <td>Set by human after prospect stage</td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td><code class="field-key">deal_source</code><button class="copy-btn" onclick="copyKey(this,'deal_source')">Copy</button></td>
+    <td><span class="field-type">Text</span></td>
+    <td>Original source of the deal</td>
+    <td>Copied from contact source tag</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td><code class="field-key">bot_conversation_summary</code><button class="copy-btn" onclick="copyKey(this,'bot_conversation_summary')">Copy</button></td>
+    <td><span class="field-type">Text Area</span></td>
+    <td>Bot conversation summary for human handover</td>
+    <td>Copied from contact field on opportunity creation</td>
+  </tr>
+</table>
+
+<script>
+function copyKey(btn, key) {
+  navigator.clipboard.writeText(key).then(() => {
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'Copy';
+      btn.classList.remove('copied');
+    }, 2000);
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = key;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'Copy';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+</script>
+
+</div>
+</body>
+</html>

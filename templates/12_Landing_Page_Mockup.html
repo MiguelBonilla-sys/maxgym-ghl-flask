@@ -1,0 +1,275 @@
+﻿<!DOCTYPE html>
+<html lang="es-PA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Max Gym — Encuentra tu Max 💚</title>
+<style>
+  :root { --primary: #000000; --secondary: #87f24d; --accent: #E8F5E9; --white: #ffffff; --gray: #f8fafc; --text: #1e293b; --muted: #64748b; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', -apple-system, system-ui, sans-serif; color: var(--text); line-height: 1.6; background: var(--white); }
+  .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
+  /* Hero */
+  .hero { background: var(--primary); color: var(--white); padding: 80px 0 72px; position: relative; overflow: hidden; }
+  .hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 6px; background: var(--secondary); }
+  .hero .container { position: relative; z-index: 1; }
+  .hero-logo { font-size: 28px; font-weight: 900; letter-spacing: 2px; margin-bottom: 32px; }
+  .hero-logo span { color: var(--secondary); }
+  .hero h1 { font-size: clamp(36px, 6vw, 56px); font-weight: 900; line-height: 1.1; margin-bottom: 16px; }
+  .hero h1 span { color: var(--secondary); }
+  .hero p { font-size: 18px; color: #94a3b8; margin-bottom: 32px; max-width: 480px; }
+  .hero .cta { display: inline-block; background: var(--secondary); color: #000; padding: 16px 40px; border-radius: 10px; text-decoration: none; font-weight: 700; font-size: 16px; transition: background 0.2s, transform 0.15s; }
+  .hero .cta:hover { background: #6fd93a; transform: translateY(-2px); }
+  .hero-bg-icon { position: absolute; right: -40px; top: 50%; transform: translateY(-50%); font-size: 280px; opacity: 0.04; font-weight: 900; pointer-events: none; user-select: none; }
+
+  /* Sections */
+  section { padding: 72px 0; }
+  .section-title { font-size: 28px; font-weight: 800; text-align: center; margin-bottom: 8px; }
+  .section-subtitle { text-align: center; color: var(--muted); margin-bottom: 48px; font-size: 15px; }
+  .accent-title span { color: var(--secondary); }
+
+  /* Features */
+  .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .feature { text-align: center; padding: 32px 20px; border-radius: 12px; background: var(--gray); transition: transform 0.2s; }
+  .feature:hover { transform: translateY(-4px); }
+  .feature-icon { font-size: 36px; margin-bottom: 16px; display: block; }
+  .feature h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+  .feature p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+  .feature .brand-list { font-size: 13px; color: var(--muted); margin-top: 8px; }
+  .feature .brand-list strong { color: var(--secondary); }
+
+  /* Plans */
+  .plans-bg { background: var(--primary); }
+  .plans-bg .section-title { color: var(--white); }
+  .plans-bg .section-subtitle { color: #94a3b8; }
+  .plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .plan { background: #1e293b; border-radius: 12px; padding: 32px 24px; text-align: center; color: var(--white); border: 1px solid #334155; transition: transform 0.2s, border-color 0.2s; display: flex; flex-direction: column; }
+  .plan:hover { transform: translateY(-4px); border-color: var(--secondary); }
+  .plan.featured { border-color: var(--secondary); position: relative; }
+  .plan.featured::before { content: 'MÁS POPULAR'; position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--secondary); color: #000; font-size: 10px; font-weight: 700; letter-spacing: 1px; padding: 4px 14px; border-radius: 20px; }
+  .plan-name { font-size: 16px; font-weight: 600; color: var(--secondary); margin-bottom: 4px; }
+  .plan-price { font-size: 36px; font-weight: 900; margin: 8px 0; }
+  .plan-price span { font-size: 14px; font-weight: 400; color: #94a3b8; }
+  .plan-desc { font-size: 13px; color: #94a3b8; margin-bottom: 20px; line-height: 1.6; flex: 1; }
+  .plan-cta { display: inline-block; background: transparent; color: var(--white); border: 2px solid var(--secondary); padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 14px; transition: all 0.2s; }
+  .plan-cta:hover { background: var(--secondary); color: #000; }
+
+  /* Day Pass */
+  .passes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 800px; margin: 0 auto; }
+  .pass { text-align: center; padding: 28px 20px; border-radius: 12px; border: 2px solid #e2e8f0; background: var(--white); transition: border-color 0.2s; }
+  .pass:hover { border-color: var(--secondary); }
+  .pass-icon { font-size: 28px; margin-bottom: 8px; display: block; }
+  .pass-name { font-size: 15px; font-weight: 700; }
+  .pass-price { font-size: 24px; font-weight: 900; color: var(--primary); margin: 4px 0; }
+  .pass-price .dollar { color: var(--secondary); }
+  .pass-desc { font-size: 12px; color: var(--muted); }
+
+  /* Form */
+  .form-section { background: var(--gray); }
+  .form-card { max-width: 520px; margin: 0 auto; background: var(--white); padding: 40px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.06); border: 1px solid #e2e8f0; }
+  .form-group { margin-bottom: 20px; }
+  .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--text); }
+  .form-group input, .form-group select { width: 100%; padding: 12px 16px; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit; color: var(--text); background: var(--white); transition: border-color 0.2s; }
+  .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--secondary); box-shadow: 0 0 0 3px rgba(135, 242, 77, 0.15); }
+  .form-submit { width: 100%; padding: 14px; background: var(--secondary); color: #000; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: inherit; transition: background 0.2s; }
+  .form-submit:hover { background: #6fd93a; }
+
+  /* Testimonials */
+  .testimonials { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 700px; margin: 0 auto; }
+  .testimonial { background: var(--gray); border-radius: 12px; padding: 24px; border: 1px solid #e2e8f0; }
+  .testimonial q { font-size: 14px; font-style: italic; color: var(--text); }
+  .testimonial cite { display: block; margin-top: 12px; font-size: 12px; font-weight: 600; color: var(--muted); font-style: normal; }
+
+  /* Footer */
+  footer { background: var(--primary); color: #94a3b8; padding: 40px 0; text-align: center; font-size: 14px; line-height: 2; }
+  footer strong { color: var(--white); }
+  footer .social { margin: 12px 0; }
+  footer .social a { color: #94a3b8; text-decoration: none; margin: 0 10px; transition: color 0.2s; }
+  footer .social a:hover { color: var(--secondary); }
+  footer .divider { width: 40px; height: 2px; background: var(--secondary); margin: 16px auto; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .features, .plans, .passes, .testimonials { grid-template-columns: 1fr; }
+    .hero { padding: 48px 0 56px; }
+    .hero h1 { font-size: 32px; }
+    section { padding: 48px 0; }
+    .form-card { padding: 24px; }
+    .plans, .passes { max-width: 400px; margin: 0 auto; }
+  }
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .features { grid-template-columns: repeat(2, 1fr); }
+    .features .feature:last-child { grid-column: 1 / -1; max-width: 400px; margin: 0 auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-logo">MAX <span>GYM</span></div>
+    <h1>Encuentra tu <span>Max</span> 💚</h1>
+    <p>Agenda tu tour y descubre el gimnasio con el mejor equipamiento de Panamá. Sin compromiso, sin presión.</p>
+    <a href="#form" class="cta">Agendar mi tour</a>
+  </div>
+  <div class="hero-bg-icon">MAX</div>
+</section>
+
+<!-- Why Max Gym -->
+<section>
+  <div class="container">
+    <h2 class="section-title accent-title">¿Por qué <span>Max Gym</span>?</h2>
+    <p class="section-subtitle">No es solo un gimnasio. Es tu espacio para superarte.</p>
+    <div class="features">
+      <div class="feature">
+        <span class="feature-icon">🏋️</span>
+        <h3>Equipamiento de Élite</h3>
+        <p>Máquinas <strong>Panatta</strong>, <strong>Technogym</strong> y <strong>Hammer Strength</strong> que no existen en ningún otro gym de Panamá.</p>
+        <div class="brand-list">Calidad profesional, resultados reales.</div>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">⏰</span>
+        <h3>Horarios Ilimitados</h3>
+        <p>Abierto <strong>5:00 AM – 12:00 AM</strong> entre semana, <strong>19 horas al día</strong>. Sábados y domingos de 8am a 4pm.</p>
+        <div class="brand-list">Entrena cuando tú quieras.</div>
+      </div>
+      <div class="feature">
+        <span class="feature-icon">💚</span>
+        <h3>Más que un Gym</h3>
+        <p>Sauna, parqueo gratis (60+ espacios), clases grupales ilimitadas Les Mills, valoración inicial incluida y un ambiente de comunidad único.</p>
+        <div class="brand-list">Todo incluido en tu membresía.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Plans -->
+<section class="plans-bg">
+  <div class="container">
+    <h2 class="section-title">Nuestros Planes</h2>
+    <p class="section-subtitle">Elige el plan que se ajuste a ti. Sin letra pequeña.</p>
+    <div class="plans">
+      <div class="plan">
+        <div class="plan-name">Max Rewards</div>
+        <div class="plan-price">B/. 58.85 <span>/mes</span></div>
+        <div class="plan-desc">Compromiso 6 meses con débito automático. Cancelación presencial. Mejor relación calidad-precio para quienes ya saben que esto es para ellos.</div>
+        <a href="#form" class="plan-cta">Elegir plan</a>
+      </div>
+      <div class="plan featured">
+        <div class="plan-name">Plan Mensual (Max PRO)</div>
+        <div class="plan-price">B/. 69.55 <span>/mes</span></div>
+        <div class="plan-desc">Sin permanencia. Cancela con 3 días de aviso. Acceso completo + clases + sauna + valoración inicial. Flexibilidad total.</div>
+        <a href="#form" class="plan-cta">Elegir plan</a>
+      </div>
+      <div class="plan">
+        <div class="plan-name">MAX 360</div>
+        <div class="plan-price">B/. 529.65 <span>pago único</span></div>
+        <div class="plan-desc">3 meses completos: gym + 3 PT + 3 nutrición + 3 fisioterapia + 3 valoraciones. Resultados garantizados.</div>
+        <a href="#form" class="plan-cta">Saber más</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Day Pass Section -->
+<section>
+  <div class="container">
+    <h2 class="section-title accent-title">¿Quieres entrenar <span>antes de inscribirte</span>?</h2>
+    <p class="section-subtitle">Pruébanos con nuestras entradas diarias. ITBMS incluido.</p>
+    <div class="passes">
+      <div class="pass">
+        <span class="pass-icon">🎫</span>
+        <div class="pass-name">Day Pass</div>
+        <div class="pass-price"><span class="dollar">$</span>21.40</div>
+        <div class="pass-desc">Un día completo de entrenamiento. Acceso a todas las áreas y clases.</div>
+      </div>
+      <div class="pass">
+        <span class="pass-icon">📅</span>
+        <div class="pass-name">Week Pass</div>
+        <div class="pass-price"><span class="dollar">$</span>32.10</div>
+        <div class="pass-desc">Una semana completa. Entrena todos los días sin límite.</div>
+      </div>
+      <div class="pass">
+        <span class="pass-icon">🏋️</span>
+        <div class="pass-name">Clase Individual</div>
+        <div class="pass-price"><span class="dollar">$</span>10.70</div>
+        <div class="pass-desc">Una clase grupal. Prueba Body Combat, Yoga, Spinning y más.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section>
+  <div class="container">
+    <h2 class="section-title accent-title">Lo que dicen nuestros <span>miembros</span></h2>
+    <p class="section-subtitle">Resultados reales de personas como tú.</p>
+    <div class="testimonials">
+      <div class="testimonial">
+        <q>El mejor gym de Costa del Este. Las máquinas son increíbles.</q>
+        <cite>— Carlos M., miembro desde 2024</cite>
+      </div>
+      <div class="testimonial">
+        <q>Llegué sin saber nada y el equipo me guió desde el día 1.</q>
+        <cite>— Andrea L., miembro MAX 360</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Form -->
+<section class="form-section" id="form">
+  <div class="container">
+    <h2 class="section-title accent-title">Agenda tu <span>tour</span></h2>
+    <p class="section-subtitle">Te esperamos para conocer nuestras instalaciones. Sin compromiso.</p>
+    <div class="form-card">
+      <form onsubmit="event.preventDefault(); alert('✅ ¡Gracias! Te contactaremos para confirmar tu tour.');">
+        <div class="form-group">
+          <label for="name">Nombre</label>
+          <input type="text" id="name" placeholder="Ej: María González" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">Teléfono</label>
+          <input type="tel" id="phone" placeholder="+507 6000-0000" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="maria@ejemplo.com">
+        </div>
+        <div class="form-group">
+          <label for="goal">Objetivo principal</label>
+          <select id="goal" required>
+            <option value="">Selecciona tu objetivo</option>
+            <option value="muscle">Ganar músculo</option>
+            <option value="lose">Bajar de peso</option>
+            <option value="active">Mantenerme activo</option>
+            <option value="condition">Mejorar condición física</option>
+            <option value="unsure">No estoy seguro</option>
+          </select>
+        </div>
+        <button type="submit" class="form-submit">Agendar mi tour</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <strong>MAX GYM</strong>
+    <div class="divider"></div>
+    <div>📍 Plaza del Super 99, Nivel 1, Costa del Este, Panamá</div>
+    <div>🕐 Lun–Vie 5am–12am | Sáb–Dom 8am–4pm</div>
+    <div>📱 +507 6535-1411 / +507 6969-8010 | ✉️ info@maxgym.com.pa</div>
+    <div class="social">
+      <a href="https://instagram.com/maxgym_pa" target="_blank">Instagram</a>
+      <a href="https://maxgym.com.pa" target="_blank">Web</a>
+    </div>
+    <div style="font-size:12px;margin-top:12px;color:#475569;">© 2026 Max Gym Panamá. Todos los derechos reservados.</div>
+  </div>
+</footer>
+
+</body>
+</html>

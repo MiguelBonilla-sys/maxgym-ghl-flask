@@ -1,0 +1,201 @@
+﻿<!DOCTYPE html>
+<html lang="es-PA">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bot-to-Pipeline Mapping — Max Gym</title>
+<style>
+  :root { --primary: #000000; --secondary: #87f24d; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1a1a1a; background: #f8f9fa; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 40px 24px; }
+  h1 { font-size: 2rem; margin-bottom: 4px; color: var(--primary); }
+  .subtitle { color: #666; margin-bottom: 32px; font-size: 0.95rem; }
+  h2 { font-size: 1.3rem; margin: 40px 0 16px; padding-bottom: 8px; border-bottom: 3px solid var(--secondary); color: var(--primary); }
+
+  /* Pipeline Visual */
+  .pipeline { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0; margin: 32px 0; }
+  .pipe-stage { background: var(--primary); color: #fff; border-radius: 12px; padding: 14px 18px; min-width: 130px; text-align: center; font-size: 0.8rem; font-weight: 600; line-height: 1.4; position: relative; }
+  .pipe-stage .pipe-label { font-size: 0.65rem; opacity: 0.8; font-weight: 400; display: block; margin-top: 4px; }
+  .pipe-arrow { font-size: 1.4rem; color: var(--secondary); margin: 0 4px; font-weight: 700; }
+  .pipe-stage.dq { background: #c0392b; }
+  .pipe-stage.win { background: #27ae60; }
+  .pipe-stage.bot { border: 3px solid var(--secondary); }
+
+  .pipeline-legend { display: flex; gap: 20px; justify-content: center; margin: 16px 0; font-size: 0.85rem; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-swatch { width: 16px; height: 16px; border-radius: 4px; }
+  .legend-swatch.bot { background: var(--primary); border: 2px solid var(--secondary); }
+
+  /* Data Table */
+  table { width: 100%; border-collapse: collapse; margin: 16px 0 32px; font-size: 0.9rem; }
+  th, td { padding: 12px 14px; text-align: left; border: 1px solid #ddd; }
+  th { background: var(--primary); color: #fff; font-weight: 600; }
+  tr:nth-child(even) { background: #f1f3f5; }
+  .tag { display: inline-block; padding: 2px 10px; border-radius: 10px; font-size: 0.75rem; font-weight: 600; margin: 1px; }
+  .tag-green { background: #d4edda; color: #155724; }
+  .tag-red { background: #f8d7da; color: #721c24; }
+  .tag-gray { background: #e2e3e5; color: #383d41; }
+  .tag-yellow { background: #fff3cd; color: #856404; }
+  .tag-blue { background: #d1ecf1; color: #0c5460; }
+  .bot-badge { display: inline-block; background: var(--secondary); color: #000; padding: 2px 10px; border-radius: 10px; font-size: 0.75rem; font-weight: 700; }
+  .dq-badge { display: inline-block; background: #e74c3c; color: #fff; padding: 2px 10px; border-radius: 10px; font-size: 0.75rem; font-weight: 700; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>Bot-to-Pipeline Mapping</h1>
+<p class="subtitle">Max Gym (Panamá) — How the AI Agent moves leads through the pipeline</p>
+
+<!-- Pipeline Visual -->
+<h2>Pipeline Flow</h2>
+<div class="pipeline-legend">
+  <div class="legend-item"><span class="legend-swatch bot"></span> Bot-Active Stage</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:var(--primary);"></span> Standard Stage</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:#c0392b;"></span> Disqualified / Lost</div>
+  <div class="legend-item"><span class="legend-swatch" style="background:#27ae60;"></span> Won / Active</div>
+</div>
+
+<div class="pipeline">
+  <div class="pipe-stage bot">
+    New Lead
+    <span class="pipe-label">Bot Phase 0</span>
+  </div>
+  <span class="pipe-arrow">→</span>
+  <div class="pipe-stage bot">
+    Tour / Visit<br>Scheduled
+    <span class="pipe-label">Bot Phase 1–5 → STOPBOT</span>
+  </div>
+  <span class="pipe-arrow">→</span>
+  <div class="pipe-stage">
+    Prospect
+    <span class="pipe-label">Human takes over</span>
+  </div>
+  <span class="pipe-arrow">→</span>
+  <div class="pipe-stage">
+    Member Signed
+    <span class="pipe-label">Agreement + Payment</span>
+  </div>
+  <span class="pipe-arrow">→</span>
+  <div class="pipe-stage win">
+    Active Member
+    <span class="pipe-label">30+ days engaged</span>
+  </div>
+</div>
+
+<div class="pipeline" style="margin-top:8px;">
+  <div class="pipe-stage bot" style="min-width:160px;background:#c0392b;border:3px solid #e74c3c;">
+    Disqualified
+    <span class="pipe-label">DQ Types A–F</span>
+  </div>
+  <span class="pipe-arrow" style="color:#e74c3c;">→</span>
+  <div class="pipe-stage dq">
+    Lost
+    <span class="pipe-label">End of pipeline</span>
+  </div>
+</div>
+
+<!-- Detailed Mapping Table -->
+<h2>Detailed Stage Mapping</h2>
+<table>
+  <tr>
+    <th style="width:16%;">Pipeline Stage</th>
+    <th style="width:20%;">Bot Phase / Trigger</th>
+    <th style="width:20%;">Bot Action</th>
+    <th style="width:20%;">Tags Applied</th>
+    <th style="width:24%;">Notes</th>
+  </tr>
+
+  <tr>
+    <td><strong>New Lead</strong><br><span class="tag tag-green">Phase 0</span></td>
+    <td>Inbound DM (WhatsApp / IG) or walk-in</td>
+    <td><span class="bot-badge">Bot starts</span> — Intelligent Greeting (Branch A/B/C)</td>
+    <td>
+      <span class="tag tag-blue">new-lead</span>
+      <span class="tag tag-blue">ia-qualifying</span>
+      <span class="tag tag-blue">source-*</span>
+    </td>
+    <td>Bot collects name, phone, email if missing. Identifies objective.</td>
+  </tr>
+
+  <tr>
+    <td><strong>Tour / Visit Scheduled</strong><br><span class="tag tag-green">Phase 1–5 → Stop</span></td>
+    <td>Lead completes Pasos 1–5 → accepts tour offer</td>
+    <td><span class="bot-badge">Bot qualifies</span> — Pasos 1–5 → STOPBOT_VISITA</td>
+    <td>
+      <span class="tag tag-blue">ia-qualified</span>
+      <span class="tag tag-blue">meeting-scheduled</span>
+      <span class="tag tag-yellow">-ia-qualifying</span>
+    </td>
+    <td>Bot books tour, creates calendar event, moves to Opportunity. Human follows up post-visit.</td>
+  </tr>
+
+  <tr>
+    <td><strong>Prospect</strong><br><span class="tag tag-yellow">Human Stage</span></td>
+    <td>Visit completed, lead interested</td>
+    <td><span class="bot-badge">Human takes over</span></td>
+    <td>
+      <span class="tag tag-blue">human-handover</span>
+    </td>
+    <td>Sales rep follows up, presents plans, handles objections, closes.</td>
+  </tr>
+
+  <tr>
+    <td><strong>Member Signed</strong><br><span class="tag tag-yellow">Human Stage</span></td>
+    <td>Agreement + first payment completed</td>
+    <td>WF 6: Celebration + Pixel</td>
+    <td>
+      <span class="tag tag-blue">won</span>
+      <span class="tag tag-blue">onboarding-start</span>
+      <span class="tag tag-yellow">-meeting-scheduled</span>
+      <span class="tag tag-yellow">-ia-qualified</span>
+    </td>
+    <td>Workflow triggers onboarding sequence and conversion pixel.</td>
+  </tr>
+
+  <tr>
+    <td><strong>Active Member</strong><br><span class="tag tag-green">Retention</span></td>
+    <td>First 30 days engaged</td>
+    <td>Retention workflows start</td>
+    <td>
+      <span class="tag tag-blue">15-day-checkin</span>
+      <span class="tag tag-blue">7-day-no-show</span>
+      <span class="tag tag-blue">churn-risk</span>
+    </td>
+    <td>Retention infrastructure: check-ins, no-show alerts, churn intervention.</td>
+  </tr>
+
+  <tr style="background:#fff3cd;">
+    <td><strong>Lost (Disqualified)</strong><br><span class="tag tag-red">Bot DQ</span></td>
+    <td>DQ Types A–F triggered during qualification</td>
+    <td><span class="dq-badge">Bot disqualifies</span> — STOPBOT_DESCALIFICADO</td>
+    <td>
+      <span class="tag tag-red">ia-disqualified</span>
+      <span class="tag tag-red">dq-budget-too-low</span>
+      <span class="tag tag-red">dq-wrong-profile</span>
+      <span class="tag tag-red">dq-no-decision-maker</span>
+      <span class="tag tag-red">dq-out-of-range</span>
+      <span class="tag tag-red">dq-already-committed</span>
+      <span class="tag tag-red">dq-underage</span>
+      <span class="tag tag-red">stop-bot</span>
+    </td>
+    <td>MAX 6 DQ types including underage (TIPO F). Tags are never removed.</td>
+  </tr>
+</table>
+
+<!-- DQ Types Quick Reference -->
+<h2>Disqualification Types (TIPO A–F)</h2>
+<table>
+  <tr><th>Type</th><th>Condition</th><th>Tag</th></tr>
+  <tr><td><span class="dq-badge">A</span></td><td>Presupuesto menor a B/. 50/mes firmemente</td><td><code>dq-budget-too-low</code></td></tr>
+  <tr><td><span class="dq-badge">B</span></td><td>Vive/trabaja a más de 30 min de Costa del Este</td><td><code>dq-wrong-profile</code></td></tr>
+  <tr><td><span class="dq-badge">C</span></td><td>Necesita aprobación de pareja y pareja no está interesada</td><td><code>dq-no-decision-maker</code></td></tr>
+  <tr><td><span class="dq-badge">D</span></td><td>Busca algo que Max Gym no ofrece (piscina, canchas, etc.)</td><td><code>dq-out-of-range</code></td></tr>
+  <tr><td><span class="dq-badge">E</span></td><td>Ya tiene membresía activa en otro gym + no quiere cambiar</td><td><code>dq-already-committed</code></td></tr>
+  <tr><td><span class="dq-badge">F</span></td><td>Edad menor a 13 años <strong>(underage)</strong></td><td><code>dq-underage</code></td></tr>
+</table>
+
+</div>
+</body>
+</html>
