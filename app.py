@@ -81,12 +81,13 @@ main{{max-width:1600px;margin:0 auto;padding:1.5rem}}
 
 
 def inject_nav(content: bytes, current_path: str) -> bytes:
+    nav = nav_html(current_path).encode()
     body_tag = b'<body'
     if body_tag in content:
         idx = content.index(body_tag)
         end_idx = content.index(b'>', idx) + 1
-        return content[:end_idx].decode() + nav_html(current_path) + content[end_idx:].decode()
-    return nav_html(current_path).encode() + content
+        return content[:end_idx] + nav + content[end_idx:]
+    return nav + content
 
 
 # ── Static file serving ───────────────────────────────────────────────────────
@@ -133,7 +134,7 @@ def serve_html(route):
     with open(filepath, 'rb') as f:
         content = f.read()
 
-    content = inject_nav(content.encode(), route)
+    content = inject_nav(content, route)
     return Response(content, mimetype='text/html')
 
 
